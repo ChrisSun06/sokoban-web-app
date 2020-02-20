@@ -1,14 +1,27 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams
+} from "react-router-dom";
 
-function App() {
+function MainPage() {
+  const sub_path = useParams();
+  let title = 'Just to test that the router works'
+
+  if(!!sub_path && !!sub_path.title){
+    title = sub_path.title;
+  }
+  console.log(title);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {title}
         </p>
         <a
           className="App-link"
@@ -21,6 +34,28 @@ function App() {
       </header>
     </div>
   );
+}
+
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
+  render(){
+    // return main_page('LOL');
+    return (
+      <Router>
+        <Switch>
+          <Route path="/lol/:title">
+            <MainPage/>
+          </Route>
+          {/* add your own pages' path above this line */}
+          <Route exact_path=''>
+            <MainPage/>
+          </Route> 
+        </Switch>
+      </Router>);
+  }
 }
 
 export default App;
