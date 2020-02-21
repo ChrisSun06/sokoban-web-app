@@ -44,13 +44,15 @@ class App extends React.Component{
     this.state = {};
   }
   render(){
-    // return main_page('LOL');
     return (
       <Router>
         <Switch>
+
           <Route path="/lol/:title">
             <MainPage/>
           </Route>
+          {/* the above one is just a dummy page to test the router works */}
+          
           <Route path="/gameplay">
             <GamePlayPage/>
           </Route>

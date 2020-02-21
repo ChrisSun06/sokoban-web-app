@@ -6,58 +6,191 @@
 
 
 // ------------------ below is data for games -------------------
-const EMPTY_CELL = 0;
-const WALL_CELL = 1;
-const BOX_CELL = 2;
-const PLAYER_CELL = 3;
-// each game consists of a layout and a list of storage points
-//  the list of storage points is a list of (row, col) pairs
-//  each game layout L is a 2d array where L[r][c] is on row r and col c
-//    each entry L[i][j] = lij, is a JS object specified among the
-//    following:
-//      (1) nothing: {type = EMPTY_CELL}
-//      (2) wall: {type = WALL_CELL};
-//      (3) box: {type: BOX_CELL}
-//      (4) player: {type: PLAYER_CELL, player_num: player index}
-//                  (as for player index, each index is an assigned
-//                  player number just in this game, it maps to
-//                  a user in the database but it is different)
-function NullCell(){
-  return {
-    type: EMPTY_CELL
-  };
-}
-function WallCell(){
-  return {
-    type: WALL_CELL
-  };
-}
-// this is not a typo, it is just that four letters align
-function BoxxCell(){
-  return {
-    type: BOX_CELL
-  };
-}
-function UsrCell(n){
-  return {
-    type: PLAYER_CELL,
-    player_num: n
-  }
-}
+//  game contains num_rows, num_cols, num_players
+//  other than that, game consists of several lists:
+//    goals, boxes, players, walls, 
+//    goals, boxes, walls consist of objects in the form {row: ..., col: ...}
+//    players consists of objects in the form {row: ..., col: ..., player_num: ...}
+
 const sample_game = {
-  goals: [[0, 2], [2, 0], [2, 4], [4, 2]],
-  layout:[
-    [NullCell(), WallCell(), NullCell(), WallCell(), NullCell()],
-    [WallCell(), WallCell(), BoxxCell(), WallCell(), WallCell()],
-    [NullCell(), BoxxCell(), UsrCell(0), BoxxCell(), NullCell()],
-    [WallCell(), WallCell(), BoxxCell(), WallCell(), WallCell()],
-    [NullCell(), WallCell(), NullCell(), WallCell(), NullCell()]
+  num_rows: 5,
+  num_cols: 5,
+  // goals: [{[0, 2], [2, 0], [2, 4], [4, 2]}],
+  goals: [
+    {row: 0, col: 2},
+    {row: 2, col: 0},
+    {row: 2, col: 4},
+    {row: 4, col: 2}
   ],
+  boxes: [
+    {row: 1, col: 2},
+    {row: 2, col: 1},
+    {row: 2, col: 3},
+    {row: 3, col: 2},
+  ],
+  walls: [
+    {row: 0, col: 1},
+    {row: 0, col: 3},
+    {row: 1, col: 1},
+    {row: 1, col: 3},
+    {row: 1, col: 0},
+    {row: 1, col: 4},
+    {row: 3, col: 0},
+    {row: 3, col: 1},
+    {row: 3, col: 3},
+    {row: 3, col: 4},
+    {row: 4, col: 1},
+    {row: 4, col: 3}
+  ],
+  players: [
+    {row: 2, col: 2, player_num: 0}
+  ]
 }
 
+// action consists of: 
+//  {
+//    player_num: the player that took the action
+//    key: the key got pressed, has to be among W, A, S, D
+//  }
+// gonna do it asynchoronously for it to fit later with server, will use Proimse
+const EMPTY = 'empty';
+const WALL = 'wall';
+const PLAYER = 'player';
+const BOX = 'box';
+const DIRECTIONS = {
+  'w': [-1, 0],
+  's': [1, 0],
+  'a': [0, -1],
+  'd': [0, 1],
+  'W': [-1, 0],
+  'S': [1, 0],
+  'A': [0, -1],
+  'D': [0, 1]
+};
+function next_game(game, action){
+  // copy without ref
+  return new Promise(function(resolve, reject){
+    const new_game = JSON.parse(JSON.stringify(game));
+  
+    const player_num = action.player_num;
+    const key = action.key;
+    // console.log(new_game)
+    // console.log(action);
+    // console.log(player_num);
+    // console.log(key);
+    const plyr = new_game.players.find((player_i) => player_i.player_num === player_num);
+    if(!plyr){
+      reject();
+    }else{
+      const move_dir = DIRECTIONS[key];
+      const dr = move_dir[0];
+      const dc = move_dir[1];
+      const r = plyr.row;
+      const c = plyr.col;
+      const rn = r + dr;
+      const cn = c + dc;
+      const type_n = coord_type(game, rn, cn);
+      let can_move = true;
+      // console.log(type_n);
+      if([PLAYER, WALL].includes(type_n)){
+        can_move = false;
+      }else if([BOX].includes(type_n)){
+        const rnn = rn + dr;
+        const cnn = cn + dc;
+        const type_nn = coord_type(game, rnn, cnn);
+        if([BOX, PLAYER, WALL].includes(type_nn)){
+          can_move = false;
+        }
+      }
+      // else{
+      //   // empty
+      //   can_move = true;
+      // }
+      if(!can_move){
+        // return new_game;
+        reject();
+      }else{
+        // console.log('finally moving');
+        // console.log(new_game)
+        if(type_n === BOX){
+          const boxn = new_game.boxes.find((bx) => bx.row === rn && bx.col === cn);
+          boxn.row = rn + dr;
+          boxn.col = cn + dc;
+        }
+        plyr.row = rn;
+        plyr.col = cn;
+        // console.log(new_game)
+        // resolve(game_end(new_game), JSON.stringify(new_game));
+        resolve({game_end: game_end(new_game), new_game: new_game});
+      }
+    }
+    
+  });
+
+}
+
+function game_end(game){
+  return game.boxes.reduce(function(prev, cur){
+    return prev && on_goal(game, cur.row, cur.col);
+  }, true);
+}
+
+function on_goal(game, x, y){
+  return game.goals.reduce(function(prev, cur){
+    if(cur.row === x && cur.col === y){
+      return true;
+    }else{
+      return prev;
+    }
+  }, false);
+}
+
+// return one of:
+//    EMPTY, WALL, PLAYER, BOX, it ignores if it is goal or not because it 
+//    is only for whether the direction is movable
+function coord_type(game, r, c){
+  if(r >= game.num_rows || c >= game.numcols || r < 0 || c < 0){
+    return WALL;
+  }else if(
+    game.walls.reduce((prev, cur) => {
+      if(r === cur.row && c===cur.col){
+        return true;
+      }else{
+        return prev;
+      }
+    }, false)
+  ){
+    return WALL;
+  }else if(
+    game.boxes.reduce((prev, cur) => {
+      if(r === cur.row && c===cur.col){
+        return true;
+      }else{
+        return prev;
+      }
+    }, false)
+  ){
+    return BOX;
+  }else if(
+    game.players.reduce((prev, cur) => {
+      if(r === cur.row && c===cur.col){
+        return true;
+      }else{
+        return prev;
+      }
+    }, false)
+  ){
+    return PLAYER;
+  }else{
+    return EMPTY;
+  }
+
+}
 
 
 module.exports={
-  sample_game: sample_game
+  sample_game: sample_game,
+  on_goal: on_goal,
+  next_game: next_game
 }
 
