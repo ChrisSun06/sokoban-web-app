@@ -8,6 +8,8 @@ import {
   useParams
 } from "react-router-dom";
 
+import GamePlayPage from './GamePlay/GamePlayPage'
+
 function MainPage() {
   const sub_path = useParams();
   let title = 'Just to test that the router works'
@@ -48,6 +50,9 @@ class App extends React.Component{
         <Switch>
           <Route path="/lol/:title">
             <MainPage/>
+          </Route>
+          <Route path="/gameplay">
+            <GamePlayPage/>
           </Route>
           {/* add your own pages' path above this line */}
           <Route exact_path=''>
