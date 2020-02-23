@@ -1,7 +1,7 @@
 import React from 'react';
-import Data from '../hardCodedData'
+// import Data from '../hardCodedData'
 import GameInterface from './GameInterface'
-import {next_game} from '../hardCodedData'
+import {next_game, fetch_initial_game_config} from '../hardCodedData'
 
 class GamePlayPage extends React.Component{
   constructor(props){
@@ -26,11 +26,13 @@ class GamePlayPage extends React.Component{
             // console.log(game_end, new_game);
             const new_game = result.new_game;
             const game_end = result.game_end;
-            
-            this.setState({game: new_game, allow_action: true});
-            if(game_end){
-              alert('end of game!');
-              this.setState({allow_action: false});
+            if(!game_end){
+              this.setState({game: new_game, allow_action: true});
+            }else{
+              this.setState({allow_action: false, game: new_game}, 
+                (function(){
+                  alert('End of Game!')
+                }).bind(this));
             }
           }).bind(this))
           .catch((function(){
@@ -42,10 +44,15 @@ class GamePlayPage extends React.Component{
   }
 
   componentDidMount(){
-    this.setState({
-      game: Data.sample_game,
-      players: []
-    });
+    fetch_initial_game_config()
+      .then((function(result){
+        // alert(JSON.stringify(result))
+        this.setState({
+          game: result.game,
+          players: result.player_lst
+        });
+      }).bind(this));
+    
   }
 
   render(){

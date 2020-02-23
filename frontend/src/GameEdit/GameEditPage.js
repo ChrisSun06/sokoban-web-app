@@ -1,8 +1,8 @@
 import React from 'react';
-import Data from '../hardCodedData'
+// import Data from '../hardCodedData'
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
-import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim} from '../hardCodedData'
+import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
 import DimPanel from './DimPanel';
 
 class GameEditPage extends React.Component{
@@ -19,10 +19,18 @@ class GameEditPage extends React.Component{
   }
 
   componentDidMount(){
-    this.setState({
-      game: Data.sample_game,
-      players: []
-    });
+    // this.setState({
+    //   game: Data.sample_game,
+    //   players: []
+    // });
+    fetch_initial_edit_game()
+      .then((function(result){
+        this.setState({
+          players: result.player_lst,
+          game: result.game
+        })
+      }).bind(this))
+    
   }
 
   cell_clicked(coord){
@@ -69,7 +77,8 @@ class GameEditPage extends React.Component{
         <EditButtons onButtonClick={this.switch_type.bind(this)}
                      currentOn={this.state.current_cursor_type}
         />
-        <DimPanel onDimChange={this.changeDim.bind(this)}></DimPanel>
+       {!!this.state.game && <DimPanel onDimChange={this.changeDim.bind(this)}
+                  game={this.state.game}></DimPanel>}
         <GameEditInterface game={this.state.game} 
                            usr_lst={this.state.players}
                            cell_clicked={this.cell_clicked.bind(this)}

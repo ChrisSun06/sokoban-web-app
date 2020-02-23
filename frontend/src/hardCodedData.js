@@ -268,6 +268,31 @@ function game_change_dim(game, new_dim){
   });
 }
 
+function fetch_initial_edit_game(...args){
+  // promise to simulate asynchrononess, return empty 6 by 6 board
+  return new Promise(function(resolve, reject){
+    const empty_game = {
+      num_rows: 6,
+      num_cols: 6,
+      goals: [],
+      walls: [],
+      boxes: [],
+      players: []
+    };
+    resolve({game: empty_game, player_lst: []})
+  });
+}
+
+function fetch_initial_game_config(...args){
+  // promise for asynchrousness
+  return new Promise(function(resolve, reject){
+    resolve({
+      game: sample_game,
+      player_lst: []
+    });
+  });
+}
+
 
 module.exports = {
   sample_game: sample_game,
@@ -280,6 +305,8 @@ module.exports = {
   GOAL: GOAL,
   ERASE: ERASE,
   update_game_element: update_game_element,
-  game_change_dim: game_change_dim
+  game_change_dim: game_change_dim,
+  fetch_initial_edit_game,
+  fetch_initial_game_config
 }
 
