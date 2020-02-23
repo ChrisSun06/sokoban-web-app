@@ -12,8 +12,11 @@ const GREY = "#404040"
 // note that coord system of canvas is x from left to right, y from up to down, thus it is transposed
 //  of our representation
 
-const game_width = 300;
-const game_height = 200;
+// const game_width = 300;
+// const game_height = 200;
+const cell_size = 50;
+const w_rec = cell_size;
+const h_rec = cell_size;
 const r_small = 5;
 const sign_font = 'Arial';
 const sign_base_size = 100;
@@ -57,17 +60,17 @@ class GameEditInterface extends React.Component{
   render() {
     return(
       <div>
-        <canvas ref="canvas" height={game_height} 
-                width={game_width} tabIndex='0'
-                onClick={this.on_interface_click.bind(this)}/>
+        {!!this.props.game && <canvas ref="canvas" height={this.props.game.num_rows * h_rec} 
+                width={this.props.game.num_cols * w_rec} tabIndex='0'
+                onClick={this.on_interface_click.bind(this)}/>}
       </div>
     )
   }
 }
 
 function draw_game_board(ctx, game, user_lst){
-  const w_rec = game_width / game.num_cols;
-  const h_rec = game_height / game.num_rows;
+  // const w_rec = game_width / game.num_cols;
+  // const h_rec = game_height / game.num_rows;
   // ctx.fillStyle = WHITE;
   // ctx.fillRect(0, 0, width, height);
   for(let ri = 0; ri < game.num_rows; ri++){
@@ -88,8 +91,19 @@ function draw_game_board(ctx, game, user_lst){
 
 }
 
+function coordInRange(game, r, c){
+  // let in_range = true;
+  const n_rows = game.num_rows;
+  const n_cols = game.num_cols;
+  // if(r < 0 || r>=n_rows)
+  return (r < n_rows && r >= 0 && c >= 0 && c < n_cols);
+}
+
 function draw_wall(game, user_lst, w_rec, h_rec, ctx, r, c){
   // const on_goal = on_goal(game, r, c);
+  if(!coordInRange(game, r, c)){
+    return;
+  }
   const x = c * w_rec;
   const y = r * h_rec;
   const xn = x + w_rec;
@@ -103,6 +117,9 @@ function draw_wall(game, user_lst, w_rec, h_rec, ctx, r, c){
 }
 
 function draw_null(game, user_lst, w_rec, h_rec, ctx, r, c){
+  if(!coordInRange(game, r, c)){
+    return;
+  }
   const is_on_goal = on_goal(game, r, c);
   const x = c * w_rec;
   const y = r * h_rec;
@@ -115,6 +132,8 @@ function draw_null(game, user_lst, w_rec, h_rec, ctx, r, c){
   ctx.strokeStyle = GREY;
   ctx.strokeRect(x, y, w_rec, h_rec);
 
+  const game_width = game.num_cols * w_rec;
+  const game_height = game.num_rows * h_rec;
   if(is_on_goal){
     ctx.fillStyle = GREEN;
     ctx.beginPath();
@@ -134,6 +153,9 @@ function draw_null(game, user_lst, w_rec, h_rec, ctx, r, c){
 
 }
 function draw_box(game, user_lst, w_rec, h_rec, ctx, r, c){
+  if(!coordInRange(game, r, c)){
+    return;
+  }
   const is_on_goal = on_goal(game, r, c);
   const x = c * w_rec;
   const y = r * h_rec;
@@ -151,6 +173,9 @@ function draw_box(game, user_lst, w_rec, h_rec, ctx, r, c){
   }
 }
 function draw_player(game, user_lst, w_rec, h_rec, ctx, r, c, player_num){
+  if(!coordInRange(game, r, c)){
+    return;
+  }
   // should render based on player number but ignore it for now
   const is_on_goal = on_goal(game, r, c);
   const x = c * w_rec;
@@ -182,8 +207,8 @@ function draw_player(game, user_lst, w_rec, h_rec, ctx, r, c, player_num){
 }
 
 function find_click_coord(game, x, y){
-  const w_rec = game_width / game.num_cols;
-  const h_rec = game_height / game.num_rows;
+  // const w_rec = game_width / game.num_cols;
+  // const h_rec = game_height / game.num_rows;
   const col = floor(x / w_rec);
   const row = floor(y / h_rec);
   return {row: row,

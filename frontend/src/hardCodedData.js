@@ -257,6 +257,17 @@ function update_game_element(game, row, col, type) {
 
 }
 
+function game_change_dim(game, new_dim){
+  // promisify to simulate asynchrousness
+  // alert(JSON.stringify(new_dim))
+  const new_game = JSON.parse(JSON.stringify(game));
+  new_game.num_rows = new_dim.num_rows;
+  new_game.num_cols = new_dim.num_cols;
+  return new Promise(function(resolve, reject){
+    resolve({game: new_game});
+  });
+}
+
 
 module.exports = {
   sample_game: sample_game,
@@ -268,6 +279,7 @@ module.exports = {
   BOX: BOX,
   GOAL: GOAL,
   ERASE: ERASE,
-  update_game_element: update_game_element
+  update_game_element: update_game_element,
+  game_change_dim: game_change_dim
 }
 

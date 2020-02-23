@@ -2,7 +2,8 @@ import React from 'react';
 import Data from '../hardCodedData'
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
-import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from '../hardCodedData'
+import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim} from '../hardCodedData'
+import DimPanel from './DimPanel';
 
 class GameEditPage extends React.Component{
   constructor(props){
@@ -27,7 +28,7 @@ class GameEditPage extends React.Component{
   cell_clicked(coord){
     // alert(JSON.stringify(coord));
     const {row, col} = coord;
-    if(this.state.allow_edit && this.state.current_cursor_type != EMPTY){
+    if(this.state.allow_edit && this.state.current_cursor_type !== EMPTY){
       this.setState({allow_edit: false});
       update_game_element(this.state.game, row, col, this.state.current_cursor_type)
         .then(
@@ -51,6 +52,15 @@ class GameEditPage extends React.Component{
     }
     
   }
+  
+  changeDim(dims){
+    game_change_dim(this.state.game, dims)
+      .then((function(result){
+          this.setState({game: result.game})
+        }).bind(this)
+      );
+
+  }
 
   render(){
     return(
@@ -59,6 +69,7 @@ class GameEditPage extends React.Component{
         <EditButtons onButtonClick={this.switch_type.bind(this)}
                      currentOn={this.state.current_cursor_type}
         />
+        <DimPanel onDimChange={this.changeDim.bind(this)}></DimPanel>
         <GameEditInterface game={this.state.game} 
                            usr_lst={this.state.players}
                            cell_clicked={this.cell_clicked.bind(this)}

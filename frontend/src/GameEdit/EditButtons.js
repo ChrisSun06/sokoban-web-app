@@ -22,11 +22,16 @@ class EditButtons extends React.Component{
   render(){
     return (
       <div>
-        <ul display='inline'>
+        {/* <ul display='inline'>
           {[WALL, PLAYER, BOX, GOAL, ERASE].map((function(obj_type){
               return (<li display='inline'>{this.create_button(obj_type)}</li>);
           }).bind(this))}
-        </ul>
+        </ul> */}
+        {[WALL, PLAYER, BOX, GOAL, ERASE].map((function(obj_type){
+              return (<div>{this.create_button(obj_type)} 
+                          <br/>
+                      </div>);
+          }).bind(this))}
       </div>
     );
   }
