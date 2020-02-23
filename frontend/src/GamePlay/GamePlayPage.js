@@ -43,7 +43,8 @@ class GamePlayPage extends React.Component{
 
   componentDidMount(){
     this.setState({
-      game: Data.sample_game
+      game: Data.sample_game,
+      players: []
     });
   }
 

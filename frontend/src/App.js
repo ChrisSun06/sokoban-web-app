@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import GamePlayPage from './GamePlay/GamePlayPage'
+import GameEditPage from './GameEdit/GameEditPage'
 
 function MainPage() {
   const sub_path = useParams();
@@ -55,6 +56,9 @@ class App extends React.Component{
           
           <Route path="/gameplay">
             <GamePlayPage/>
+          </Route>
+          <Route path="/gameedit">
+            <GameEditPage/>
           </Route>
           {/* add your own pages' path above this line */}
           <Route exact_path=''>
