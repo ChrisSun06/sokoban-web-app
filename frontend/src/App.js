@@ -11,6 +11,10 @@ import {
 import GamePlayPage from './GamePlay/GamePlayPage'
 import GameEditPage from './GameEdit/GameEditPage'
 
+import Login from './Login/login'
+import SignUp from './SignUp/signup'
+import Profile from './Profile/profile'
+
 function MainPage() {
   const sub_path = useParams();
   let title = 'Just to test that the router works'
@@ -53,17 +57,26 @@ class App extends React.Component{
             <MainPage/>
           </Route>
           {/* the above one is just a dummy page to test the router works */}
-          
+
           <Route path="/gameplay">
             <GamePlayPage/>
           </Route>
           <Route path="/gameedit">
             <GameEditPage/>
           </Route>
+          <Route path="/signup">
+            <SignUp/>
+          </Route>
+          <Route path="/profile">
+            <Profile/>
+          </Route>
+          <Route path="">
+            <Login/>
+          </Route>
           {/* add your own pages' path above this line */}
-          <Route exact_path=''>
-            <MainPage/>
-          </Route> 
+          // <Route exact_path=''>
+          //   <MainPage/>
+          // </Route>
         </Switch>
       </Router>);
   }
