@@ -2,7 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // import LoginView from './log_view.js'
 import Container from '@material-ui/core/Container'
+import Box from '@material-ui/core/Box'
+import { borders } from '@material-ui/system'
 import {authenticate_user} from '../hardCodedData'
+import "./login.css"
 
 export class Login extends React.Component{
 
@@ -48,15 +51,26 @@ export class Login extends React.Component{
 
     render() {
         return (
-            <div>
-                <Container maxWidth="xs">
-                    <h1 style = {{marginLeft: 167, marginTop: 180}}>Log in</h1>
-                    <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="text"placeholder="Username" value={this.state.inputs.usr_nm} onChange={this.onInput('usr_nm')}/></p>
-                    <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="password" placeholder="Password" value={this.state.inputs.passwrd} onChange={this.onInput('passwrd')}/></p>
-                    <button style = {{marginLeft: 176, marginTop: 45}} id = "login_button" onClick={this.onLogin.bind(this)}><h2>Log in</h2></button><br/>
-                    <p style = {{marginLeft: 90, marginTop: 100}}>Doesn't have an account? <button id = "login_button" onClick={this.jump.bind(this)}>Sign up</button></p>
-                </Container>
-            </div>
+            <body id = 'l_back'>
+                <div id="l_placeholder">
+                    <span> </span><br/>
+                </div>
+                <div id="l_rec">
+                    <Container maxWidth="xs">
+                        <span> </span><br/>
+                        <h1 style = {{marginLeft: 167}}>Log in</h1>
+                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="text"placeholder="Username" value={this.state.inputs.usr_nm} onChange={this.onInput('usr_nm')}/></p>
+                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="password" placeholder="Password" value={this.state.inputs.passwrd} onChange={this.onInput('passwrd')}/></p>
+                        <button style = {{marginLeft: 176, marginTop: 45}} id = "login_button" onClick={this.onLogin.bind(this)}><h2>Log in</h2></button><br/>
+                        <span> </span><br/>
+                    </Container>
+                </div>
+                <div>
+                    <Container maxWidth="xs">
+                        <p style = {{marginLeft: 90,marginTop: 10, marginBottom: 30}}>Doesn't have an account? <button style={{marginLeft: 10}} id = "login_button" onClick={this.jump.bind(this)}>Sign up</button></p>
+                    </Container>
+                </div>
+            </body>
         )
     }
 }
