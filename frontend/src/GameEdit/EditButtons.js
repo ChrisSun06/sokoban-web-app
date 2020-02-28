@@ -1,5 +1,8 @@
 import React from 'react';
 import {EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from '../hardCodedData'
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import {EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from './constants';
 
 class EditButtons extends React.Component{
@@ -7,32 +10,27 @@ class EditButtons extends React.Component{
     super(props);
   }
   create_button(obj_type){
-    let color = 'white';
+    let color = 'primary';
     if(obj_type === this.props.currentOn){
-      color='blue';
+      color='secondary';
     }
     return (
-      <button onClick={(function(e){this.props.onButtonClick(obj_type)}).bind(this)}
-              style={{backgroundColor: color}}
+      <Button color={color} variant="outlined" size="small" onClick={(function(e){this.props.onButtonClick(obj_type)}).bind(this)}
+              style={{display: 'inline-block'}}
         >
         {obj_type.toUpperCase()}
-      </button>);
+      </Button>);
   }
 
   render(){
     return (
-      <div>
-        {/* <ul display='inline'>
-          {[WALL, PLAYER, BOX, GOAL, ERASE].map((function(obj_type){
-              return (<li display='inline'>{this.create_button(obj_type)}</li>);
-          }).bind(this))}
-        </ul> */}
+      <ButtonGroup>
         {[WALL, PLAYER, BOX, GOAL, ERASE].map((function(obj_type){
               return (<div>{this.create_button(obj_type)} 
                           <br/>
                       </div>);
           }).bind(this))}
-      </div>
+      </ButtonGroup>
     );
   }
 }

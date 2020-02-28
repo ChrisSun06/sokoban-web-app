@@ -88,7 +88,10 @@ class GamePlayPage extends React.Component{
                     all_msgs: result.chat.msgs
                   }
           })
-        }).bind(this));
+        }).bind(this))
+        .catch(function(){
+
+        });
         // console.log(this.state.chat);
         // console.log(room_number)
 
@@ -123,16 +126,17 @@ class GamePlayPage extends React.Component{
   }
 
   render(){
+    // alert(JSON.stringify(!!this.state.url_info))
     return(
       <div>
         <h1>The Game</h1><br/>
         <GameInterface game={this.state.game} 
                        usr_lst={this.state.players}
                        on_action={this.onAction.bind(this)}/>
-        {!!this.state.game && <InGameChatBox messages={this.state.chat.all_msgs} 
-                                             on_send_msg={this.onSendMessage.bind(this)} 
-                                             input_msg={this.state.chat.input_msg} 
-                                             on_input_msg_change={this.update_input_msg.bind(this)}/>}
+        <InGameChatBox messages={this.state.chat.all_msgs} 
+                       on_send_msg={this.onSendMessage.bind(this)} 
+                       input_msg={this.state.chat.input_msg} 
+                       on_input_msg_change={this.update_input_msg.bind(this)}/>
       </div>)
   }
 
