@@ -51,17 +51,17 @@ export class SignUp extends React.Component{
                 <div id="rec">
                     <Container maxWidth="xs">
                         <span> </span><br/>
-                        <h1 style = {{marginLeft: 155}}>Sign Up</h1>
-                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "signup" type="text"placeholder="Username" value={this.state.inputs.username} onChange={this.onInput('username')}/></p>
-                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "signup" type="password" placeholder="Password" value={this.state.inputs.password} onChange={this.onInput('password')}/></p>
-                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "signup" type="password" placeholder="Confirm Password" value={this.state.inputs.confirm_password} onChange={this.onInput('confirm_password')}/></p>
-                        <button style = {{marginLeft: 168, marginTop: 45}} id = "signup_button" onClick={this.checkPassword.bind(this)}><h2>Sign up</h2></button><br/>
+                        <h1 style = {{marginLeft: 145}}>Sign Up</h1>
+                        <p style = {{marginLeft: 120, marginTop: 30}}><input className = "signup" type="text"placeholder="Username" value={this.state.inputs.username} onChange={this.onInput('username')}/></p>
+                        <p style = {{marginLeft: 120, marginTop: 30}}><input className = "signup" type="password" placeholder="Password" value={this.state.inputs.password} onChange={this.onInput('password')}/></p>
+                        <p style = {{marginLeft: 120, marginTop: 30}}><input className = "signup" type="password" placeholder="Confirm Password" value={this.state.inputs.confirm_password} onChange={this.onInput('confirm_password')}/></p>
+                        <button style = {{marginLeft: 158, marginTop: 45}} id = "signup_button" onClick={this.checkPassword.bind(this)}><h2>Sign up</h2></button><br/>
                         <span> </span><br/>
                     </Container>
                 </div>
                 <div>
                     <Container maxWidth="xs">
-                        <p style = {{marginLeft: 90, marginTop: 100}}>Already have an account? <button style = {{marginLeft: 10}} id = "login_button" onClick={this.jump.bind(this)}>Log in</button></p>
+                        <p style = {{marginLeft: 70, marginTop: 100}}><strong>Already have an account?</strong> <button style = {{marginLeft: 10}} id = "login_button" onClick={this.jump.bind(this)}>Log in</button></p>
                     </Container>
                 </div>
             </body>

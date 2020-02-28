@@ -58,16 +58,16 @@ export class Login extends React.Component{
                 <div id="l_rec">
                     <Container maxWidth="xs">
                         <span> </span><br/>
-                        <h1 style = {{marginLeft: 167}}>Log in</h1>
-                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="text"placeholder="Username" value={this.state.inputs.usr_nm} onChange={this.onInput('usr_nm')}/></p>
-                        <p style = {{marginLeft: 130, marginTop: 30}}><input className = "login" type="password" placeholder="Password" value={this.state.inputs.passwrd} onChange={this.onInput('passwrd')}/></p>
-                        <button style = {{marginLeft: 176, marginTop: 45}} id = "login_button" onClick={this.onLogin.bind(this)}><h2>Log in</h2></button><br/>
+                        <h1 style = {{marginLeft: 157}}>Log in</h1>
+                        <p style = {{marginLeft: 120, marginTop: 30}}><input className = "login" type="text"placeholder="Username" value={this.state.inputs.usr_nm} onChange={this.onInput('usr_nm')}/></p>
+                        <p style = {{marginLeft: 120, marginTop: 30}}><input className = "login" type="password" placeholder="Password" value={this.state.inputs.passwrd} onChange={this.onInput('passwrd')}/></p>
+                        <button style = {{marginLeft: 166, marginTop: 45}} id = "login_button" onClick={this.onLogin.bind(this)}><h2>Log in</h2></button><br/>
                         <span> </span><br/>
                     </Container>
                 </div>
                 <div>
                     <Container maxWidth="xs">
-                        <p style = {{marginLeft: 90,marginTop: 10, marginBottom: 30}}>Doesn't have an account? <button style={{marginLeft: 10}} id = "login_button" onClick={this.jump.bind(this)}>Sign up</button></p>
+                        <p style = {{marginLeft: 70,marginTop: 10, marginBottom: 30}}><strong>Doesn't have an account?</strong> <button style={{marginLeft: 10}} id = "login_button" onClick={this.jump.bind(this)}>Sign up</button></p>
                     </Container>
                 </div>
             </body>
