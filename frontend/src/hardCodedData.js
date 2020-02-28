@@ -41,7 +41,6 @@ function find_user(usrnm){
 //    goals, boxes, players, walls,
 //    goals, boxes, walls consist of objects in the form {row: ..., col: ...}
 //    players consists of objects in the form {row: ..., col: ..., player_num: ...}
-
 const sample_game = {
   num_rows: 5,
   num_cols: 5,
@@ -324,6 +323,45 @@ function fetch_initial_game_config(...args){
 }
 
 
+const sample_chats = [
+  {
+    room_num: 0,
+    msgs: [
+      {
+        time: new Date(),
+        sender_number: 0,
+        content: 'That looks easy!!!'
+      }
+    ]
+  },
+
+
+]
+
+function push_new_message(room_id, usr_id, content){
+  return new Promise(function(resolve, reject){
+    const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
+    rm_chat.msgs.push(
+      {
+        time: new Date(),
+        sender_number: usr_id,
+        content: content
+      }
+    );
+    resolve();
+  });
+}
+
+function get_room_messages(room_id){
+  return new Promise(function(resolve, reject){
+    const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
+    resolve({chat: rm_chat});
+  });
+}
+
+
+
+
 module.exports = {
   // exports for game
   sample_game: sample_game,
@@ -340,6 +378,9 @@ module.exports = {
   fetch_initial_edit_game,
   fetch_initial_game_config,
 
+  push_new_message: push_new_message,
+  get_room_messages: get_room_messages,
+  
   // exports for user
   authenticate_user: authenticate_user
 
