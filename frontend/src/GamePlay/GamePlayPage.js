@@ -1,17 +1,35 @@
 import React from 'react';
 // import Data from '../hardCodedData'
 import GameInterface from './GameInterface'
-import {next_game, fetch_initial_game_config} from '../hardCodedData'
+import {next_game, fetch_initial_game_config, 
+        get_room_messages, push_new_message} from '../hardCodedData'
+import InGameChatBox from './InGameChatBox'
+
+const watch_interval = 100;
 
 class GamePlayPage extends React.Component{
   constructor(props){
     super(props);
+
     this.state = {
+      url_info: this.parseUrl(),
       players: undefined,
       game: undefined,
       // part of hardcode, should instead fetch the player number
       player_num: 0,
-      allow_action: true
+      allow_action: true,
+
+      chat: {
+        all_msgs: [],
+        input_msg: ''
+      }
+    }
+  }
+
+  parseUrl(){
+    const query_str = window.location.search;
+    return {
+      room_number: parseInt(query_str.replace('?', ''))
     }
   }
 
@@ -52,7 +70,56 @@ class GamePlayPage extends React.Component{
           players: result.player_lst
         });
       }).bind(this));
+    // const {room_number} = useParams();
+    const room_number = this.state.url_info.room_number;
+    this.start_watching_msgs(room_number);
+  }
+
+  start_watching_msgs(rm_num){
+    setInterval(this.update_msgs(rm_num), watch_interval)
+  }
+  update_msgs(room_number){
+    return (function(){
+      get_room_messages(room_number)
+        .then((function(result){
+          this.setState({
+            ...this.state,
+            chat: {...this.state.chat, 
+                    all_msgs: result.chat.msgs
+                  }
+          })
+        }).bind(this));
+        // console.log(this.state.chat);
+        // console.log(room_number)
+
+    }).bind(this);
     
+  }
+
+  update_input_msg(content){
+    this.setState(
+      {
+        ...this.state,
+        chat: {...this.state.chat, 
+                input_msg: content
+              }
+      }
+    )
+  }
+
+  onSendMessage(){
+    // const {room_number} = useParams();
+    const room_number = this.state.url_info.room_number;
+    push_new_message(room_number, this.state.player_num, this.state.chat.input_msg)
+      .then((function(result){
+        this.setState({
+          ...this.state,
+          chat: {
+            ...this.state.chat,
+            input_msg: ''
+          }
+        })
+      }).bind(this))
   }
 
   render(){
@@ -62,6 +129,10 @@ class GamePlayPage extends React.Component{
         <GameInterface game={this.state.game} 
                        usr_lst={this.state.players}
                        on_action={this.onAction.bind(this)}/>
+        {!!this.state.game && <InGameChatBox messages={this.state.chat.all_msgs} 
+                                             on_send_msg={this.onSendMessage.bind(this)} 
+                                             input_msg={this.state.chat.input_msg} 
+                                             on_input_msg_change={this.update_input_msg.bind(this)}/>}
       </div>)
   }
 

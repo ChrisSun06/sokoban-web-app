@@ -1,17 +1,46 @@
 // This file is for hard coded data for phase one
+const sample_users = [
+    {
+        username: 'user1',
+        password: '123456',
+    },
+    {
+        username: 'user2',
+        password: '1234567'
+    }
+]
 
 
+function authenticate_user(usr){
+    // use proimse to simulate the asynchronousness of actual server
+    return new Promise(function(resolve, reject){
+        const authenticated = sample_users.filter(function(u){
+            return u.username === usr.username && u.password === usr.password;
+        }).length > 0;
+        resolve({
+            authenticated: authenticated,
+            user: usr
+        });
+    })
+}
 
-
-
+function find_user(usrnm){
+    return new Promise(function(resolve, reject){
+        const found = sample_users.filter(function(u){
+            return u.username === usrnm.username
+        }).length > 0;
+        resolve({
+            name: usrnm.username
+        });
+    })
+}
 
 // ------------------ below is data for games -------------------
 //  game contains num_rows, num_cols, num_players
 //  other than that, game consists of several lists:
-//    goals, boxes, players, walls, 
+//    goals, boxes, players, walls,
 //    goals, boxes, walls consist of objects in the form {row: ..., col: ...}
 //    players consists of objects in the form {row: ..., col: ..., player_num: ...}
-
 const sample_game = {
   num_rows: 5,
   num_cols: 5,
@@ -47,7 +76,7 @@ const sample_game = {
   ]
 }
 
-// action consists of: 
+// action consists of:
 //  {
 //    player_num: the player that took the action
 //    key: the key got pressed, has to be among W, A, S, D
@@ -153,7 +182,7 @@ function on_goal(game, x, y) {
 }
 
 // return one of:
-//    EMPTY, WALL, PLAYER, BOX, it ignores if it is goal or not because it 
+//    EMPTY, WALL, PLAYER, BOX, it ignores if it is goal or not because it
 //    is only for whether the direction is movable
 function coord_type(game, r, c) {
   if (r >= game.num_rows || c >= game.numcols || r < 0 || c < 0) {
@@ -196,7 +225,7 @@ function coord_type(game, r, c) {
 
 // type among WALL, PLAYER, ERASE, BOX, GOAL
 function update_game_element(game, row, col, type) {
-  // original type among EMPTY, WALL, PLAYER, BOX 
+  // original type among EMPTY, WALL, PLAYER, BOX
   const original_type = coord_type(game, row, col);
   const original_is_on_goal = on_goal(game, row, col);
 
@@ -294,7 +323,47 @@ function fetch_initial_game_config(...args){
 }
 
 
+const sample_chats = [
+  {
+    room_num: 0,
+    msgs: [
+      {
+        time: new Date(),
+        sender_number: 0,
+        content: 'That looks easy!!!'
+      }
+    ]
+  },
+
+
+]
+
+function push_new_message(room_id, usr_id, content){
+  return new Promise(function(resolve, reject){
+    const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
+    rm_chat.msgs.push(
+      {
+        time: new Date(),
+        sender_number: usr_id,
+        content: content
+      }
+    );
+    resolve();
+  });
+}
+
+function get_room_messages(room_id){
+  return new Promise(function(resolve, reject){
+    const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
+    resolve({chat: rm_chat});
+  });
+}
+
+
+
+
 module.exports = {
+  // exports for game
   sample_game: sample_game,
   on_goal: on_goal,
   next_game: next_game,
@@ -307,6 +376,12 @@ module.exports = {
   update_game_element: update_game_element,
   game_change_dim: game_change_dim,
   fetch_initial_edit_game,
-  fetch_initial_game_config
-}
+  fetch_initial_game_config,
 
+  push_new_message: push_new_message,
+  get_room_messages: get_room_messages,
+  
+  // exports for user
+  authenticate_user: authenticate_user
+
+}
