@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+//import { Route, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -10,6 +11,8 @@ import {
 
 import GamePlayPage from './GamePlay/GamePlayPage'
 import GameEditPage from './GameEdit/GameEditPage'
+import TokenShop from './TokenShop/Shop/Shop'
+import Admin from './Admin/Admin'
 
 function MainPage() {
   const sub_path = useParams();
@@ -49,7 +52,7 @@ class App extends React.Component{
       <Router>
         <Switch>
 
-          <Route path="/lol/:title">
+          <Route path="./TokenShop">
             <MainPage/>
           </Route>
           {/* the above one is just a dummy page to test the router works */}
@@ -60,12 +63,17 @@ class App extends React.Component{
           <Route path="/gameedit">
             <GameEditPage/>
           </Route>
+          <Route exact path='/shop' render={() =>
+            (<TokenShop state={this.state}/>)}/>
+          <Route exact path='/admin' render={() =>
+            (<Admin state={this.state}/>)}/>
           {/* add your own pages' path above this line */}
           <Route exact_path=''>
             <MainPage/>
           </Route> 
         </Switch>
-      </Router>);
+      </Router>
+      );
   }
 }
 

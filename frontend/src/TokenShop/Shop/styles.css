@@ -1,0 +1,12 @@
+.contents {
+    padding-top: 150px;
+    height: 100%;
+    text-align: center;
+}
+
+.tabs {
+    position: 'relative';
+    align-items: "center";
+    align-self: "center";
+    text-align: center;
+}
