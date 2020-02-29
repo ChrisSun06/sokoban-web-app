@@ -126,17 +126,24 @@ class GamePlayPage extends React.Component{
   }
 
   render(){
-    // alert(JSON.stringify(!!this.state.url_info))
+    const centered_style = {display: 'flex',  
+                            justifyContent:'center', 
+                            alignItems:'center'};
+
     return(
       <div>
-        <h1>The Game</h1><br/>
-        <GameInterface game={this.state.game} 
-                       usr_lst={this.state.players}
-                       on_action={this.onAction.bind(this)}/>
-        <InGameChatBox messages={this.state.chat.all_msgs} 
-                       on_send_msg={this.onSendMessage.bind(this)} 
-                       input_msg={this.state.chat.input_msg} 
-                       on_input_msg_change={this.update_input_msg.bind(this)}/>
+        <h1 style={{...centered_style}}>The Game</h1><br/>
+        <div style={{...centered_style}}>
+          <GameInterface game={this.state.game} 
+                        usr_lst={this.state.players}
+                        on_action={this.onAction.bind(this)}/>
+        </div>
+        <div style={{...centered_style}}>
+          <InGameChatBox messages={this.state.chat.all_msgs} 
+                        on_send_msg={this.onSendMessage.bind(this)} 
+                        input_msg={this.state.chat.input_msg} 
+                        on_input_msg_change={this.update_input_msg.bind(this)}/>
+        </div>
       </div>)
   }
 
