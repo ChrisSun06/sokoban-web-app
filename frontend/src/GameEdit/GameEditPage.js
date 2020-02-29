@@ -4,6 +4,7 @@ import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
 import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
 import DimPanel from './DimPanel';
+import { number } from 'prop-types';
 
 class GameEditPage extends React.Component{
   constructor(props){
@@ -71,19 +72,30 @@ class GameEditPage extends React.Component{
   }
 
   render(){
+    const centered_style = {display: 'flex',  justifyContent:'center', alignItems:'center'};
+
     return(
       <div>
-        <h1>The Game</h1><br/>
-        <EditButtons onButtonClick={this.switch_type.bind(this)}
-                     currentOn={this.state.current_cursor_type}
-        />
-       {!!this.state.game && <DimPanel onDimChange={this.changeDim.bind(this)}
-                  game={this.state.game}></DimPanel>}
-        <GameEditInterface game={this.state.game} 
-                           usr_lst={this.state.players}
-                           cell_clicked={this.cell_clicked.bind(this)}
-                          //  on_action={this.onAction.bind(this)}
-                           />
+        <h1 style={{...centered_style}}>The Game</h1><br/>
+        <div style={{...centered_style}}>
+          <EditButtons onButtonClick={this.switch_type.bind(this)}
+                      currentOn={this.state.current_cursor_type}
+          />
+        </div><br/>
+       {!!this.state.game && 
+          <div style={{...centered_style}}>
+            <DimPanel onDimChange={this.changeDim.bind(this)}
+                    game={this.state.game}></DimPanel>
+            
+          </div>}
+        <br/>
+        <div style={{...centered_style}}>
+          <GameEditInterface game={this.state.game} 
+                            usr_lst={this.state.players}
+                            cell_clicked={this.cell_clicked.bind(this)}
+                            //  on_action={this.onAction.bind(this)}
+                            />
+        </div>
       </div>)
   }
 

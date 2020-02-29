@@ -1,6 +1,9 @@
 import React from 'react';
 import {pi, floor} from 'mathjs';
 import {on_goal} from '../hardCodedData';
+import player_icon from '../gameResources/player.png'
+import box_icon from '../gameResources/box.jpeg'
+import obstacle_icon from '../gameResources/obstacle.png'
 
 const WHITE = '#FFFFFF';
 const BLACK = '#000000';
@@ -22,6 +25,36 @@ const sign_font = 'Arial';
 const sign_base_size = 100;
 
 class GameEditInterface extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      icons: {
+        player: undefined,
+        box: undefined, 
+        wall: undefined
+      }
+    }
+    this.load_icons();
+  }
+
+  load_icons(){
+    const img_plyr = new Image();
+    const img_bx = new Image();
+    const img_wll = new Image();
+
+    [{key: 'player', img: img_plyr, source: player_icon}, 
+      {key: 'box', img: img_bx, source: box_icon}, 
+      {key: 'wall', img: img_wll, source: obstacle_icon}]
+        .forEach((function(itm){
+          const {key, img, source} = itm;
+          img.onload = (function(){
+            this.setState({...this.state, icons: {...this.state.icons, [key]: img}})
+          }).bind(this);
+          img.src = source;
+      }).bind(this));
+
+  }
+
   componentDidUpdate(){
     if(!this.props.game){
       return;
@@ -41,7 +74,7 @@ class GameEditInterface extends React.Component{
     //     CellDisplay(cx, cy, user_lst, ctx, game);
     //   }
     // }
-    draw_game_board(ctx, game, user_lst);
+    draw_game_board.bind(this)(ctx, game, user_lst);
   }
 
   on_interface_click(e){
@@ -75,19 +108,19 @@ function draw_game_board(ctx, game, user_lst){
   // ctx.fillRect(0, 0, width, height);
   for(let ri = 0; ri < game.num_rows; ri++){
     for(let ci = 0; ci < game.num_cols; ci++){
-      draw_null(game, user_lst, w_rec, h_rec, ctx, ri, ci);
+      draw_null.bind(this)(game, user_lst, w_rec, h_rec, ctx, ri, ci);
     }
   }
 
-  game.walls.forEach(function(coord){
-    draw_wall(game, user_lst, w_rec, h_rec, ctx, coord.row, coord.col);
-  });
-  game.boxes.forEach(function(coord){
-    draw_box(game, user_lst, w_rec, h_rec, ctx, coord.row, coord.col);
-  });
-  game.players.forEach(function(p){
-    draw_player(game, user_lst, w_rec, h_rec, ctx, p.row, p.col, p.player_num);
-  });
+  game.walls.forEach((function(coord){
+    draw_wall.bind(this)(game, user_lst, w_rec, h_rec, ctx, coord.row, coord.col);
+  }).bind(this));
+  game.boxes.forEach((function(coord){
+    draw_box.bind(this)(game, user_lst, w_rec, h_rec, ctx, coord.row, coord.col);
+  }).bind(this));
+  game.players.forEach((function(p){
+    draw_player.bind(this)(game, user_lst, w_rec, h_rec, ctx, p.row, p.col, p.player_num);
+  }).bind(this));
 
 }
 
@@ -108,8 +141,13 @@ function draw_wall(game, user_lst, w_rec, h_rec, ctx, r, c){
   const y = r * h_rec;
   const xn = x + w_rec;
   const yn = y + h_rec;
-  ctx.fillStyle = BLACK;
-  ctx.fillRect(x, y, w_rec, h_rec);
+  if(!this.state.icons.wall){
+    ctx.fillStyle = BLACK;
+    ctx.fillRect(x, y, w_rec, h_rec);
+  }else{
+    ctx.drawImage(this.state.icons.wall, x, y, w_rec, h_rec);
+  }
+ 
   // ctx.fillStyle=undefined;
   // console.log(r, c, x, y, xn, yn)
   // assume wall never on goal
@@ -161,8 +199,13 @@ function draw_box(game, user_lst, w_rec, h_rec, ctx, r, c){
   const y = r * h_rec;
   const xn = x + w_rec;
   const yn = y + h_rec;
-  ctx.fillStyle = DARK_BLUE;
-  ctx.fillRect(x, y, w_rec, h_rec);
+  if(!this.state.icons.box){
+    ctx.fillStyle = DARK_BLUE;
+    ctx.fillRect(x, y, w_rec, h_rec);
+  }else{
+    ctx.drawImage(this.state.icons.box, x, y, w_rec, h_rec);
+  }
+  
   if(is_on_goal){
     const xc = (x + xn) / 2;
     const yc = (y + yn) / 2;
@@ -192,11 +235,15 @@ function draw_player(game, user_lst, w_rec, h_rec, ctx, r, c, player_num){
       return prev;
     }
   }, undefined);
-
-  ctx.fillStyle = RED;
-  ctx.beginPath();
-  ctx.arc(xc, yc, r_player, 0, 2 * pi);
-  ctx.fill();
+  if(!this.state.icons.player){
+    ctx.fillStyle = RED;
+    ctx.beginPath();
+    ctx.arc(xc, yc, r_player, 0, 2 * pi);
+    ctx.fill();
+  }else{
+    ctx.drawImage(this.state.icons.player, x, y, w_rec, h_rec);
+  }
+  
 
   if(is_on_goal){
     ctx.fillStyle = GREEN;
