@@ -15,6 +15,9 @@ const DARK_BLUE = '#144DDE'
 const RED = '#F5190A'
 const GREEN = '#22FF00'
 
+const SOL_CHAR_SIZE = 30;
+const SOL_MSG = 'Solved!';
+
 // note that coord system of canvas is x from left to right, y from up to down, thus it is transposed
 //  of our representation
 
@@ -73,13 +76,13 @@ class GameInterface extends React.Component {
     //     CellDisplay(cx, cy, user_lst, ctx, game);
     //   }
     // }
-    draw_game_board.bind(this)(ctx, game, user_lst);
+    draw_game_board.bind(this)(ctx, game, user_lst, this.props.game_ended);
   }
   render() {
     return(
       <div>
         <canvas ref="canvas" height={game_height} 
-                width={game_width} tabIndex='0'
+                width={game_width} tabIndex='1'
                 onKeyPress={this.props.on_action}/>
       </div>
     )
@@ -87,7 +90,7 @@ class GameInterface extends React.Component {
 }
 
 
-function draw_game_board(ctx, game, user_lst){
+function draw_game_board(ctx, game, user_lst, game_is_end){
   const w_rec = game_width / game.num_cols;
   const h_rec = game_height / game.num_rows;
   // ctx.fillStyle = WHITE;
@@ -107,6 +110,20 @@ function draw_game_board(ctx, game, user_lst){
   game.players.forEach((function(p){
     draw_player.bind(this)(game, user_lst, w_rec, h_rec, ctx, p.row, p.col, p.player_num);
   }).bind(this));
+
+  if(game_is_end){
+    draw_game_end_message(game, user_lst, w_rec, h_rec, ctx)
+  }
+
+
+}
+
+function draw_game_end_message(game, user_lst, w_rec, h_rec, ctx){
+  const x_end = w_rec * game.num_cols;
+  const y_end = h_rec * game.num_rows;
+  ctx.font = `${SOL_CHAR_SIZE}px Arial`;
+  ctx.fillStyle = RED;
+  ctx.fillText(SOL_MSG, x_end / 2 - SOL_MSG.length * SOL_CHAR_SIZE / 4, y_end / 2 + SOL_CHAR_SIZE / 4);
 
 }
 

@@ -4,6 +4,7 @@ import GameInterface from './GameInterface'
 import {next_game, fetch_initial_game_config, 
         get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
+import JumpPrep from './JumpPrep'
 
 const watch_interval = 100;
 
@@ -15,10 +16,11 @@ class GamePlayPage extends React.Component{
       url_info: this.parseUrl(),
       players: undefined,
       game: undefined,
+      game_ended: false,
       // part of hardcode, should instead fetch the player number
       player_num: 0,
       allow_action: true,
-
+      cnt_down : 5,
       chat: {
         all_msgs: [],
         input_msg: ''
@@ -44,13 +46,18 @@ class GamePlayPage extends React.Component{
             // console.log(game_end, new_game);
             const new_game = result.new_game;
             const game_end = result.game_end;
-            if(!game_end){
-              this.setState({game: new_game, allow_action: true});
-            }else{
-              this.setState({allow_action: false, game: new_game}, 
-                (function(){
-                  alert('End of Game!')
-                }).bind(this));
+            // if(!game_end){
+            //   this.setState({game: new_game, allow_action: true});
+            // }else{
+              // this.setState({allow_action: false, game: new_game}, 
+              //   (function(){
+              //     // alert('End of Game!')
+              //     // this.state.setState
+              //   }).bind(this));
+            // }
+            this.setState({game: new_game, allow_action: !game_end, game_ended: game_end})
+            if(game_end){
+              this.return_to_lobby_count_down();
             }
           }).bind(this))
           .catch((function(){
@@ -61,6 +68,25 @@ class GamePlayPage extends React.Component{
     
   }
 
+  return_to_lobby_count_down(){
+    setInterval((function(){
+      if(this.state.cnt_down > 0){
+        this.setState(
+          {...this.state, cnt_down: this.state.cnt_down - 1},
+          (function(){
+            if(this.state.cnt_down <= 0){
+              window.location.href = '/lobby';
+            }
+          }).bind(this)
+        )
+      }
+    }).bind(this), 1000)
+  }
+
+  focus_on_canvas(){
+    document.querySelector('canvas').focus();
+  }
+
   componentDidMount(){
     fetch_initial_game_config()
       .then((function(result){
@@ -68,7 +94,7 @@ class GamePlayPage extends React.Component{
         this.setState({
           game: result.game,
           players: result.player_lst
-        });
+        }, this.focus_on_canvas.bind(this));
       }).bind(this));
     // const {room_number} = useParams();
     const room_number = this.state.url_info.room_number;
@@ -132,11 +158,21 @@ class GamePlayPage extends React.Component{
 
     return(
       <div>
-        <h1 style={{...centered_style}}>The Game</h1><br/>
+        <h1 style={{...centered_style}}>The Game</h1>
+        {/* {this.state.game_ended && 
+          <h4 style={{...centered_style, color: 'grey'}}>
+            {`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}
+          </h4>} */}
+        {this.state.game_ended && 
+          <div style={{...centered_style, color: 'grey'}}>
+            <JumpPrep msg={`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}/>
+          </div>}
+        <br/>
         <div style={{...centered_style}}>
           <GameInterface game={this.state.game} 
                         usr_lst={this.state.players}
-                        on_action={this.onAction.bind(this)}/>
+                        on_action={this.onAction.bind(this)}
+                        game_ended={this.state.game_ended}/>
         </div>
         <div style={{...centered_style}}>
           <InGameChatBox messages={this.state.chat.all_msgs} 

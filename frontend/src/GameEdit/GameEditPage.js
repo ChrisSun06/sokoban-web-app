@@ -5,6 +5,9 @@ import EditButtons from './EditButtons'
 import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 class GameEditPage extends React.Component{
   constructor(props){
@@ -71,12 +74,27 @@ class GameEditPage extends React.Component{
 
   }
 
+  return_home(){
+    window.location.href = './profile?username=user1';
+  }
+
+  upload_game(){
+    window.location.href = './profile?username=user1';
+  }
+
   render(){
     const centered_style = {display: 'flex',  justifyContent:'center', alignItems:'center'};
 
     return(
       <div>
-        <h1 style={{...centered_style}}>The Game</h1><br/>
+        <div style={{...centered_style}}>
+          <IconButton style={{float: 'left'}} onClick={this.return_home.bind(this)}><HomeIcon/></IconButton>
+        </div>
+        {/* <br/> */}
+        <div style={{...centered_style}}>
+          <h1>Game Edit</h1>
+          <IconButton color='primary' onClick={this.upload_game.bind(this)}><CloudUploadIcon/></IconButton>
+        </div><br/>
         <div style={{...centered_style}}>
           <EditButtons onButtonClick={this.switch_type.bind(this)}
                       currentOn={this.state.current_cursor_type}
