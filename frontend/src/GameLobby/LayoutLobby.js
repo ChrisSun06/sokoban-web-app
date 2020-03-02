@@ -79,11 +79,12 @@ export default class LayoutLobby extends React.Component {
     }
 
     on_create_room(game_preview){
-        window.location.href = '/gameroom'
+        window.location.href = `/gameroom?id=2`
     }
 
     on_enter_room(){
-        window.location.href = '/gameroom'
+        window.location.href = `/gameroom?id=3&code=${this.state.entering_room_code}`
+        
     }
 
     on_input_room_code(e){
@@ -131,7 +132,8 @@ export default class LayoutLobby extends React.Component {
                 </div>
                 <br/>
                 <div style={{...centered_style}}>
-                    <IconButton onClick={this.on_enter_room.bind(this)}><GamesIcon/> Play</IconButton>
+                    <IconButton onClick={this.on_enter_room.bind(this)}
+                                disabled={this.state.entering_room_code.length < 4}><GamesIcon/> Play</IconButton>
                 </div>
             </div>
         )

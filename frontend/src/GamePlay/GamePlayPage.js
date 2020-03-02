@@ -4,7 +4,7 @@ import GameInterface from './GameInterface'
 import {next_game, fetch_initial_game_config, 
         get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
-import JumpPrep from './JumpPrep'
+import WaitingText from './WaitingText'
 
 const watch_interval = 100;
 
@@ -165,7 +165,7 @@ class GamePlayPage extends React.Component{
           </h4>} */}
         {this.state.game_ended && 
           <div style={{...centered_style, color: 'grey'}}>
-            <JumpPrep msg={`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}/>
+            <WaitingText msg={`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}/>
           </div>}
         <br/>
         <div style={{...centered_style}}>
