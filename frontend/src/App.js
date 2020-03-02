@@ -75,10 +75,10 @@ class App extends React.Component {
                     <Route path="/lobby">
                         <LayoutLobby/>
                     </Route>
-                    <Route path="/game-room">
+                    <Route path="/gameroom">
                         <GameRoomPage/>
                     </Route>
-                    <Route path="/game-created">
+                    <Route path="/gamecreated">
                         <GameCreatedPage/>
                     </Route>
                     <Route exact path='/shop' render={() =>
@@ -97,8 +97,8 @@ class App extends React.Component {
 
                     {/* add your own pages' path above this line */}
                     {/* <Route exact_path=''>
-            <MainPage/>
-          </Route> */}
+                            <MainPage/>
+                        </Route> */}
                 </Switch>
             </Router>
         );
