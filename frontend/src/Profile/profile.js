@@ -23,6 +23,9 @@ export class Profile extends React.Component{
     //     return queryString.parse(window.location.search).username
     // }
 
+    jump(e){
+        window.location.href='/lobby'
+    }
 
 
     render() {
@@ -31,7 +34,8 @@ export class Profile extends React.Component{
                 {!!this.state.usr &&
                 <div>
                     <img style = {{display: "inline-block", marginLeft: 50, marginTop: 60}} class='imgside' src={profile} height='130px'/>
-                    <h2 style = {{display: "inline-block", marginLeft: 100}}>{this.state.usr}</h2> <br/>
+                    <h2 style = {{display: "inline-block", marginLeft: 100}}>{this.state.usr}</h2>
+                    <button style={{display: "inline-block", marginLeft: 100}} id = "login_button" onClick={this.jump.bind(this)}><h1>Play</h1></button><br/>
                     <p style = {{display: "inline-block", marginLeft: 30}}><strong>Account Information: </strong></p>
                     <p style = {{display: "inline-block", marginLeft: 100}}>{this.state.usr}</p>
                     <p style = {{marginLeft: 50, padding:10}}><strong>Personal information </strong></p>
