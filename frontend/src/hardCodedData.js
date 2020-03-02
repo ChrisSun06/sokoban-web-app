@@ -1,3 +1,7 @@
+// import preview_1 from './GameLobby/sokobanpreivew1.png';
+// import preview_2 from './GameLobby/sokobanpreview2.jpeg';
+// import preview_3 from './GameLobby/sokobanpreview3.jpeg';
+
 // This file is for hard coded data for phase one
 const sample_users = [
     {
@@ -185,7 +189,7 @@ function on_goal(game, x, y) {
 //    EMPTY, WALL, PLAYER, BOX, it ignores if it is goal or not because it
 //    is only for whether the direction is movable
 function coord_type(game, r, c) {
-  if (r >= game.num_rows || c >= game.numcols || r < 0 || c < 0) {
+  if (r >= game.num_rows || c >= game.num_cols || r < 0 || c < 0) {
     return WALL;
   } else if (
     game.walls.reduce((prev, cur) => {
@@ -341,24 +345,60 @@ const sample_chats = [
 function push_new_message(room_id, usr_id, content){
   return new Promise(function(resolve, reject){
     const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
-    rm_chat.msgs.push(
-      {
-        time: new Date(),
-        sender_number: usr_id,
-        content: content
-      }
-    );
-    resolve();
+    if(!!rm_chat){
+      rm_chat.msgs.push(
+        {
+          time: new Date(),
+          sender_number: usr_id,
+          content: content
+        }
+      );
+      resolve();
+    }else{
+      reject();
+    }
+    
   });
 }
 
 function get_room_messages(room_id){
   return new Promise(function(resolve, reject){
     const rm_chat = sample_chats.filter(function(cts){return cts.room_num === room_id})[0];
-    resolve({chat: rm_chat});
+    if(!rm_chat){
+      reject();
+    }else{
+      resolve({chat: rm_chat});
+    }
+    
   });
 }
 
+const sample_created_games = [
+  {
+    game_name: 'Easy Game',
+    creater: {name: 'user1'},
+    preview_image: 'preview1',
+    game_id: 0
+  },
+  {
+    game_name: 'Strange Game',
+    creater: {name: 'user2'},
+    preview_image: 'preview2',
+    game_id: 1
+  },
+  {
+    game_name: 'Whatever Game',
+    creater: {name: 'user2'},
+    preview_image: 'preview3',
+    game_id: 2
+  }
+]
+
+function get_all_created_games(usr_num){
+  return new Promise(function(resolve, reject){
+    resolve({games: JSON.parse(JSON.stringify(sample_created_games))});
+  })
+}
 
 
 
@@ -377,7 +417,7 @@ module.exports = {
   game_change_dim: game_change_dim,
   fetch_initial_edit_game,
   fetch_initial_game_config,
-
+  get_all_created_games: get_all_created_games,
   push_new_message: push_new_message,
   get_room_messages: get_room_messages,
   

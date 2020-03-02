@@ -11,6 +11,8 @@ import {
 
 import GamePlayPage from './GamePlay/GamePlayPage'
 import GameEditPage from './GameEdit/GameEditPage'
+import LayoutLobby from './GameLobby/LayoutLobby'
+
 import TokenShop from './TokenShop/Shop/Shop'
 import Admin from './Admin/Admin'
 
@@ -67,6 +69,10 @@ class App extends React.Component{
           <Route path="/gameedit">
             <GameEditPage/>
           </Route>
+          <Route path="/lobby">
+            <LayoutLobby/>
+          </Route>
+
           <Route exact path='/shop' render={() =>
             (<TokenShop state={this.state}/>)}/>
           <Route exact path='/admin' render={() =>
@@ -81,9 +87,9 @@ class App extends React.Component{
             <Login/>
           </Route>
           {/* add your own pages' path above this line */}
-          // <Route exact_path=''>
-          //   <MainPage/>
-          // </Route>
+          {/* <Route exact_path=''>
+            <MainPage/>
+          </Route> */}
         </Switch>
       </Router>
       );
