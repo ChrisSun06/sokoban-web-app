@@ -15,9 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
-import PopUp from "./PopUp";
 import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 
 
 const styles = theme => ({
@@ -25,7 +23,6 @@ const styles = theme => ({
     flexGrow: 1,
     alignItems: 'center',
     alignSelf: 'center',
-    minWidth: 400
   },
   list_container: {
     alignItems: 'center',
@@ -41,33 +38,29 @@ const styles = theme => ({
     alignItems: 'center',
     alignSelf: 'center',
   },
-  container: {
-    minWidth: 400
-  },
   items: {
     minWidth: 700,
     maxWidth: 1500,
   }
 });
 
-class UserList extends React.Component {
+class ShopItem extends React.Component {
   constructor(props){
     super(props);
     this.togglePopPswd = this.togglePopPswd.bind(this);
     this.togglePopTkn = this.togglePopTkn.bind(this);
     this.togglePopDel = this.togglePopDel.bind(this);
+    this.changeAvailability = this.changeAvailability.bind(this);
     this.state = {
       arr: this.props.user_data.map(function(elem) {
         return {
           name: elem.name,
-          tokens: elem.tokens,
+          price: elem.price,
           pic: elem.pic,
-          seen_pswd: false,
-          seen_tkn: false,
+          available: elem.available,
           seen_del: false
         }
       }),
-      
     }
   }
 
@@ -105,12 +98,17 @@ class UserList extends React.Component {
           name: elem.name,
           tokens: elem.tokens,
           pic: elem.pic,
-          seen_pswd: false,
-          seen_tkn: false,
+          price: elem.price,
+          available: elem.available,
           seen_del: false
         }
     });
     this.setState({ arr: tmp });  
+  }
+
+  //
+  changeAvailability(index){
+    this.props.handleUpdate(index);
   }
 
 
@@ -120,15 +118,15 @@ class UserList extends React.Component {
 
     return (
       <div className={classes.root} >
-        <Grid container spacing={2} alignItems="center" justify="center" className={classes.container}>
+        <Grid container spacing={2} alignItems="center" justify="center" >
           <Grid item xs={12} md={6}>
             <Typography variant="h5" className={classes.title}>
-              Users
+              Products
             </Typography>
             <div className={classes.list_container}>
               <List dense={this.state.dense} className={classes.list_elements}>
                   {this.state.arr.map((user, index) =>
-                  <div className={classes.items}>
+                  <div className={classes.items} >
                   <ListItem id={user.name}>
                       <ListItemAvatar>
                           <Avatar>
@@ -137,23 +135,18 @@ class UserList extends React.Component {
                       </ListItemAvatar>
                       <ListItemText
                           primary={user.name}
-                          secondary={"Tokens: " + user.tokens}
+                          secondary={"Price: " + user.price}
                       />
                       <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="delete" className={classes.subside_btn} onClick={() => this.togglePopDel(index)}>
-                              <DeleteIcon />
-                          </IconButton>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopPswd(index)}>
-                            Change Password
-                          </Button>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopTkn(index)}>
-                            Change Tokens
+                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.changeAvailability(index)}>
+                          {user.available ? (
+                            <span>Make Unavailable</span>
+                            ) : (
+                                <span>Make Available</span>
+                            )}
                           </Button>
                       </ListItemSecondaryAction>
                   </ListItem>
-                   {this.state.arr[index].seen_pswd ? <PopUp handleUpdate={handleUpdate2.bind(this)} title="Change Password" content="Enter new password" data={this.state.arr} index={index}  toggle={() => this.togglePopPswd(index)} /> : null}
-                   {this.state.arr[index].seen_del ? <PopUp  handleUpdate={handleUpdate2.bind(this)} title="Delete This User?" content="" index={index} toggle={() => this.togglePopDel(index)} /> : null}
-                   {this.state.arr[index].seen_tkn ? <PopUp handleUpdate={handleUpdate2.bind(this)} title="Change Tokens" content="Enter new amount of tokens" data={this.state.arr} index={index} toggle={() => this.togglePopTkn(index)} /> : null}
                   </div>
                   )}
               </List>
@@ -165,7 +158,7 @@ class UserList extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(UserList);
+export default withStyles(styles, { withTheme: true })(ShopItem);
 
 
 

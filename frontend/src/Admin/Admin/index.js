@@ -5,25 +5,35 @@ import pic from "./admin.jpg"
 // Importing components
 import Header from "./../Header";
 import UsersList from "./../UsersListHead"
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  root: {
+    alignSelf: 'center',
+  },
+});
 
 class Admin extends React.Component {
-    render() {
-        return (
-            <div>
-                <div>
-                    <Header
-                        title="Administrator"
-                        logo={pic}
-                    />
-                </div>
+  
 
-                <div>
-                    <UsersList/>
-                </div>
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <div>
+          <Header
+            title="Administrator"
+            logo= {pic}
+          />
+        </div>
 
-            </div>
-        );
-    }
+        <div className={classes.root}>
+          <UsersList/>
+        </div>
+
+      </div>
+    );
+  }
 }
 
-export default Admin;
+export default withStyles(styles, { withTheme: true })(Admin);
