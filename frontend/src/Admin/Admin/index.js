@@ -7,24 +7,23 @@ import Header from "./../Header";
 import UsersList from "./../UsersListHead"
 
 class Admin extends React.Component {
+    render() {
+        return (
+            <div>
+                <div>
+                    <Header
+                        title="Administrator"
+                        logo={pic}
+                    />
+                </div>
 
-  render() {
-    return (
-      <div>
-        <div>
-          <Header
-            title="Administrator"
-            logo= {pic}
-          />
-        </div>
+                <div>
+                    <UsersList/>
+                </div>
 
-        <div>
-          <UsersList/>
-        </div>
-
-      </div>
-    );
-  }
+            </div>
+        );
+    }
 }
 
 export default Admin;

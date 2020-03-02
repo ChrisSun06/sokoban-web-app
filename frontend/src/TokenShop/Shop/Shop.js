@@ -8,24 +8,24 @@ import SimpleTabs from "./../NavBar"
 
 class Shop extends React.Component {
 
-  render() {
-    return (
-      <div>
-        <div className="Shop">
-          <Header
-            title="Token Shop"
-            logo= {pic}
-            money="$4500"
-          />
-        </div>
+    render() {
+        return (
+            <div>
+                <div className="Shop">
+                    <Header
+                        title="Token Shop"
+                        logo={pic}
+                        money="$4500"
+                    />
+                </div>
 
-        <div class="tabs">
-          <SimpleTabs/>
-        </div>
+                <div class="tabs">
+                    <SimpleTabs/>
+                </div>
 
-      </div>
-    );
-  }
+            </div>
+        );
+    }
 }
 
 export default Shop;
