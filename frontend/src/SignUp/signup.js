@@ -62,7 +62,7 @@ export class SignUp extends React.Component {
                                                                        placeholder="Confirm Password"
                                                                        value={this.state.inputs.confirm_password}
                                                                        onChange={this.onInput('confirm_password')}/></p>
-                    <button  className = "b1" id="signup_button"
+                    <button  id = "bbb"
                             onClick={this.checkPassword.bind(this)}><h2>Sign up</h2></button>
                     <br/>
                     <span> </span><br/>

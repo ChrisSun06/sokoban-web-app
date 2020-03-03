@@ -63,3 +63,15 @@
 #I1 {
     margin-left: 50px
 }
+
+#hidden {
+    visibility: hidden;
+    height: 0px;
+    opacity: 0
+}
+
+#visible {
+    visibility: visible;
+    height: auto;
+    opacity: 1
+}

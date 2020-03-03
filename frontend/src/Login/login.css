@@ -22,7 +22,7 @@
     overflow: auto
 }
 
-#l_h1 {
+#l_h {
     margin-left: 157px
 }
 
@@ -34,10 +34,14 @@
 .b1 {
     margin-left: 166px;
     margin-top: 45px
-
 }
 
-.b2 {
+#bb {
+    margin-left: 166px;
+    margin-top: 45px
+}
+
+#bb2 {
     margin-left: 10px
 }
 

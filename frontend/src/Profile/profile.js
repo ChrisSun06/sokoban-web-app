@@ -70,21 +70,9 @@ export class Profile extends React.Component{
 
 
     render() {
-        let divStyle = {
-            hidden: {
-                visibility: "hidden",
-                height: 0,
-                opacity: 0
-            },
-            visible: {
-                visibility: "visible",
-                height: "auto",
-                opacity: 1
-            }
-        }
-        let hiddenProperty1 = this.state.active1 ? divStyle.visible : divStyle.hidden
-        let hiddenProperty2 = this.state.active2 ? divStyle.visible : divStyle.hidden
-        let hiddenProperty3 = this.state.active3 ? divStyle.visible : divStyle.hidden
+        let hiddenProperty1 = this.state.active1 ? "visible" : "hidden"
+        let hiddenProperty2 = this.state.active2 ? "visible" : "hidden"
+        let hiddenProperty3 = this.state.active3 ? "visible" : "hidden"
         let rightIconHiddenProperty = (this.state.active1 ? 'active' : null)
         return (
             <div id='l_back'>
@@ -102,23 +90,23 @@ export class Profile extends React.Component{
                             {this.state.active1 ? <KeyboardArrowDownIcon onClick={this.toggleClass1}/> : <ChevronRightIcon onClick={this.toggleClass1}/>}
                         </IconButton>
                     <span className = "big">Account Information</span></div>
-                        <div className = "small" style={hiddenProperty1}>Personal information</div>
-                        <div className = "tiny" style={hiddenProperty1}>Name: {this.state.usr}</div>
-                        <div className = "tiny" style={hiddenProperty1}>Age: 20</div>
-                        <div className = "tiny" style={hiddenProperty1}>VIP level: 0</div>
+                        <div className = "small" id = {hiddenProperty1}> Personal information</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Name: {this.state.usr}</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Age: 20</div>
+                        <div className = "tiny" id = {hiddenProperty1}>VIP level: 0</div>
                         {/* <div className = "small1" style={hiddenProperty1}><button style={{marginLeft: 10}} id="login_button">Change password</button></div> */}
 
                         <IconButton id = "I1">
                             {this.state.active2 ? <KeyboardArrowDownIcon onClick={this.toggleClass2}/> : <ChevronRightIcon onClick={this.toggleClass2}/>}
                         </IconButton>
                     <span className = "big">Game History</span>
-                        <div className = "small" style={hiddenProperty2}>Game: 1,  Score: 10</div>
+                        <div className = "small" id={hiddenProperty2}>Game: 1,  Score: 10</div>
 
                         <IconButton id = "I1">
                             {this.state.active3 ? <KeyboardArrowDownIcon onClick={this.toggleClass3}/> : <ChevronRightIcon onClick={this.toggleClass3}/>}
                         </IconButton>
                     <span className = "big">Games Created</span>
-                        <div className = "small" style={hiddenProperty3}><img id = "im2" class='imgside' src={g1}/></div>
+                        <div className = "small" id={hiddenProperty3}><img id = "im2" class='imgside' src={g1}/></div>
                 </div>
             }
             {!this.state.usr &&

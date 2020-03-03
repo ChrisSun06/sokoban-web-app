@@ -60,7 +60,7 @@ export class Login extends React.Component {
             <div id="l_rec">
                 <Container maxWidth="xs">
                     <span> </span><br/>
-                    <h1 id = "l_h1">Log in</h1>
+                    <h1 id = "l_h">Log in</h1>
                     <p className = "l_p1"><input className="login" type="text"
                                                                        placeholder="Username"
                                                                        value={this.state.inputs.usr_nm}
@@ -69,7 +69,7 @@ export class Login extends React.Component {
                                                                        placeholder="Password"
                                                                        value={this.state.inputs.passwrd}
                                                                        onChange={this.onInput('passwrd')}/></p>
-                    <button className = "b1" id="login_button"
+                    <button id="bb"
                             onClick={this.onLogin.bind(this)}><h2>Log in</h2></button>
                     <br/>
                     <span> </span><br/>
@@ -79,7 +79,7 @@ export class Login extends React.Component {
                 <Container maxWidth="xs">
                     <p id = "h2"><strong>Doesn't have an
                         account?</strong>
-                        <button className = "b2" id="login_button" onClick={this.jump.bind(this)}>Sign up
+                        <button id = "bb2" onClick={this.jump.bind(this)}>Sign up
                         </button>
                     </p>
                 </Container>
