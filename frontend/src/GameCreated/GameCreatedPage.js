@@ -110,7 +110,7 @@ class GameCreatedPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
                 <IconButton aria-label="Create" onClick={this.on_quit.bind(this)}>
                     <ExitToAppIcon/>
                 </IconButton>

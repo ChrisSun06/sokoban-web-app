@@ -23,7 +23,7 @@ class Admin extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
         <div>
           <IconButton onClick={this.on_logout.bind(this)}><ExitToAppIcon/></IconButton>
           <Header

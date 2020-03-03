@@ -65,7 +65,7 @@ function LayoutList(props) {
             {props.player_preview.map(function (preview) {
                 return (
                     <Grid md={3}>
-                        <PreviewCard preview={preview} self_id={props.self_id} 
+                        <PreviewCard preview={preview} self_id={props.self_id}
                                     as_owner={props.as_owner}
                                     on_del={props.on_del_usr}/>
                     </Grid>)
@@ -76,7 +76,7 @@ function LayoutList(props) {
 class GameRoomPage extends React.Component {
     constructor(props) {
         super(props);
-        
+
         // const user_id = window.location.search.replace('?', '');
         const args = parser.parse(window.location.search);
         const user_id = !!args.id?args.id: 2;
@@ -90,29 +90,29 @@ class GameRoomPage extends React.Component {
                     name: "User 1",
                     scores: "1000 scores",
                     is_owner: false
-                }, 
+                },
                 {
                     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
                     name: "User 2",
                     scores: "1000 scores",
                     is_owner: true
-                }, 
+                },
                 {
                     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
                     name: "User 3",
                     scores: "1000 scores",
                     is_owner: false
-                }, 
+                },
                 // {
                 //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
                 //     name: "User 4",
                 //     scores: "1000 scores"
-                // }, 
+                // },
                 // {
                 //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
                 //     name: "User 5",
                 //     scores: "1000 scores"
-                // }, 
+                // },
                 // {
                 //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
                 //     name: "User 6",
@@ -136,7 +136,7 @@ class GameRoomPage extends React.Component {
         const usr_del_nm = usr_del.name;
         const is_self = usr_del_nm === this.state.my_name;
         if(is_self || this.is_owner_of_room()){
-            this.setState({...this.state, 
+            this.setState({...this.state,
                          players: this.state.players.filter(function(plyr){
                             return plyr.name !== usr_del_nm;
                          })},
@@ -146,17 +146,17 @@ class GameRoomPage extends React.Component {
                             }
                          }));
         }
-        
+
     }
 
     render() {
-        const centered_style = {display: 'flex',  
-                                justifyContent:'center', 
+        const centered_style = {display: 'flex',
+                                justifyContent:'center',
                                 alignItems:'center'};
 
         const as_owner = this.is_owner_of_room()
         return (
-            <div>
+            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
                 <div style={{...centered_style, marginTop: '10vh'}}>
                     <Typography color='textSecondary' variant='caption'>
                         {`Invite your friend to join with this code: ${this.state.game_code.toUpperCase()} !`}
@@ -166,14 +166,14 @@ class GameRoomPage extends React.Component {
                     <Typography color='secondary' variant='h3'>{this.state.my_name}</Typography>
                 </div>
                 <div style={{...centered_style, height: '40vh', overflow: 'auto', marginTop: '5vh', marginLeft: '20vw'}}>
-                    <LayoutList player_preview={this.state.players} 
+                    <LayoutList player_preview={this.state.players}
                                 self_id={this.state.my_name}
                                 as_owner={as_owner}
                                 on_del_usr={this.on_del_user.bind(this)}/>
-                    
+
                 </div>
                 {
-                    as_owner && 
+                    as_owner &&
                     (
                         <div style={{...centered_style}}>
                             <IconButton aria-label="Start" onClick={this.start_game.bind(this)}>
@@ -191,7 +191,7 @@ class GameRoomPage extends React.Component {
                         </div>
                     )
                 }
-                
+
             </div>
         )
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 // import Data from '../hardCodedData'
 import GameInterface from './GameInterface'
-import {next_game, fetch_initial_game_config, 
+import {next_game, fetch_initial_game_config,
         get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
 import WaitingText from './WaitingText'
@@ -50,7 +50,7 @@ class GamePlayPage extends React.Component{
             // if(!game_end){
             //   this.setState({game: new_game, allow_action: true});
             // }else{
-              // this.setState({allow_action: false, game: new_game}, 
+              // this.setState({allow_action: false, game: new_game},
               //   (function(){
               //     // alert('End of Game!')
               //     // this.state.setState
@@ -66,7 +66,7 @@ class GamePlayPage extends React.Component{
           }).bind(this));
       }
     }
-    
+
   }
 
   return_to_lobby_count_down(){
@@ -111,7 +111,7 @@ class GamePlayPage extends React.Component{
         .then((function(result){
           this.setState({
             ...this.state,
-            chat: {...this.state.chat, 
+            chat: {...this.state.chat,
                     all_msgs: result.chat.msgs
                   }
           })
@@ -123,14 +123,14 @@ class GamePlayPage extends React.Component{
         // console.log(room_number)
 
     }).bind(this);
-    
+
   }
 
   update_input_msg(content){
     this.setState(
       {
         ...this.state,
-        chat: {...this.state.chat, 
+        chat: {...this.state.chat,
                 input_msg: content
               }
       }
@@ -157,37 +157,37 @@ class GamePlayPage extends React.Component{
   }
 
   render(){
-    const centered_style = {display: 'flex',  
-                            justifyContent:'center', 
+    const centered_style = {display: 'flex',
+                            justifyContent:'center',
                             alignItems:'center'};
 
     return(
-      <div>
+      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
         <h1 style={{...centered_style}}>The Game</h1>
         <div style={{...centered_style}}>
           <IconButton onClick={this.on_quit.bind(this)} color='secondary'>
             Quit
           </IconButton>
         </div>
-        {/* {this.state.game_ended && 
+        {/* {this.state.game_ended &&
           <h4 style={{...centered_style, color: 'grey'}}>
             {`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}
           </h4>} */}
-        {this.state.game_ended && 
+        {this.state.game_ended &&
           <div style={{...centered_style, color: 'grey'}}>
             <WaitingText msg={`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}/>
           </div>}
         <br/>
         <div style={{...centered_style}}>
-          <GameInterface game={this.state.game} 
+          <GameInterface game={this.state.game}
                         usr_lst={this.state.players}
                         on_action={this.onAction.bind(this)}
                         game_ended={this.state.game_ended}/>
         </div>
         <div style={{...centered_style}}>
-          <InGameChatBox messages={this.state.chat.all_msgs} 
-                        on_send_msg={this.onSendMessage.bind(this)} 
-                        input_msg={this.state.chat.input_msg} 
+          <InGameChatBox messages={this.state.chat.all_msgs}
+                        on_send_msg={this.onSendMessage.bind(this)}
+                        input_msg={this.state.chat.input_msg}
                         on_input_msg_change={this.update_input_msg.bind(this)}/>
         </div>
       </div>)

@@ -34,7 +34,7 @@ class GameEditPage extends React.Component{
           game: result.game
         })
       }).bind(this))
-    
+
   }
 
   cell_clicked(coord){
@@ -62,9 +62,9 @@ class GameEditPage extends React.Component{
     }else{
       this.setState({current_cursor_type: type})
     }
-    
+
   }
-  
+
   changeDim(dims){
     game_change_dim(this.state.game, dims)
       .then((function(result){
@@ -86,7 +86,7 @@ class GameEditPage extends React.Component{
     const centered_style = {display: 'flex',  justifyContent:'center', alignItems:'center'};
 
     return(
-      <div>
+      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
         <div style={{...centered_style}}>
           <IconButton style={{float: 'left'}} onClick={this.return_home.bind(this)}>
             {/* <HomeIcon/> */}
@@ -103,15 +103,15 @@ class GameEditPage extends React.Component{
                       currentOn={this.state.current_cursor_type}
           />
         </div><br/>
-       {!!this.state.game && 
+       {!!this.state.game &&
           <div style={{...centered_style}}>
             <DimPanel onDimChange={this.changeDim.bind(this)}
                     game={this.state.game}></DimPanel>
-            
+
           </div>}
         <br/>
         <div style={{...centered_style}}>
-          <GameEditInterface game={this.state.game} 
+          <GameEditInterface game={this.state.game}
                             usr_lst={this.state.players}
                             cell_clicked={this.cell_clicked.bind(this)}
                             //  on_action={this.onAction.bind(this)}
