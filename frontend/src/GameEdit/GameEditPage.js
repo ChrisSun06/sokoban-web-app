@@ -88,7 +88,10 @@ class GameEditPage extends React.Component{
     return(
       <div>
         <div style={{...centered_style}}>
-          <IconButton style={{float: 'left'}} onClick={this.return_home.bind(this)}><HomeIcon/></IconButton>
+          <IconButton style={{float: 'left'}} onClick={this.return_home.bind(this)}>
+            {/* <HomeIcon/> */}
+            Quit
+          </IconButton>
         </div>
         {/* <br/> */}
         <div style={{...centered_style}}>

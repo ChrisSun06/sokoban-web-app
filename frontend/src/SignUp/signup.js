@@ -34,7 +34,8 @@ export class SignUp extends React.Component {
         } else if (this.state.inputs.password !== this.state.inputs.confirm_password) {
             alert('password does not match')
         } else {
-            window.location.href = `/profile?username=${this.state.inputs.usr_nm}`
+            // window.location.href = `/profile?username=${this.state.inputs.usr_nm}`
+            window.location.href = '/'
         }
     }
 

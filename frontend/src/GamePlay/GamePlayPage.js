@@ -5,6 +5,7 @@ import {next_game, fetch_initial_game_config,
         get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
 import WaitingText from './WaitingText'
+import { IconButton } from '@material-ui/core';
 
 const watch_interval = 100;
 
@@ -151,6 +152,10 @@ class GamePlayPage extends React.Component{
       }).bind(this))
   }
 
+  on_quit(e){
+    window.location.href='/lobby'
+  }
+
   render(){
     const centered_style = {display: 'flex',  
                             justifyContent:'center', 
@@ -159,6 +164,11 @@ class GamePlayPage extends React.Component{
     return(
       <div>
         <h1 style={{...centered_style}}>The Game</h1>
+        <div style={{...centered_style}}>
+          <IconButton onClick={this.on_quit.bind(this)} color='secondary'>
+            Quit
+          </IconButton>
+        </div>
         {/* {this.state.game_ended && 
           <h4 style={{...centered_style, color: 'grey'}}>
             {`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}

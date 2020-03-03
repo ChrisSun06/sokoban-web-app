@@ -32,26 +32,26 @@ let dummy_users = [
       password: "12345"
   },
  
-  {
-      pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-      name: "User 4",
-      tokens: 131,
-      password: "12345"
-  },
+  // {
+  //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+  //     name: "User 4",
+  //     tokens: 131,
+  //     password: "12345"
+  // },
  
-  {
-      pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-      name: "User 5",
-      tokens: 139,
-      password: "12345"
-  },
+  // {
+  //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+  //     name: "User 5",
+  //     tokens: 139,
+  //     password: "12345"
+  // },
  
-  {
-      pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-      name: "User 6",
-      tokens: 130,
-      password: "12345"
-  }
+  // {
+  //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+  //     name: "User 6",
+  //     tokens: 130,
+  //     password: "12345"
+  // }
  ];
 
 let dummy_products = [
@@ -63,19 +63,19 @@ let dummy_products = [
       available: true
   },
  
-  {
-      pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
-      name: "Icon",
-      price: 133,
-      available: true
-  },
+  // {
+  //     pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
+  //     name: "Icon",
+  //     price: 133,
+  //     available: true
+  // },
  
-  {
-      pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
-      name: "Icon",
-      price: 132,
-      available: true
-  },
+  // {
+  //     pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
+  //     name: "Icon",
+  //     price: 132,
+  //     available: true
+  // },
  
   {
       pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
@@ -84,12 +84,12 @@ let dummy_products = [
       available: false
   },
  
-  {
-      pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
-      name: "Badge",
-      price: 139,
-      available: false
-  },
+  // {
+  //     pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
+  //     name: "Badge",
+  //     price: 139,
+  //     available: false
+  // },
  
   {
       pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",

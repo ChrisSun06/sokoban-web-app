@@ -93,8 +93,8 @@ export class Profile extends React.Component{
                 <div>
                     <img style = {{display: "inline-block", marginLeft: 50, marginTop: 60}} class='imgside' src={profile} height='130px'/>
                     <h2 style = {{display: "inline-block", marginLeft: 100}}>{this.state.usr}</h2><br/>
-                    <button style={{display: "inline-block", marginLeft: 50, marginTop: 30}} id="signup_button" onClick={this.jump1.bind(this)}><h2>Create Game</h2></button>
                     <button style={{display: "inline-block", marginLeft: 50}} id="signup_button" onClick={this.jump.bind(this)}><h2>Go to Lobby</h2></button>
+                    <button style={{display: "inline-block", marginLeft: 50, marginTop: 30}} id="signup_button" onClick={this.jump1.bind(this)}><h2>Create Game</h2></button>
                     <button style={{display: "inline-block", marginLeft: 50}} id="signup_button" onClick={this.jump2.bind(this)}><h2>Go to Token Shop</h2></button><br/>
 
                     <div style = {{marginLeft:50, marginTop: 50}}>
@@ -106,7 +106,7 @@ export class Profile extends React.Component{
                         <div className = "tiny" style={hiddenProperty1}>Name: {this.state.usr}</div>
                         <div className = "tiny" style={hiddenProperty1}>Age: 20</div>
                         <div className = "tiny" style={hiddenProperty1}>VIP level: 0</div>
-                        <div className = "small1" style={hiddenProperty1}><button style={{marginLeft: 10}} id="login_button">Change password</button></div>
+                        {/* <div className = "small1" style={hiddenProperty1}><button style={{marginLeft: 10}} id="login_button">Change password</button></div> */}
 
                         <IconButton style = {{marginLeft:50}}>
                             {this.state.active2 ? <KeyboardArrowDownIcon onClick={this.toggleClass2}/> : <ChevronRightIcon onClick={this.toggleClass2}/>}
