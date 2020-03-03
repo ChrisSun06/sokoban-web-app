@@ -45,24 +45,24 @@ export class SignUp extends React.Component {
 
     render() {
         return (
-            <body id='back' style={{backgroundImage: 'url(' + require('./s.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+            <body id='l_back'>
             <div id="rec">
                 <Container maxWidth="xs">
                     <span> </span><br/>
-                    <h1 style={{marginLeft: 145}}>Sign Up</h1>
-                    <p style={{marginLeft: 120, marginTop: 30}}><input className="signup" type="text"
+                    <h1 id = "l_h1">Sign Up</h1>
+                    <p className = "l_p1"><input className="signup" type="text"
                                                                        placeholder="Username"
                                                                        value={this.state.inputs.username}
                                                                        onChange={this.onInput('username')}/></p>
-                    <p style={{marginLeft: 120, marginTop: 30}}><input className="signup" type="password"
+                    <p className = "l_p1"><input className="signup" type="password"
                                                                        placeholder="Password"
                                                                        value={this.state.inputs.password}
                                                                        onChange={this.onInput('password')}/></p>
-                    <p style={{marginLeft: 120, marginTop: 30}}><input className="signup" type="password"
+                    <p className = "l_p1"><input className="signup" type="password"
                                                                        placeholder="Confirm Password"
                                                                        value={this.state.inputs.confirm_password}
                                                                        onChange={this.onInput('confirm_password')}/></p>
-                    <button style={{marginLeft: 158, marginTop: 45}} id="signup_button"
+                    <button  className = "b1" id="signup_button"
                             onClick={this.checkPassword.bind(this)}><h2>Sign up</h2></button>
                     <br/>
                     <span> </span><br/>
@@ -70,8 +70,8 @@ export class SignUp extends React.Component {
             </div>
             <div>
                 <Container maxWidth="xs">
-                    <p style={{marginLeft: 70, marginTop: 100}}><strong>Already have an account?</strong>
-                        <button style={{marginLeft: 10}} id="login_button" onClick={this.jump.bind(this)}>Log in
+                    <p  id = "h2"><strong>Already have an account?</strong>
+                        <button className = "b2" id="login_button" onClick={this.jump.bind(this)}>Log in
                         </button>
                     </p>
                 </Container>

@@ -15,3 +15,35 @@
     height: 2000px;
     background-color: #66ffff;
 }
+
+#l_back {
+    background-image: url("s.jpg");
+    background-size: cover;
+    height: 900px;
+    width: 100%;
+    overflow: auto
+}
+
+#l_h1 {
+    margin-left: 145px
+}
+
+.l_p1 {
+    margin-left: 120px;
+    margin-top: 30px
+}
+
+.b1 {
+    margin-left: 158px;
+    margin-top: 45px
+
+}
+
+.b2 {
+    margin-left: 10px
+}
+
+#h2 {
+    margin-left: 70px;
+    margin-top: 100px
+}
