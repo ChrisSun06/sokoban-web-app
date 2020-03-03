@@ -45,10 +45,7 @@ export class SignUp extends React.Component {
 
     render() {
         return (
-            <body id='back'>
-            <div id="placeholder">
-                <span> </span><br/>
-            </div>
+            <body id='back' style={{backgroundImage: 'url(' + require('./s.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
             <div id="rec">
                 <Container maxWidth="xs">
                     <span> </span><br/>

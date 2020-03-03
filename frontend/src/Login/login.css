@@ -4,7 +4,11 @@
 }
 
 #l_rec {
-    background-color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #f0f5f5;
+    margin-top: 10%;
     margin-bottom: 10%;
     margin-left: 30%;
     margin-right: 30%

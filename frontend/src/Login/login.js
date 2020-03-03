@@ -7,7 +7,6 @@ import {borders} from '@material-ui/system'
 import {authenticate_user} from '../hardCodedData'
 import {authenticate_admin} from '../hardCodedData'
 import "./login.css"
-
 export class Login extends React.Component {
 
     constructor(props) {
@@ -57,10 +56,7 @@ export class Login extends React.Component {
 
     render() {
         return (
-            <body id='l_back'>
-            <div id="l_placeholder">
-                <span> </span><br/>
-            </div>
+            <body id='l_back' style={{backgroundImage: 'url(' + require('./l.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
             <div id="l_rec">
                 <Container maxWidth="xs">
                     <span> </span><br/>
