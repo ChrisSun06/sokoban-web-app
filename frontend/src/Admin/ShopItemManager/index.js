@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
+import PopUp from './PopUp.js';
 
 
 const styles = theme => ({
@@ -47,10 +48,9 @@ const styles = theme => ({
 class ShopItem extends React.Component {
   constructor(props){
     super(props);
-    this.togglePopPswd = this.togglePopPswd.bind(this);
-    this.togglePopTkn = this.togglePopTkn.bind(this);
-    this.togglePopDel = this.togglePopDel.bind(this);
+    this.togglePopEdit = this.togglePopEdit.bind(this);
     this.changeAvailability = this.changeAvailability.bind(this);
+    this.editProduct = this.editProduct.bind(this)
     this.state = {
       arr: this.props.user_data.map(function(elem) {
         return {
@@ -58,63 +58,48 @@ class ShopItem extends React.Component {
           price: elem.price,
           pic: elem.pic,
           available: elem.available,
-          seen_del: false
+          seen_edit: false
         }
       }),
     }
   }
 
-  togglePopPswd(index) {
+
+  togglePopEdit(index) {
     let tmp = this.state.arr;
-    tmp[index].seen_pswd = !tmp[index].seen_pswd;
+    tmp[index].seen_edit = !tmp[index].seen_edit;
     this.setState({
       arr: tmp
     });
-  }
-
-  togglePopTkn(index) {
-    let tmp = this.state.arr;
-    tmp[index].seen_tkn = !tmp[index].seen_tkn;
-    this.setState({
-      arr: tmp
-    });
-  }
-
-  togglePopDel(index) {
-    let tmp = this.state.arr;
-    tmp[index].seen_del = !tmp[index].seen_del;
-    this.setState({
-      arr: tmp
-    });
-  }
-
-  handleUpdate(index, title, input) {
-    this.props.handleUpdate(index, title, input);
   }
 
   componentWillReceiveProps(nextProps) {
     let tmp = nextProps.user_data.map(function(elem) {
         return {
           name: elem.name,
-          tokens: elem.tokens,
-          pic: elem.pic,
           price: elem.price,
+          pic: elem.pic,
           available: elem.available,
-          seen_del: false
+          seen_edit: false
         }
     });
     this.setState({ arr: tmp });  
   }
 
-  //
   changeAvailability(index){
     this.props.handleUpdate(index);
+  }
+
+  editProduct(index, name, price){
+    console.log(this.state.arr)
+    alert(this.state.arr.length)
+    this.props.handleEdit(index, name, price);
   }
 
 
   render() {
     const { classes, user_data } = this.props;
-    const handleUpdate2 = this.handleUpdate
+    const editProduct = this.editProduct;
 
     return (
       <div className={classes.root} >
@@ -145,7 +130,11 @@ class ShopItem extends React.Component {
                                 <span>Make Available</span>
                             )}
                           </Button>
+                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopEdit(index)}>
+                            Edit
+                          </Button>
                       </ListItemSecondaryAction>
+                      {this.state.arr[index].seen_edit ? <PopUp  handleUpdate={editProduct.bind(this)} title="Edit Product" index={index} toggle={() => this.togglePopEdit(index)} /> : null}
                   </ListItem>
                   </div>
                   )}

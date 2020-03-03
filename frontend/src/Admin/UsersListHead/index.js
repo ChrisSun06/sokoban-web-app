@@ -143,10 +143,12 @@ class UsersList extends React.Component {
     this.addOneToAll = this.addOneToAll.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.changeAvailability = this.changeAvailability.bind(this);
+    this.newProduct = this.newProduct.bind(this)
     this.findUser = this.findUser.bind(this)
     this.deleteAll = this.deleteAll.bind(this)
     this.inputUser = null;
     this.inputUserChange = this.inputUserChange.bind(this)
+    this.editProduct = this.editProduct.bind(this)
     this.state = {
       data: dummy_users.map(function(elem) {
         return {
@@ -171,7 +173,14 @@ class UsersList extends React.Component {
     let tmp = this.state.data;
     if(title === "Change Tokens"){
       tmp[index].tokens = input;
-      dummy_users[index].tokens = input;
+      let index_to = null;
+      for (let j = 0; j < dummy_users.length; j++){
+        if(dummy_users[j].name == tmp[index].name){
+          index_to = j;
+        }
+      }
+      alert(index_to)
+      dummy_users[index_to].tokens = input;
       this.setState({
         data: tmp,
       });
@@ -184,12 +193,53 @@ class UsersList extends React.Component {
       });
     } else {
       let tmp = this.state.data;
+      let index_to = null;
+      for (let j = 0; j < dummy_users.length; j++){
+        if(dummy_users[j].name === tmp[index].name){
+          index_to = j;
+        }
+      }
+      if(index_to === null){
+        alert("Cannot delete, user does not exist")
+      }
+      dummy_users.splice(index_to,1)
       tmp.splice(index,1)
-      dummy_users.splice(index,index)
       this.setState({
         data: tmp,
       });
     }
+  }
+
+  newProduct(new_name, new_price) {
+    dummy_products.push({
+      name: new_name,
+      pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
+      price: new_price,
+      available: true
+    });
+    let tmp = this.state.products;
+    tmp.push({
+      name: new_name,
+      pic: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Dog-512.png",
+      price: new_price,
+      available: true
+    });
+    this.setState({
+      products: tmp,
+    })
+    console.log(this.state.products)
+  }
+
+  editProduct(index, new_name, new_price) {
+    console.log(this.state.products)
+    let tmp = this.state.products;
+    tmp[index].name = new_name;
+    tmp[index].price = new_price;
+    dummy_products[index].name = new_name;
+    dummy_products[index].price = new_price;
+    this.setState({
+      products: tmp,
+    });
   }
 
   changeAvailability(index){
@@ -270,8 +320,9 @@ class UsersList extends React.Component {
           </Paper>
           <Button variant="contained" className={classes.add_to_all} onClick={() => this.addOneToAll()} alignItems="center" justify="center">Add Token To All</Button>
           <Button variant="contained" className={classes.remove_all} alignItems="center" justify="center" onClick={() => this.deleteAll()}>Remove All</Button>
+          <Button variant="contained" className={classes.remove_all} alignItems="center" justify="center" onClick={() => this.newProduct("new product", 0)}>Add New Product</Button>
           <UserListContent handleUpdate={this.handleUpdate} user_data={this.state.data} alignItems="center" justify="center"/>
-          <ShopItem handleUpdate={this.changeAvailability} user_data={this.state.products} alignItems="center" justify="center"/>
+          <ShopItem handleUpdate={this.changeAvailability} handleEdit={this.editProduct} user_data={this.state.products} alignItems="center" justify="center"/>
       </div>
     );
   }

@@ -7,7 +7,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
-import "./styles.css";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,7 +14,6 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'auto',
-        backgroundColor: theme.palette.background.paper,
     },
     gridList: {
         width: 600,
@@ -43,7 +41,7 @@ const Contents = (props) => {
                         <img src={tile.img} alt={tile.title}/>
                         <GridListTileBar
                             title={tile.title}
-                            subtitle={<span>cost: {tile.author}$</span>}
+                            subtitle={<span>cost: {tile.price}$</span>}
                             actionIcon={
                                 <IconButton aria-label={`purchase ${tile.title}`} className={classes.icon}>
                                     <MonetizationOnIcon/>
