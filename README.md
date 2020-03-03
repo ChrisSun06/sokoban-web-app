@@ -79,13 +79,13 @@ Below is the instruction on how to use the app in phase 1:
 
   Then you will see your user name
 
-  You will see a list of users that is already in the room, for each user in the list:
+  If you are the room owner, you will see a button "start" to start the entire game at the bottom, otherwise you will only see a message
 
-    If it is you, you will see a button "quit" and clicking it will have you quit the game and redirect you back to lobby
+  You will see a list of users that is already in the room, for each user in the list
 
-    If it is another user, and if you are the room owner, you can kick the user out of the room by clicking "kick" under that user
+  If it is you, you will see a button "quit" and clicking it will have you quit the game and redirect you back to lobby
 
-  If you are the room owner, you will see a button "start" to start the entire game
+  If it is another user, and if you are the room owner, you can kick the user out of the room by clicking "kick" under that user
 
 * After the game starts, you will be directed to the actual game interface
 
@@ -98,7 +98,7 @@ Below is the instruction on how to use the app in phase 1:
 
   Right now the this page is only a single player game because multiplayer cannot be done without a server
 
-  If you successfully solve a game, you will be redirected back to game lobby after 5 seconds (there will be a message for it)
+  If you successfully solve a game, you will be redirected back to game lobby after 5 seconds, there will be a count down message.
 
 * You can also create your own games, and you can get to that page by clicking "create games" from your user profile, and you will be redirected to the page of your created games
 
@@ -114,7 +114,7 @@ Below is the instruction on how to use the app in phase 1:
 
   The game is put in the grids
 
-  Under the title "Game Edit", you will see a list of buttons for you to select what to add. For instance, if you select "wall" and click a cell in the grids, it will put wall in the cell. Meanwhile, if you select "delete", it will empty the cells that you create. Note that you can not put goals on walls but can put them on players and boxes.
+  Below the title "Game Edit", you will see a list of buttons for you to select what to add. For instance, if you select "wall" and click a cell in the grids, it will put wall in the cell. Meanwhile, if you select "delete", it will empty the cells that you click. Note that you cannot put goals on walls but can put them on players and boxes.
 
   You can also adjust the board size using the slide bars
 
