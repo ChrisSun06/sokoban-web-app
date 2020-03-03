@@ -24,37 +24,38 @@ Below is the instruction on how to use the app in phase 1:
 
   If you click "add new product", a new product with a default name and price will be added to the list of products (at the bottom, so you might need to scroll down)
 
-  For each user, you will see their user name, profile picture and number of tokens. There are also three actions you can take with each user:
+  For each user, you will see their user name, profile picture and number of tokens. There are also three actions you can take with each user.
 
-    If you click the delete icon, the user will be removed
+  If you click the delete icon, the user will be removed
 
-    If you click "change password", there will be a popup where you can fill in the new password
+  If you click "change password", there will be a popup where you can fill in the new password
 
-    If you click "change tokens", a popup will be shown for you to enter a new amount, the change will be reflected
-    after you submit the new token amount.
+  If you click "change tokens", a popup will be shown for you to enter a new amount, the change will be reflected
+  after you submit the new token amount.
   
-  For each product in the product list: 
+  For each product in the product list,
 
-    You can toggle if it is in the token shop by clicking "make (un)available"
+  You can toggle if the product is in the token shop by clicking "make (un)available"
 
-    You can also edit its name and price by clicking edit, after which a pop up will be shown for you to enter the new name and price
+  You can also edit the product name and price by clicking edit, after which a pop up will be shown for you to enter the new name and price
   
   You can click the exit icon at the top left corner of the page to go back to the log in page
 
 * All other pages are for normal users and thus we will assume that you log yourself in as the normal user, and we will use the word "user" to refer to users without admin priviledge
 
 * After logging in as an user, you will see the your profile page:
+
   First you will see your user name and profile picture in the profile
 
-  Below are three buttons to jump to the main functionaities for each user, and the pages clicking them will show up later in this instruction
+  Below are three buttons to jump to the main functionaities for each user, and more details will follow later in this instruction about the pages they jump to.
 
-  Below the three buttons are three sections, which are collapsed by default:
+  Below the three buttons are three sections, which are collapsed by default.
 
-    The account information contains personal information
+  The account information contains personal information
 
-    The game history contains the scores in your past games
+  The game history contains the scores in your past games
 
-    The games created part contains previews of games that you created and posted
+  The games created part contains previews of games that you created and posted
 
   You can click the exit icon on top left corner to go back to log in page.
 
@@ -110,6 +111,7 @@ Below is the instruction on how to use the app in phase 1:
   There is an exit button on top left to go back to user profile
 
 * Right now in the game editting page you will see a blank game, but in phase 2, we might also be loading a game you already created for you to edit
+
   The game is put in the grids
 
   Under the title "Game Edit", you will see a list of buttons for you to select what to add. For instance, if you select "wall" and click a cell in the grids, it will put wall in the cell. Meanwhile, if you select "delete", it will empty the cells that you create. Note that you can not put goals on walls but can put them on players and boxes.
@@ -123,5 +125,5 @@ Below is the instruction on how to use the app in phase 1:
 * As an user you can go to token shop by clicking "token shop" in youur profile page
 
   There are three tabs of three different kinds of products that you will be able to purchase with your tokens
-  
+
   You can go back to the user profile by clicking the exit button on top left of the page
