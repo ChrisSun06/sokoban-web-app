@@ -3,15 +3,14 @@ import AppBar from '@material-ui/core/AppBar'
 
 import {Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-//import classes from "*.module.css";
 
 const useStyles = makeStyles({
     root: {
         flexGrow: 1
     },
     logo: {
-        width: 45,
-        height: 45
+        width: 50,
+        height: 50
     },
     appbar: {
         alignItems: 'center',
@@ -59,54 +58,5 @@ class Header extends React.Component {
     }
 }
 
-// const Header = () => {
-//   const classes = useStyles();
-
-//   return (
-//     <div>
-//       <AppBar style={{ background: '#fafafa'}} position="fixed">
-//         <Toolbar>
-//           <img
-//             className={classes.logo}
-//             src={
-//               logo
-//             }
-//           />
-//         <Typography style={{color: '#212121'}} variant="h3">
-//           Token Shop
-//         </Typography>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// }
-
-/* The Header Component */
-// class Header extends React.Component {
-//     const classes = useStyles();
-//     const { title, logo, money } = this.props;
-
-//     return (
-//       <div>
-//         <AppBar color="primary" position="static">
-//           <Toolbar>
-//             <img
-//               className={classes.logo}
-//               src={
-//                 "./bag.png"
-//               }
-//               alt="Bag Logo"
-//             />
-//           <Typography variant="h3">
-//             {title}
-//           </Typography>
-//           <Typography variant="h6">
-//             <img src="./bag.png"/>
-//           </Typography>
-//           </Toolbar>
-//         </AppBar>
-//       </div>
-//     );
-// }
 
 export default Header;
