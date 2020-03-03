@@ -84,7 +84,7 @@ export default class LayoutLobby extends React.Component {
 
     on_enter_room(){
         window.location.href = `/gameroom?id=3&code=${this.state.entering_room_code}`
-        
+
     }
 
     on_input_room_code(e){
@@ -96,8 +96,8 @@ export default class LayoutLobby extends React.Component {
     }
 
     render() {
-        const centered_style = {display: 'flex',  
-                                justifyContent:'center', 
+        const centered_style = {display: 'flex',
+                                justifyContent:'center',
                                 alignItems:'center'};
         return (
             <div>
@@ -121,13 +121,13 @@ export default class LayoutLobby extends React.Component {
                     }}
                 />
                 <br/>
-                
-                {this.state.current_on === ALL_GAMES && <LayoutList 
+
+                {this.state.current_on === ALL_GAMES && <LayoutList
                                                             game_previews={this.state.display_game}
                                                             on_create_room={this.on_create_room.bind(this)}/>}
 
                 <div style={{...centered_style,marginTop: '50px'}}>
-                    <InputLabel style={{marginRight: '10px'}}>Enter a room code to enter an existing code: </InputLabel>
+                    <InputLabel style={{marginRight: '10px'}}>Enter a room code to enter an existing room: </InputLabel>
                     <Input placeholder='enter 4-digit code...' value={this.state.entering_room_code} onChange={this.on_input_room_code.bind(this)}/>
                 </div>
                 <br/>

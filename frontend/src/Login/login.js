@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import {borders} from '@material-ui/system'
 import {authenticate_user} from '../hardCodedData'
+import {authenticate_admin} from '../hardCodedData'
 import "./login.css"
 
 export class Login extends React.Component {
@@ -37,13 +38,18 @@ export class Login extends React.Component {
     }
 
     onAuthentication(result) {
-        if (result.authenticated) {
+        if (result.admin) {
+            window.location.href = `/admin`
+            // window.location.href='/profile?' + this.state.inputs.usr_nm
+        }
+        else if (result.authenticated) {
             window.location.href = `/profile?username=${this.state.inputs.usr_nm}`
             // window.location.href='/profile?' + this.state.inputs.usr_nm
         } else {
             alert('fail')
         }
     }
+
 
     jump(e) {
         window.location.href = '/signup'

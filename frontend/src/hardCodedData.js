@@ -14,6 +14,13 @@ const sample_users = [
     }
 ];
 
+const sample_admins = [
+    {
+        username: 'admin1',
+        password: '000000'
+
+}];
+
 
 function authenticate_user(usr) {
     // use proimse to simulate the asynchronousness of actual server
@@ -21,12 +28,17 @@ function authenticate_user(usr) {
         const authenticated = sample_users.filter(function (u) {
             return u.username === usr.username && u.password === usr.password;
         }).length > 0;
+        const admin = sample_admins.filter(function (u) {
+            return u.username === usr.username && u.password === usr.password;
+        }).length > 0;
         resolve({
+            admin: admin,
             authenticated: authenticated,
             user: usr
         });
     })
 }
+
 
 function find_user(usrnm) {
     return new Promise(function (resolve, reject) {
