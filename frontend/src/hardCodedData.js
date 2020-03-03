@@ -5,19 +5,19 @@
 // This file is for hard coded data for phase one
 const sample_users = [
     {
-        username: 'user1',
-        password: '123456',
+        username: 'user',
+        password: 'user',
     },
     {
-        username: 'user2',
-        password: '1234567'
+        username: 'user1',
+        password: 'user1'
     }
 ];
 
 const sample_admins = [
     {
-        username: 'admin1',
-        password: '000000'
+        username: 'admin',
+        password: 'admin'
 
 }];
 

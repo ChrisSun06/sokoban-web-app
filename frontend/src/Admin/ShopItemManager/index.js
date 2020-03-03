@@ -91,8 +91,8 @@ class ShopItem extends React.Component {
   }
 
   editProduct(index, name, price){
-    console.log(this.state.arr)
-    alert(this.state.arr.length)
+    // console.log(this.state.arr)
+    // alert(this.state.arr.length)
     this.props.handleEdit(index, name, price);
   }
 

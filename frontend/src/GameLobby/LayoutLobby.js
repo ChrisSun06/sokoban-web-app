@@ -15,6 +15,7 @@ import ReactSearchBox from 'react-search-box'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import GamesIcon from '@material-ui/icons/Games';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 
@@ -95,12 +96,16 @@ export default class LayoutLobby extends React.Component {
         this.setState({...this.state, entering_room_code: v});
     }
 
+    on_quit(e){
+        window.location.href = '/profile?username=user'
+    }
     render() {
         const centered_style = {display: 'flex',
                                 justifyContent:'center',
                                 alignItems:'center'};
         return (
             <div>
+                <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
                 <ReactSearchBox
                     placeholder="Search"
                     // value="Search..."

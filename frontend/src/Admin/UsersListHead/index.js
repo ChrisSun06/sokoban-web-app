@@ -179,7 +179,7 @@ class UsersList extends React.Component {
           index_to = j;
         }
       }
-      alert(index_to)
+      // alert(index_to)
       dummy_users[index_to].tokens = input;
       this.setState({
         data: tmp,

@@ -12,6 +12,7 @@ import preview3 from "../GameLobby/sokobanpreview3.jpeg";
 import { CardActionArea } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 const IMAGES = {
@@ -103,9 +104,16 @@ class GameCreatedPage extends React.Component {
         window.location.href = '/gameedit'
     }
 
+    on_quit(e){
+        window.location.href = '/profile?username=user'
+    }
+
     render() {
         return (
             <div>
+                <IconButton aria-label="Create" onClick={this.on_quit.bind(this)}>
+                    <ExitToAppIcon/>
+                </IconButton>
                 <IconButton aria-label="Create" onClick={this.on_create_new.bind(this)}>
                     <Add/> Create Game
                 </IconButton>

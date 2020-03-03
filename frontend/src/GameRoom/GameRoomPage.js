@@ -13,6 +13,8 @@ import GamesIcon from '@material-ui/icons/Games';
 import parser from 'query-string'
 import WaitingText from './WaitingText'
 import { CardActionArea } from "@material-ui/core";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 
 function PreviewCard(props) {
@@ -35,18 +37,24 @@ function PreviewCard(props) {
                 >
                     <img src={`${props.preview.pic}`} height='100vh' width='100vh'></img>
                 </CardContent>
-                <CardActionArea>
+                <CardActions>
                     {
                         is_self && (
-                            <IconButton onClick={on_del_button}>Quit</IconButton>
+                            <IconButton onClick={on_del_button} color='primary'>
+                                <ExitToAppIcon/>
+                                Quit
+                            </IconButton>
                         )
                     }
                     {
                         !is_self && (
-                            <IconButton disabled={!as_owner} onClick={on_del_button}>Kick</IconButton>
+                            <IconButton disabled={!as_owner} onClick={on_del_button} color='primary'>
+                                <RemoveIcon/>
+                                Kick
+                            </IconButton>
                         )
                     }
-                </CardActionArea>
+                </CardActions>
             </Card>
         </div>)
 }
