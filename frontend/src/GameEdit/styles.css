@@ -1,0 +1,14 @@
+
+.root {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+
+html {
+    background-image:url("./b.jpg");
+    background-size: cover;
+    height: 900px;
+    width: 100%;
+    overflow: auto;
+}

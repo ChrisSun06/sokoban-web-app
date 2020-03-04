@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Contents from "./../Content";
 
+
 //Dummy datas for products
 const productData = [
 
@@ -148,13 +149,6 @@ TabPanel.propTypes = {
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired,
 };
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 const useStyles = makeStyles(theme => ({
     root: {

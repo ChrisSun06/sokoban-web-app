@@ -10,3 +10,11 @@
     align-self: "center";
     text-align: center;
 }
+
+html{
+    background-image:url("./b.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}

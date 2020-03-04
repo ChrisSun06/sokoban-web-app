@@ -4,6 +4,10 @@ import pic from "./bag.png"
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+
+import "./styles.css";
+
+
 // Importing components
 import Header from "./../Header";
 import SimpleTabs from "./../NavBar"
@@ -15,7 +19,7 @@ class Shop extends React.Component {
 
     render() {
         return (
-            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+            <div class="main">
                 <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
                 <div className="Shop">
                     <Header

@@ -1,0 +1,17 @@
+.root {
+    align-self: center;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+}
+
+#appbar {
+    align-items: center;
+    background-color: #fafafa
+}
+
+#title {
+    color: #121212;
+}

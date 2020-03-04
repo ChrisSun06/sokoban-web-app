@@ -18,32 +18,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import PopUp from './PopUp.js';
 
+import "./styles2.css"
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  list_container: {
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  title: {
-    margin: theme.spacing(4, 0, 2),
-  },
-  subside_btn: {
-      margin: 10,
-  },
-  list_elements: {
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  items: {
-    minWidth: 700,
-    maxWidth: 1500,
-  }
-});
 
 class ShopItem extends React.Component {
   constructor(props){
@@ -91,27 +67,24 @@ class ShopItem extends React.Component {
   }
 
   editProduct(index, name, price){
-    // console.log(this.state.arr)
-    // alert(this.state.arr.length)
     this.props.handleEdit(index, name, price);
   }
 
 
   render() {
-    const { classes, user_data } = this.props;
     const editProduct = this.editProduct;
 
     return (
-      <div className={classes.root} >
-        <Grid container spacing={2} alignItems="center" justify="center" >
+      <div className="root" >
+        <Grid container spacing={2} >
           <Grid item xs={12} md={6}>
-            <Typography variant="h5" className={classes.title}>
+            <Typography variant="h5">
               Products
             </Typography>
-            <div className={classes.list_container}>
-              <List dense={this.state.dense} className={classes.list_elements}>
+            <div className="list_container">
+              <List dense={this.state.dense} className="list_elements">
                   {this.state.arr.map((user, index) =>
-                  <div className={classes.items} >
+                  <div className="items" >
                   <ListItem id={user.name}>
                       <ListItemAvatar>
                           <Avatar>
@@ -123,14 +96,14 @@ class ShopItem extends React.Component {
                           secondary={"Price: " + user.price}
                       />
                       <ListItemSecondaryAction>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.changeAvailability(index)}>
+                          <Button variant="contained" color="primary" id="subside_btn" onClick={() => this.changeAvailability(index)}>
                           {user.available ? (
                             <span>Make Unavailable</span>
                             ) : (
                                 <span>Make Available</span>
                             )}
                           </Button>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopEdit(index)}>
+                          <Button variant="contained" color="primary" id="subside_btn2" onClick={() => this.togglePopEdit(index)}>
                             Edit
                           </Button>
                       </ListItemSecondaryAction>
@@ -147,7 +120,7 @@ class ShopItem extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ShopItem);
+export default ShopItem;
 
 
 

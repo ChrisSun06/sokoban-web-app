@@ -17,6 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import GamesIcon from '@material-ui/icons/Games';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import "./styles.css"
 
 
 const IMAGES = {
@@ -25,7 +26,6 @@ const IMAGES = {
 
 
 function PreviewCard(props) {
-    // alert(IMAGES[props.preview.preview_image])
     return (<Card>
         <CardHeader
             title={`${props.preview.game_name}`}
@@ -104,7 +104,7 @@ export default class LayoutLobby extends React.Component {
                                 justifyContent:'center',
                                 alignItems:'center'};
         return (
-            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+            <div>
                 <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
                 <ReactSearchBox
                     placeholder="Search"
@@ -131,12 +131,12 @@ export default class LayoutLobby extends React.Component {
                                                             game_previews={this.state.display_game}
                                                             on_create_room={this.on_create_room.bind(this)}/>}
 
-                <div style={{...centered_style,marginTop: '50px'}}>
+                <div id="a">
                     <InputLabel style={{marginRight: '10px'}}><strong>Enter a room code to enter an existing room: </strong></InputLabel>
                     <Input placeholder='enter 4-digit code...' value={this.state.entering_room_code} onChange={this.on_input_room_code.bind(this)}/>
                 </div>
                 <br/>
-                <div style={{...centered_style}}>
+                <div id="b">
                     <IconButton onClick={this.on_enter_room.bind(this)}
                                 disabled={this.state.entering_room_code.length < 4}><GamesIcon/> <strong>Play</strong></IconButton>
                 </div>

@@ -9,6 +9,8 @@ import UserListContent from './../UsersList';
 import ShopItem from './../ShopItemManager';
 import { withStyles } from '@material-ui/core/styles';
 
+import "./styles.css"
+
 let dummy_users = [
 
   {
@@ -306,27 +308,27 @@ class UsersList extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.main} align="center">
-          <Paper component="form" className={classes.root} alignItems="center" justify="center">
+      <div className="main">
+          <Paper component="form" className="root" alignItems="center" justify="center">
               <InputBase
-                  className={classes.input}
+                  className="input"
                   placeholder="Search People"
                   inputProps={{ 'aria-label': 'Search People' }}
                   onChange={this.inputUserChange}
               />
-              <IconButton className={classes.iconButton} aria-label="search" onClick={() => this.findUser(this.inputUser)}>
+              <IconButton id="iconButton" aria-label="search" onClick={() => this.findUser(this.inputUser)}>
                   <SearchIcon/>
               </IconButton>
           </Paper>
-          <Button variant="contained" className={classes.add_to_all} onClick={() => this.addOneToAll()} alignItems="center" justify="center">Add Token To All</Button>
-          <Button variant="contained" className={classes.remove_all} alignItems="center" justify="center" onClick={() => this.deleteAll()}>Remove All</Button>
-          <Button variant="contained" className={classes.remove_all} alignItems="center" justify="center" onClick={() => this.newProduct("new product", 0)}>Add New Product</Button>
-          <UserListContent handleUpdate={this.handleUpdate} user_data={this.state.data} alignItems="center" justify="center"/>
-          <ShopItem handleUpdate={this.changeAvailability} handleEdit={this.editProduct} user_data={this.state.products} alignItems="center" justify="center"/>
+          <Button variant="contained" id="add_to_all" onClick={() => this.addOneToAll()}>Add Token To All</Button>
+          <Button variant="contained" id="remove_all"   onClick={() => this.deleteAll()}>Remove All</Button>
+          <Button variant="contained" id="add_new"   onClick={() => this.newProduct("new product", 0)}>Add New Product</Button>
+          <UserListContent handleUpdate={this.handleUpdate} user_data={this.state.data}/>
+          <ShopItem handleUpdate={this.changeAvailability} handleEdit={this.editProduct} user_data={this.state.products}/>
       </div>
     );
   }
 
 }
 
-export default withStyles(styles, { withTheme: true })(UsersList);
+export default UsersList;

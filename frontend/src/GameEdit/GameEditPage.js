@@ -5,9 +5,16 @@ import EditButtons from './EditButtons'
 import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+
+import "./styles.css"
+
+const styles = theme => ({
+  root: {display: 'flex',  justifyContent:'center', alignItems:'center'}
+});
 
 class GameEditPage extends React.Component{
   constructor(props){
@@ -83,34 +90,33 @@ class GameEditPage extends React.Component{
   }
 
   render(){
-    const centered_style = {display: 'flex',  justifyContent:'center', alignItems:'center'};
 
     return(
-      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
-        <div style={{...centered_style}}>
+      <div id="background">
+        <div className="root">
           <IconButton style={{float: 'left'}} onClick={this.return_home.bind(this)}>
             {/* <HomeIcon/> */}
             Quit
           </IconButton>
         </div>
         {/* <br/> */}
-        <div style={{...centered_style}}>
+        <div className="root">
           <h1>Game Edit</h1>
           <IconButton color='primary' onClick={this.upload_game.bind(this)}><CloudUploadIcon/></IconButton>
         </div><br/>
-        <div style={{...centered_style}}>
+        <div className="root" >
           <EditButtons onButtonClick={this.switch_type.bind(this)}
                       currentOn={this.state.current_cursor_type}
           />
         </div><br/>
        {!!this.state.game &&
-          <div style={{...centered_style}}>
+          <div className="root">
             <DimPanel onDimChange={this.changeDim.bind(this)}
                     game={this.state.game}></DimPanel>
 
           </div>}
         <br/>
-        <div style={{...centered_style}}>
+        <div className="root">
           <GameEditInterface game={this.state.game}
                             usr_lst={this.state.players}
                             cell_clicked={this.cell_clicked.bind(this)}

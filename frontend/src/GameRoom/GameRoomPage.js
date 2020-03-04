@@ -16,6 +16,8 @@ import { CardActionArea } from "@material-ui/core";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+import "./styles.css"
+
 
 function PreviewCard(props) {
     // alert(IMAGES[props.preview.preview_image])
@@ -156,16 +158,16 @@ class GameRoomPage extends React.Component {
 
         const as_owner = this.is_owner_of_room()
         return (
-            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
-                <div style={{...centered_style, marginTop: '10vh'}}>
-                    <Typography color='textSecondary' variant='caption'>
+            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 1900, width: "100%", overflow: "auto"}}>
+                <div class="a">
+                    <Typography color='textSecondary' variant='caption' class="subtitle">
                         {`Invite your friend to join with this code: ${this.state.game_code.toUpperCase()} !`}
                     </Typography>
                 </div>
-                <div style={{...centered_style, marginTop: '0vh'}}>
+                <div class="b">
                     <Typography color='secondary' variant='h3'>{this.state.my_name}</Typography>
                 </div>
-                <div style={{...centered_style, height: '40vh', overflow: 'auto', marginTop: '5vh', marginLeft: '20vw'}}>
+                <div  class="c">
                     <LayoutList player_preview={this.state.players}
                                 self_id={this.state.my_name}
                                 as_owner={as_owner}
@@ -175,7 +177,7 @@ class GameRoomPage extends React.Component {
                 {
                     as_owner &&
                     (
-                        <div style={{...centered_style}}>
+                        <div class="d">
                             <IconButton aria-label="Start" onClick={this.start_game.bind(this)}>
                                 <GamesIcon/> Start
                             </IconButton>
@@ -186,7 +188,7 @@ class GameRoomPage extends React.Component {
                 {
                     !as_owner &&
                     (
-                        <div style={{...centered_style}}>
+                        <div class="d">
                             <WaitingText color='red' msg='Waiting the owner to start game'></WaitingText>
                         </div>
                     )

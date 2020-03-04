@@ -1,6 +1,9 @@
 import React from 'react';
 
 
+import "./styles.css"
+
+
 const tail_transition = {
   0: '.',
   1: '..',

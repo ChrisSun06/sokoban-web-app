@@ -60,10 +60,6 @@ class App extends React.Component {
         return (
             <Router>
                 <Switch>
-
-                    <Route path="./TokenShop">
-                        <MainPage/>
-                    </Route>
                     {/* the above one is just a dummy page to test the router works */}
 
                     <Route path="/gameplay">

@@ -19,6 +19,7 @@ import PopUp from "./PopUp";
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
+import "./styles2.css"
 
 const styles = theme => ({
   root: {
@@ -30,9 +31,6 @@ const styles = theme => ({
   list_container: {
     alignItems: 'center',
     alignSelf: 'center',
-  },
-  title: {
-    margin: theme.spacing(4, 0, 2),
   },
   subside_btn: {
       margin: 10,
@@ -119,16 +117,16 @@ class UserList extends React.Component {
     const handleUpdate2 = this.handleUpdate
 
     return (
-      <div className={classes.root} >
-        <Grid container spacing={2} alignItems="center" justify="center" className={classes.container}>
+      <div className="root" >
+        <Grid container spacing={2} className="container">
           <Grid item xs={12} md={6}>
-            <Typography variant="h5" className={classes.title}>
+            <Typography variant="h5">
               Users
             </Typography>
-            <div className={classes.list_container}>
-              <List dense={this.state.dense} className={classes.list_elements}>
+            <div className="list_container">
+              <List dense={this.state.dense} className="list_elements">
                   {this.state.arr.map((user, index) =>
-                  <div className={classes.items}>
+                  <div className="items">
                   <ListItem id={user.name}>
                       <ListItemAvatar>
                           <Avatar>
@@ -140,13 +138,13 @@ class UserList extends React.Component {
                           secondary={"Tokens: " + user.tokens}
                       />
                       <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="delete" className={classes.subside_btn} onClick={() => this.togglePopDel(index)}>
+                          <IconButton edge="end" aria-label="delete" id="subside_btn1" onClick={() => this.togglePopDel(index)}>
                               <DeleteIcon />
                           </IconButton>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopPswd(index)}>
+                          <Button variant="contained" color="primary" id="subside_btn2" onClick={() => this.togglePopPswd(index)}>
                             Change Password
                           </Button>
-                          <Button variant="contained" color="primary" className={classes.subside_btn} onClick={() => this.togglePopTkn(index)}>
+                          <Button variant="contained" color="primary" id="subside_btn3" onClick={() => this.togglePopTkn(index)}>
                             Change Tokens
                           </Button>
                       </ListItemSecondaryAction>
@@ -165,7 +163,7 @@ class UserList extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(UserList);
+export default UserList;
 
 
 

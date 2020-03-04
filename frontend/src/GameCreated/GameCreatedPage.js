@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import "./styles.css"
 
 const IMAGES = {
     preview1, preview2, preview3
@@ -110,7 +111,7 @@ class GameCreatedPage extends React.Component {
 
     render() {
         return (
-            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+            <div id="background">
                 <IconButton aria-label="Create" onClick={this.on_quit.bind(this)}>
                     <ExitToAppIcon/>
                 </IconButton>

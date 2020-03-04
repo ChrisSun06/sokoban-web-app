@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
 
+import "./styles.css"
+
 const styles = theme => ({
   root: {
     alignSelf: 'center',
@@ -23,7 +25,7 @@ class Admin extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+      <div>
         <div>
           <IconButton onClick={this.on_logout.bind(this)}><ExitToAppIcon/></IconButton>
           <Header
@@ -32,7 +34,7 @@ class Admin extends React.Component {
           />
         </div>
 
-        <div className={classes.root}>
+        <div className="root">
           <UsersList/>
         </div>
 
@@ -41,4 +43,4 @@ class Admin extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Admin);
+export default Admin;
