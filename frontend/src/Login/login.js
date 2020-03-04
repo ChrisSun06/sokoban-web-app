@@ -56,20 +56,20 @@ export class Login extends React.Component {
 
     render() {
         return (
-            <body id='l_back' style={{backgroundImage: 'url(' + require('./l.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
+            <body id='l_back'>
             <div id="l_rec">
                 <Container maxWidth="xs">
                     <span> </span><br/>
-                    <h1 style={{marginLeft: 157}}>Log in</h1>
-                    <p style={{marginLeft: 120, marginTop: 30}}><input className="login" type="text"
+                    <h1 id = "l_h">Log in</h1>
+                    <p className = "l_p1"><input className="login" type="text"
                                                                        placeholder="Username"
                                                                        value={this.state.inputs.usr_nm}
                                                                        onChange={this.onInput('usr_nm')}/></p>
-                    <p style={{marginLeft: 120, marginTop: 30}}><input className="login" type="password"
+                    <p className = "l_p1"><input className="login" type="password"
                                                                        placeholder="Password"
                                                                        value={this.state.inputs.passwrd}
                                                                        onChange={this.onInput('passwrd')}/></p>
-                    <button style={{marginLeft: 166, marginTop: 45}} id="login_button"
+                    <button id="bb"
                             onClick={this.onLogin.bind(this)}><h2>Log in</h2></button>
                     <br/>
                     <span> </span><br/>
@@ -77,9 +77,9 @@ export class Login extends React.Component {
             </div>
             <div>
                 <Container maxWidth="xs">
-                    <p style={{marginLeft: 70, marginTop: 10, marginBottom: 30}}><strong>Doesn't have an
+                    <p id = "h2"><strong>Doesn't have an
                         account?</strong>
-                        <button style={{marginLeft: 10}} id="login_button" onClick={this.jump.bind(this)}>Sign up
+                        <button id = "bb2" onClick={this.jump.bind(this)}>Sign up
                         </button>
                     </p>
                 </Container>

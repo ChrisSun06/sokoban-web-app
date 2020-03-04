@@ -67,58 +67,46 @@ export class Profile extends React.Component{
     on_logout(e){
         window.location.href = '/'
     }
-    
+
 
     render() {
-        let divStyle = {
-            hidden: {
-                visibility: "hidden",
-                height: 0,
-                opacity: 0
-            },
-            visible: {
-                visibility: "visible",
-                height: "auto",
-                opacity: 1
-            }
-        }
-        let hiddenProperty1 = this.state.active1 ? divStyle.visible : divStyle.hidden
-        let hiddenProperty2 = this.state.active2 ? divStyle.visible : divStyle.hidden
-        let hiddenProperty3 = this.state.active3 ? divStyle.visible : divStyle.hidden
+        let hiddenProperty1 = this.state.active1 ? "visible" : "hidden"
+        let hiddenProperty2 = this.state.active2 ? "visible" : "hidden"
+        let hiddenProperty3 = this.state.active3 ? "visible" : "hidden"
         let rightIconHiddenProperty = (this.state.active1 ? 'active' : null)
         return (
-            <div style={{backgroundImage: 'url(' + require('./d.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%"}}>
+            <div id='l_back'>
             <IconButton onClick={this.on_logout.bind(this)}><ExitToAppIcon/></IconButton>
             {!!this.state.usr &&
                 <div>
-                    <img style = {{display: "inline-block", marginLeft: 50, marginTop: 60}} class='imgside' src={profile} height='130px'/>
-                    <h2 style = {{display: "inline-block", marginLeft: 100}}>{this.state.usr}</h2><br/>
-                    <button style={{display: "inline-block", marginLeft: 50}} id="signup_button" onClick={this.jump.bind(this)}><h2>Go to Lobby</h2></button>
-                    <button style={{display: "inline-block", marginLeft: 50, marginTop: 30}} id="signup_button" onClick={this.jump1.bind(this)}><h2>Create Game</h2></button>
-                    <button style={{display: "inline-block", marginLeft: 50}} id="signup_button" onClick={this.jump2.bind(this)}><h2>Go to Token Shop</h2></button><br/>
+                    <img id = "im1" class='imgside' src={profile}/>
+                    <h2 id = "h1">{this.state.usr}</h2><br/>
+                    <button className = "b1" id="signup_button" onClick={this.jump.bind(this)}><h2>Go to Lobby</h2></button>
+                    <button className = "b2" id="signup_button" onClick={this.jump1.bind(this)}><h2>Create Game</h2></button>
+                    <button className = "b1" id="signup_button" onClick={this.jump2.bind(this)}><h2>Go to Token Shop</h2></button><br/>
 
-                    <div style = {{marginLeft:50, marginTop: 50}}>
+                    <div className = "d1">
                         <IconButton>
                             {this.state.active1 ? <KeyboardArrowDownIcon onClick={this.toggleClass1}/> : <ChevronRightIcon onClick={this.toggleClass1}/>}
                         </IconButton>
                     <span className = "big">Account Information</span></div>
-                        <div className = "small" style={hiddenProperty1}>Personal information</div>
-                        <div className = "tiny" style={hiddenProperty1}>Name: {this.state.usr}</div>
-                        <div className = "tiny" style={hiddenProperty1}>Age: 20</div>
-                        <div className = "tiny" style={hiddenProperty1}>VIP level: 0</div>
+                        <div className = "small" id = {hiddenProperty1}> Personal information</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Name: {this.state.usr}</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Age: 20</div>
+                        <div className = "tiny" id = {hiddenProperty1}>VIP level: 0</div>
                         {/* <div className = "small1" style={hiddenProperty1}><button style={{marginLeft: 10}} id="login_button">Change password</button></div> */}
 
-                        <IconButton style = {{marginLeft:50}}>
+                        <IconButton id = "I1">
                             {this.state.active2 ? <KeyboardArrowDownIcon onClick={this.toggleClass2}/> : <ChevronRightIcon onClick={this.toggleClass2}/>}
                         </IconButton>
                     <span className = "big">Game History</span>
-                        <div className = "small" style={hiddenProperty2}>Game: 1,  Score: 10</div>
+                        <div className = "small" id={hiddenProperty2}>Game: 1,  Score: 10</div>
 
-                        <IconButton style = {{marginLeft:50}}>
+                        <IconButton id = "I1">
                             {this.state.active3 ? <KeyboardArrowDownIcon onClick={this.toggleClass3}/> : <ChevronRightIcon onClick={this.toggleClass3}/>}
                         </IconButton>
                     <span className = "big">Games Created</span>
-                        <div className = "small" style={hiddenProperty3}><img style = {{display: "inline-block"}} class='imgside' src={g1} height='130px'/></div>
+                        <div className = "small" id={hiddenProperty3}><img id = "im2" class='imgside' src={g1}/></div>
                 </div>
             }
             {!this.state.usr &&

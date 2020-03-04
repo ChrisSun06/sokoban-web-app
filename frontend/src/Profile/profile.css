@@ -1,3 +1,15 @@
+#im1 {
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 60px;
+    height: 130px
+}
+
+#im2 {
+    display: inline-block;
+    height: 130px
+}
+
 .big {
     font-size: 125%
 }
@@ -17,4 +29,49 @@
 
 .Icon {
     margin-left: 5%
+}
+
+#l_back {
+    background-image: url("d.jpg");
+    background-size: cover;
+    height: 900px;
+    width: 100%;
+    overflow: auto
+}
+
+#h1 {
+    display: inline-block;
+    margin-left: 100px
+}
+
+.b1 {
+    display: inline-block;
+    margin-left: 50px
+}
+
+.b2 {
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 30px
+}
+
+.d1 {
+    margin-left: 50px;
+    margin-top: 50px
+}
+
+#I1 {
+    margin-left: 50px
+}
+
+#hidden {
+    visibility: hidden;
+    height: 0px;
+    opacity: 0
+}
+
+#visible {
+    visibility: visible;
+    height: auto;
+    opacity: 1
 }
