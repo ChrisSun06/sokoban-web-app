@@ -11,11 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import "./styles.css"
 
-const styles = theme => ({
-  root: {
-    alignSelf: 'center',
-  },
-});
 
 class Admin extends React.Component {
   on_logout(e){
@@ -23,7 +18,6 @@ class Admin extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <div id="background">
         <div>

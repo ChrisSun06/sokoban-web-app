@@ -21,6 +21,7 @@ function InputField(props) {
   }
 }
 
+//Credit 'https://medium.com/@daniela.sandoval/creating-a-popup-window-using-js-and-react-4c4bd125da57' for ideas on creating a popup window.
 export default class PopUp extends Component {
   constructor(props){
     super(props);

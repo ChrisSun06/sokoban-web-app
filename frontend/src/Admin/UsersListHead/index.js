@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import UserListContent from './../UsersList';
 import ShopItem from './../ShopItemManager';
+import GameStatus from './../gameStatus';
 import { withStyles } from '@material-ui/core/styles';
 
 import "./styles.css"
@@ -286,6 +287,7 @@ class UsersList extends React.Component {
           <Button variant="contained" id="add_new"   onClick={() => this.newProduct("new product", 0)}>Add New Product</Button>
           <UserListContent handleUpdate={this.handleUpdate} user_data={this.state.data}/>
           <ShopItem handleUpdate={this.changeAvailability} handleEdit={this.editProduct} user_data={this.state.products}/>
+          <GameStatus />
       </div>
     );
   }

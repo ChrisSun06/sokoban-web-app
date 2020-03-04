@@ -21,33 +21,6 @@ import PropTypes from 'prop-types';
 
 import "./styles2.css"
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    alignItems: 'center',
-    alignSelf: 'center',
-    minWidth: 400
-  },
-  list_container: {
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  subside_btn: {
-      margin: 10,
-  },
-  list_elements: {
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  container: {
-    minWidth: 400
-  },
-  items: {
-    minWidth: 700,
-    maxWidth: 1500,
-  }
-});
-
 class UserList extends React.Component {
   constructor(props){
     super(props);
@@ -113,7 +86,6 @@ class UserList extends React.Component {
 
 
   render() {
-    const { classes, user_data } = this.props;
     const handleUpdate2 = this.handleUpdate
 
     return (
