@@ -124,7 +124,7 @@ Below is the instruction on how to use the app in phase 1:
 
   You can give up by going clicking quit and go back to user profile page
 
-* As an user you can go to token shop by clicking "token shop" in youur profile page
+* As an user you can go to token shop by clicking "token shop" in your profile page
 
   There are now three tabs of three different kinds of products that you will be able to purchase with your tokens
   
