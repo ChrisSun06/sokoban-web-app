@@ -162,6 +162,7 @@ class Shop extends React.Component {
           }
     }
 
+    //Server call that manipulate datas
     handlePurchase(index, title){
         if(title === "Product 1"){
             let tmp = this.state.money - this.state.productData[index].price;

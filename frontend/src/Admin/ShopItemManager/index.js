@@ -40,7 +40,7 @@ class ShopItem extends React.Component {
     }
   }
 
-
+  //Server call that manipulate datas
   togglePopEdit(index) {
     let tmp = this.state.arr;
     tmp[index].seen_edit = !tmp[index].seen_edit;
@@ -62,10 +62,12 @@ class ShopItem extends React.Component {
     this.setState({ arr: tmp });  
   }
 
+  //Server call that manipulate datas
   changeAvailability(index){
     this.props.handleUpdate(index);
   }
 
+  //Server call that manipulate datas
   editProduct(index, name, price){
     this.props.handleEdit(index, name, price);
   }

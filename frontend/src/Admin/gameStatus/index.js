@@ -48,9 +48,7 @@ let dummy_games = [
 class gameStatus extends React.Component {
   constructor(props){
     super(props);
-    this.togglePopEdit = this.togglePopEdit.bind(this);
     this.changeAvailability = this.changeAvailability.bind(this);
-    this.editProduct = this.editProduct.bind(this)
     this.state = {
       arr: dummy_games.map(function(elem) {
         return {
@@ -64,23 +62,12 @@ class gameStatus extends React.Component {
   }
 
 
-  togglePopEdit(index) {
-    let tmp = this.state.arr;
-    tmp[index].seen_edit = !tmp[index].seen_edit;
-    this.setState({
-      arr: tmp
-    });
-  }
 
-
+  //Server call that manipulate datas
   changeAvailability(index){
     let tmp = this.state.arr
     tmp[index].available = !tmp[index].available
     this.setState({ arr: tmp })
-  }
-
-  editProduct(index, name, price){
-    this.props.handleEdit(index, name, price);
   }
 
 

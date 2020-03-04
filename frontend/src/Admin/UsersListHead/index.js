@@ -135,6 +135,7 @@ class UsersList extends React.Component {
     }
   }
 
+  //Server call that manipulate datas
   handleUpdate(index, title, input) {
     let tmp = this.state.data;
     if(title === "Change Tokens"){
@@ -175,6 +176,7 @@ class UsersList extends React.Component {
     }
   }
 
+  //Server call that sent datas
   newProduct(new_name, new_price) {
     dummy_products.push({
       name: new_name,
@@ -195,6 +197,7 @@ class UsersList extends React.Component {
     console.log(this.state.products)
   }
 
+  //Server call that manipulate datas
   editProduct(index, new_name, new_price) {
     console.log(this.state.products)
     let tmp = this.state.products;
@@ -207,6 +210,7 @@ class UsersList extends React.Component {
     });
   }
 
+  //Server call that manipulate datas
   changeAvailability(index){
     let tmp = this.state.products;
     tmp[index].available = !tmp[index].available;
@@ -216,7 +220,7 @@ class UsersList extends React.Component {
     });
   }
 
-
+  //Server call that manipulate datas
   addOneToAll(){
     let tmp = this.state.data;
     for(let i = 0; i < tmp.length; i++){
@@ -228,6 +232,7 @@ class UsersList extends React.Component {
     });
   }
 
+  //Server call that obtain datas
   findUser(name){
     let user = null;
     for (let i = 0; i < this.state.data.length; i++){
@@ -256,6 +261,7 @@ class UsersList extends React.Component {
     }
   }
 
+  //Server call that manipulate datas
   deleteAll(){
     let tmp = [];
     dummy_users = [];
