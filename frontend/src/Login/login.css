@@ -14,14 +14,6 @@
     margin-right: 30%
 }
 
-#l_back {
-    background-image: url("l.jpg");
-    background-size: cover;
-    height: 900px;
-    width: 100%;
-    overflow: auto
-}
-
 #l_h {
     margin-left: 157px
 }
@@ -49,4 +41,13 @@
     margin-left: 70px;
     margin-top: 10px;
     margin-bottom: 30px
+}
+
+#background {
+    position: absolute;
+    background-image:url("l.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
 }

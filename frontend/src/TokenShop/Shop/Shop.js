@@ -19,7 +19,7 @@ class Shop extends React.Component {
 
     render() {
         return (
-            <div class="main">
+            <div id="main">
                 <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
                 <div className="Shop">
                     <Header

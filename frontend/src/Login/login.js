@@ -56,6 +56,7 @@ export class Login extends React.Component {
 
     render() {
         return (
+            <div id="background">
             <body id='l_back'>
             <div id="l_rec">
                 <Container maxWidth="xs">
@@ -85,6 +86,7 @@ export class Login extends React.Component {
                 </Container>
             </div>
             </body>
+            </div>
         )
     }
 }

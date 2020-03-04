@@ -38,7 +38,7 @@ class WaitingText extends React.Component{
       text_color = this.props.color;
     }
     return (
-      <h4 style={{color: text_color}}>
+      <h4 id="msg">
         {`${this.props.msg}${this.state.tail}`}
       </h4>);
   }

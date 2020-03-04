@@ -3,3 +3,15 @@
     position: relative;
     align-items: 'center';
 }
+
+.root {
+    flex-grow: 1;
+}
+#appbar {
+    align-items: center;
+    background-color: #fafafa
+}
+
+#tab {
+    color: #212121
+}

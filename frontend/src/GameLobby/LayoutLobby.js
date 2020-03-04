@@ -100,11 +100,8 @@ export default class LayoutLobby extends React.Component {
         window.location.href = '/profile?username=user'
     }
     render() {
-        const centered_style = {display: 'flex',
-                                justifyContent:'center',
-                                alignItems:'center'};
         return (
-            <div>
+            <div id="background">
                 <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
                 <ReactSearchBox
                     placeholder="Search"

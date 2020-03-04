@@ -7,6 +7,8 @@ import InGameChatBox from './InGameChatBox'
 import WaitingText from './WaitingText'
 import { IconButton } from '@material-ui/core';
 
+import "./styles.css"
+
 const watch_interval = 100;
 
 class GamePlayPage extends React.Component{
@@ -157,14 +159,11 @@ class GamePlayPage extends React.Component{
   }
 
   render(){
-    const centered_style = {display: 'flex',
-                            justifyContent:'center',
-                            alignItems:'center'};
 
     return(
-      <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 900, width: "100%", overflow: "auto"}}>
-        <h1 style={{...centered_style}}>The Game</h1>
-        <div style={{...centered_style}}>
+      <div id="background">
+        <h1 id="a">The Game</h1>
+        <div id="b">
           <IconButton onClick={this.on_quit.bind(this)} color='secondary'>
             Quit
           </IconButton>
@@ -174,17 +173,17 @@ class GamePlayPage extends React.Component{
             {`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}
           </h4>} */}
         {this.state.game_ended &&
-          <div style={{...centered_style, color: 'grey'}}>
+          <div id="e">
             <WaitingText msg={`Game ended, returning to game lobby in ${this.state.cnt_down} seconds`}/>
           </div>}
         <br/>
-        <div style={{...centered_style}}>
+        <div id="c">
           <GameInterface game={this.state.game}
                         usr_lst={this.state.players}
                         on_action={this.onAction.bind(this)}
                         game_ended={this.state.game_ended}/>
         </div>
-        <div style={{...centered_style}}>
+        <div id="d">
           <InGameChatBox messages={this.state.chat.all_msgs}
                         on_send_msg={this.onSendMessage.bind(this)}
                         input_msg={this.state.chat.input_msg}

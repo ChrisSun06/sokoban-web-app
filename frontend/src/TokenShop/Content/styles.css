@@ -4,3 +4,19 @@
     margin-bottom: 40px;
     text-align: center;
 }
+
+.root {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: auto;
+}
+#gridList {
+    width: 600px;
+    height: 100%;
+    overflow: auto;
+}
+.icon {
+    color: rgba(255, 255, 255, 0.54);
+}
+

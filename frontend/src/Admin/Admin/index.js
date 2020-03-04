@@ -25,7 +25,7 @@ class Admin extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div id="background">
         <div>
           <IconButton onClick={this.on_logout.bind(this)}><ExitToAppIcon/></IconButton>
           <Header

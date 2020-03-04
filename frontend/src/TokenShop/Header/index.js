@@ -4,30 +4,19 @@ import AppBar from '@material-ui/core/AppBar'
 import {Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
-    root: {
-        flexGrow: 1
-    },
-    logo: {
-        width: 50,
-        height: 50
-    },
-    appbar: {
-        alignItems: 'center',
-    }
-});
+import "./styles.css"
+
 
 const SimpleHeader = (props) => {
 
-    const classes = useStyles();
     const {title, logo, money} = props;
 
     return (
-        <div className={classes.root}>
-            <AppBar style={{background: '#fafafa'}} position="relative" className={classes.appbar}>
+        <div className="root">
+            <AppBar position="relative" id="appbar">
                 <Toolbar>
                     <img
-                        className={classes.logo}
+                        className="logo"
                         src={
                             logo
                         }

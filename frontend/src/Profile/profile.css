@@ -31,13 +31,6 @@
     margin-left: 5%
 }
 
-#l_back {
-    background-image: url("d.jpg");
-    background-size: cover;
-    height: 900px;
-    width: 100%;
-    overflow: auto
-}
 
 #h1 {
     display: inline-block;
@@ -74,4 +67,13 @@
     visibility: visible;
     height: auto;
     opacity: 1
+}
+
+#l_back {
+    position: absolute;
+    background-image:url("./a.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
 }

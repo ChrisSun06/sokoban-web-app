@@ -7,32 +7,16 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
+import "./styles.css"
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'auto',
-    },
-    gridList: {
-        width: 600,
-        height: '100%',
-        overflow: 'auto',
-    },
-    icon: {
-        color: 'rgba(255, 255, 255, 0.54)',
-    },
-}));
 
 const Contents = (props) => {
-    const classes = useStyles();
 
     const {title, productData} = props;
 
     return (
-        <div className={classes.root}>
-            <GridList cellHeight='200' className={classes.gridList} spacing={16}>
+        <div className="root">
+            <GridList cellHeight='200' id="gridList" spacing={16}>
                 <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
                     <ListSubheader component="div">{title}</ListSubheader>
                 </GridListTile>
@@ -43,7 +27,7 @@ const Contents = (props) => {
                             title={tile.title}
                             subtitle={<span>cost: {tile.price}$</span>}
                             actionIcon={
-                                <IconButton aria-label={`purchase ${tile.title}`} className={classes.icon}>
+                                <IconButton aria-label={`purchase ${tile.title}`} className="icon">
                                     <MonetizationOnIcon/>
                                 </IconButton>
                             }

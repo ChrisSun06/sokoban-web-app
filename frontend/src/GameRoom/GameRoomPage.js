@@ -158,7 +158,7 @@ class GameRoomPage extends React.Component {
 
         const as_owner = this.is_owner_of_room()
         return (
-            <div style={{backgroundImage: 'url(' + require('./b.jpg') + ')', backgroundSize: 'cover' , height: 1900, width: "100%", overflow: "auto"}}>
+            <div id="background">
                 <div class="a">
                     <Typography color='textSecondary' variant='caption' class="subtitle">
                         {`Invite your friend to join with this code: ${this.state.game_code.toUpperCase()} !`}
