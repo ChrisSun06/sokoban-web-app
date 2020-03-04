@@ -12,7 +12,9 @@ Below is the instruction on how to use the app in phase 1:
 
 * If you log yourself in as admin, you will be directed to the admin page
   
-  You will see a list of users on the app, and you can search for a specific user by input the full username in the search bar(it is case sensitive for now) and click the search icon
+  You will see a list of users on the app, and you can search for a specific user by input the full username in the search bar(it is case sensitive for now) and click the search icon.
+  
+  Entering a user name that is not in the list will result in the browser alerting you “User not found”, and return back to having all users in the list.
 
   You will also see a list of products of the token shop, which will be shown later in the normal user mode
 
@@ -20,13 +22,13 @@ Below is the instruction on how to use the app in phase 1:
 
   You can click "add token to all" to add one token for each user
 
-  If you click "remove all", all users will be removed (please try it after you are done with the other features of the user list)
+  If you click "remove all users", all users will be removed (please try it after you are done with the other features of the user list)
 
   If you click "add new product", a new product with a default name and price will be added to the list of products (at the bottom, so you might need to scroll down)
 
   For each user, you will see their user name, profile picture and number of tokens. There are also three actions you can take with each user.
 
-  If you click the delete icon, the user will be removed
+  If you click the delete icon, the user will be removed, there will be a popup confirmation.
 
   If you click "change password", there will be a popup where you can fill in the new password
 
@@ -124,6 +126,8 @@ Below is the instruction on how to use the app in phase 1:
 
 * As an user you can go to token shop by clicking "token shop" in youur profile page
 
-  There are three tabs of three different kinds of products that you will be able to purchase with your tokens
+  There are now three tabs of three different kinds of products that you will be able to purchase with your tokens
+  
+  The money(token) you have is shown on the top in the header under the title. Each time you purchase a product by clicking the money button at the bottom right corner of the product tile, your money will decrease by the price of that product. Until it reaches 0, where you are not allowed to purchase anymore, and will be alerted that you do not have enough tokens.
 
   You can go back to the user profile by clicking the exit button on top left of the page
