@@ -14,20 +14,24 @@ const Contents = (props) => {
 
     const {title, productData} = props;
 
+    const handleBuy = (index, title) => {
+        props.handleBuy(index, title)
+    }
+
     return (
         <div className="root">
             <GridList cellHeight='200' id="gridList" spacing={16}>
                 <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
                     <ListSubheader component="div">{title}</ListSubheader>
                 </GridListTile>
-                {productData.map(tile => (
+                {productData.map((tile, index) => (
                     <GridListTile key={tile.img}>
                         <img src={tile.img} alt={tile.title}/>
                         <GridListTileBar
                             title={tile.title}
                             subtitle={<span>cost: {tile.price}$</span>}
                             actionIcon={
-                                <IconButton aria-label={`purchase ${tile.title}`} className="icon">
+                                <IconButton aria-label={`purchase ${tile.title}`} className="icon" onClick={() => handleBuy(index, title)}>
                                     <MonetizationOnIcon/>
                                 </IconButton>
                             }

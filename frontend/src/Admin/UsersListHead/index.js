@@ -102,43 +102,6 @@ let dummy_products = [
  ];
 
  
- 
-
-const styles = theme => ({
-  root: {
-    padding: '2px 4px',
-    display: "inline-block",
-    width: 260,
-    margin: 10,
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
-    height: 28,
-    margin: 4,
-  },
-  add_to_all: {
-    padding: 10,
-    display: "inline-block",
-    margin: 10,
-  },
-  remove_all: {
-    padding: 10,
-    display: "inline-block",
-    margin: 10,
-  },
-  main: {
-    alignItems: 'center',
-  },
-  user_contents: {
-  }
-});
-
 class UsersList extends React.Component {
   constructor(){
     super();
@@ -181,7 +144,6 @@ class UsersList extends React.Component {
           index_to = j;
         }
       }
-      // alert(index_to)
       dummy_users[index_to].tokens = input;
       this.setState({
         data: tmp,
@@ -306,7 +268,6 @@ class UsersList extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <div className="main">
           <Paper component="form" className="root" alignItems="center" justify="center">
@@ -321,7 +282,7 @@ class UsersList extends React.Component {
               </IconButton>
           </Paper>
           <Button variant="contained" id="add_to_all" onClick={() => this.addOneToAll()}>Add Token To All</Button>
-          <Button variant="contained" id="remove_all"   onClick={() => this.deleteAll()}>Remove All</Button>
+          <Button variant="contained" id="remove_all"   onClick={() => this.deleteAll()}>Remove All Users</Button>
           <Button variant="contained" id="add_new"   onClick={() => this.newProduct("new product", 0)}>Add New Product</Button>
           <UserListContent handleUpdate={this.handleUpdate} user_data={this.state.data}/>
           <ShopItem handleUpdate={this.changeAvailability} handleEdit={this.editProduct} user_data={this.state.products}/>

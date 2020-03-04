@@ -153,12 +153,16 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleBuy = (index, title) => {
+        props.handlePurchase(index, title);
+    }
 
     return (
         <div className="root">
@@ -171,17 +175,17 @@ export default function SimpleTabs() {
             </AppBar>
             <TabPanel value={value} index={0}>
                 <div>
-                    <Contents title="Product 1" productData={productData}/>
+                    <Contents title="Product 1" productData={props.productData} handleBuy={handleBuy.bind(this)}/>
                 </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <div>
-                    <Contents title="Product 2" productData={productData2}/>
+                    <Contents title="Product 2" productData={props.productData2} handleBuy={handleBuy.bind(this)}/>
                 </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <div>
-                    <Contents title="Product 3" productData={productData3}/>
+                    <Contents title="Product 3" productData={props.productData3} handleBuy={handleBuy.bind(this)}/>
                 </div>
             </TabPanel>
         </div>

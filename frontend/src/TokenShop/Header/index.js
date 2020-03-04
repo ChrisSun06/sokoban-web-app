@@ -22,9 +22,14 @@ const SimpleHeader = (props) => {
                         }
                     />
                     <Typography style={{color: '#212121'}} variant="h3">
-                        {title}
+                        {title} 
                     </Typography>
+                    
+
                 </Toolbar>
+                <Typography style={{color: '#212121'}} variant='subtitle1'>
+                     Your tokens: {money}
+                    </Typography>
             </AppBar>
         </div>
     );
