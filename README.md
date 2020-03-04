@@ -41,6 +41,8 @@ Below is the instruction on how to use the app in phase 1:
 
   You can also edit the product name and price by clicking edit, after which a pop up will be shown for you to enter the new name and price
   
+  Lastly as the admin, you can see and also activate/deactivate active games, by clicking making them available or unavailable.
+  
   You can click the exit icon at the top left corner of the page to go back to the log in page
 
 * All other pages are for normal users and thus we will assume that you log yourself in as the normal user, and we will use the word "user" to refer to users without admin priviledge
