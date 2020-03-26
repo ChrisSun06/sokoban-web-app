@@ -1,0 +1,37 @@
+.root {
+    flex-grow: 1;
+    align-items: center;
+    align-self: center;
+  }
+
+  .list_container {
+    align-items: center;
+    align-self: center;
+  }
+
+  #subside_btn {
+      margin-left: 10px;
+  }
+
+  #subside_btn2 {
+    margin-left: 10px;
+    
+}
+
+#subside_btn3 {
+    margin-left: 10px;
+    
+}
+
+  .list_elements {
+    align-items: center;
+  }
+
+  .items {
+    min-width: 700px;
+    max-width: 1500px;
+  }
+
+  .container {
+      min-width: 400px;
+  }

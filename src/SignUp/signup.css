@@ -1,0 +1,56 @@
+#placeholder {
+    height: 200px;
+    background-color: #66ffff;
+}
+
+#rec {
+    background-color: #f0f5f5;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    margin-right: 30%
+}
+
+#back {
+    height: 2000px;
+    background-color: #66ffff;
+}
+
+
+#l_h1 {
+    margin-left: 145px
+}
+
+.l_p1 {
+    margin-left: 120px;
+    margin-top: 30px
+}
+
+.b1 {
+    margin-left: 158px;
+    margin-top: 45px
+
+}
+
+#bbb {
+    margin-left: 158px;
+    margin-top: 30px
+}
+
+.b2 {
+    margin-left: 10px
+}
+
+#h2 {
+    margin-left: 70px;
+    margin-top: 100px
+}
+
+#l_back {
+    background-image:url("./s.jpg");
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}

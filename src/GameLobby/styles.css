@@ -1,0 +1,22 @@
+#a {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    margin-top: 50px;
+}
+
+#b {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#background {
+    position: absolute;
+    background-image:url("./b.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
