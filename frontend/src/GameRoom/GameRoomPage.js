@@ -15,9 +15,10 @@ import WaitingText from './WaitingText'
 import { CardActionArea } from "@material-ui/core";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RemoveIcon from '@material-ui/icons/Remove';
-
+import openSocket from 'socket.io-client';
 import "./styles.css"
 
+const socket = openSocket('http://localhost:5000');
 
 function PreviewCard(props) {
     // alert(IMAGES[props.preview.preview_image])
@@ -79,7 +80,6 @@ class GameRoomPage extends React.Component {
     constructor(props) {
         super(props);
 
-        // const user_id = window.location.search.replace('?', '');
         const args = parser.parse(window.location.search);
         const user_id = !!args.id?args.id: 2;
         const game_code = !!args.code?args.code: 'MNST';
@@ -87,41 +87,74 @@ class GameRoomPage extends React.Component {
             my_name: `User ${user_id}`,
             game_code: game_code,
             players: [
-                {
-                    pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                    name: "User 1",
-                    scores: "1000 scores",
-                    is_owner: false
-                },
-                {
-                    pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                    name: "User 2",
-                    scores: "1000 scores",
-                    is_owner: true
-                },
-                {
-                    pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                    name: "User 3",
-                    scores: "1000 scores",
-                    is_owner: false
-                },
                 // {
                 //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                //     name: "User 4",
-                //     scores: "1000 scores"
+                //     name: "User 1",
+                //     scores: "1000 scores",
+                //     is_owner: false
                 // },
                 // {
                 //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                //     name: "User 5",
-                //     scores: "1000 scores"
-                // },
-                // {
-                //     pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
-                //     name: "User 6",
-                //     scores: "1000 scores"
+                //     name: "User 2",
+                //     scores: "1000 scores",
+                //     is_owner: true
                 // }
             ]
         };
+    }
+
+    onInfoo(){
+        fetch("http://localhost:5000/users/getRoomInfo", {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json , text/plain',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": 'http://localhost:3000'
+            }
+        }).then(res => res.json())
+        .then(res => {
+            let tmp = this.state.players
+            console.log(res)
+            tmp.push({
+                pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+                name: res.name,
+                scores: "1000 scores",
+                is_owner: res.isowner
+            })
+            if (res.isowner == false){
+                tmp.push({
+                    pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+                    name: res.opponent.name,
+                    scores: "1000 scores",
+                    is_owner: true
+                })
+            }
+            this.setState({my_name: res.name, players: tmp})
+        })
+        .catch(err => {console.log(err)});
+    }
+
+    componentDidMount() {
+        this.onInfoo();
+        this.on_create_room();
+    }
+
+    on_create_room(){
+        socket.on('newPlayer', (data) => {
+            const args = parser.parse(window.location.search);
+            if (data.room == args.code){
+                let tmp = this.state.players
+                tmp.push({
+                    pic: "https://cdn6.f-cdn.com/contestentries/1524490/28503850/5d1169893fa8e_thumb900.jpg",
+                    name: data.name,
+                    scores: "1000 scores",
+                    is_owner: data.isowner
+                })
+                this.setState({players: tmp})
+            }
+        });
     }
 
     start_game(){

@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "server",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,11 +8,19 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.17.1",
-    "js-cookie": "^2.2.1",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.0.12",
+    "hbs": "^4.0.6",
+    "jsonwebtoken": "^8.4.0",
     "mathjs": "^6.6.0",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.7.12",
     "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -20,7 +28,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-search-box": "latest",
-    "socket.io-client": "^2.3.0"
+    "validator": "^10.11.0"
   },
   "scripts": {
     "start": "react-scripts start",

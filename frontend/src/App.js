@@ -6,6 +6,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
     useParams
 } from "react-router-dom";
 
@@ -50,11 +51,81 @@ function MainPage() {
     );
 }
 
+const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          loggedIn === true ? (
+            <Component {...rest} {...props} />
+          ) : (
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
+          )
+        }
+      />
+    );
+  };
+
 class App extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { email: "" };
     }
+
+    
+    onLogin(username, password){
+        let data = {
+            email: username,
+            password: password
+        }
+        fetch('http://localhost:5000/users/login', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+            'Accept': 'application/json , text/plain',
+              'Content-Type': 'application/json',
+              "Access-Control-Allow-Origin": 'http://localhost:3000'
+            }
+          })
+          .then(res => {
+            if (res.status === 200) {
+                console.log(res)
+                window.location.href='/profile'
+            } else {
+                const error = new Error(res.error);
+                throw error;
+            }
+          })
+          .catch(err => {
+                console.error(err);
+                alert('Error logging in please try again');
+          });
+    }
+
+    onInfo(){
+        fetch("http://localhost:5000/users/getInfo", {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json , text/plain',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": 'http://localhost:3000'
+            }
+        }).then(res => {if (res.status == 400) {
+            alert('Failed')
+        } else {
+            console.log('Added')
+            alert('succeeed')
+        }
+        console.log(res.session) })
+        .catch(err => err)
+    }
+
 
     render() {
         return (
@@ -84,12 +155,8 @@ class App extends React.Component {
                     <Route path="/signup">
                         <SignUp/>
                     </Route>
-                    <Route path="/profile">
-                        <Profile/>
-                    </Route>
-                    <Route path="">
-                        <Login/>
-                    </Route>
+                    <Route path="/profile" render={logProps => <Profile {...logProps} onInfo={this.onInfo}/>} />
+                    <Route path="" render={logProps => <Login {...logProps} onLogin={this.onLogin}/>}/>
 
                     {/* add your own pages' path above this line */}
                     {/* <Route exact_path=''>

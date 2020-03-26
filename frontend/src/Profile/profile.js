@@ -22,6 +22,7 @@ export class Profile extends React.Component{
         this.toggleClass1 = this.toggleClass1.bind(this)
         this.toggleClass2 = this.toggleClass2.bind(this)
         this.toggleClass3 = this.toggleClass3.bind(this)
+        this.onInfoo = this.onInfoo.bind(this)
         this.state = {
             // usr:{
             //     username:''
@@ -32,6 +33,24 @@ export class Profile extends React.Component{
             active3: false
         }
 
+    }
+
+    onInfoo(){
+        fetch("http://localhost:5000/users/getInfo", {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json , text/plain',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": 'http://localhost:3000'
+            }
+        }).then(res => res.text())
+        .then(res => this.setState({usr: res}));
+    }
+
+    componentDidMount() {
+        this.onInfoo();
     }
 
     // get_name(e){
@@ -67,7 +86,6 @@ export class Profile extends React.Component{
     on_logout(e){
         window.location.href = '/'
     }
-
 
     render() {
         let hiddenProperty1 = this.state.active1 ? "visible" : "hidden"

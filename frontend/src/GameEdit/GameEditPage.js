@@ -19,6 +19,7 @@ const styles = theme => ({
 class GameEditPage extends React.Component{
   constructor(props){
     super(props);
+    this.onInfoo = this.onInfoo.bind(this)
     this.state = {
       players: undefined,
       game: undefined,
@@ -27,6 +28,20 @@ class GameEditPage extends React.Component{
       allow_edit: true,
       current_cursor_type: undefined
     }
+  }
+
+  onInfoo(){
+    fetch("http://localhost:5000/users/getInfo", {
+        method: 'GET',
+        redirect: 'follow',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json , text/plain',
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": 'http://localhost:3000'
+        }
+    }).then(res => res.text())
+    .then(res => this.setState({players: res}));
   }
 
   componentDidMount(){
@@ -41,7 +56,8 @@ class GameEditPage extends React.Component{
           game: result.game
         })
       }).bind(this))
-
+    this.onInfoo();
+    console.log(this.state.players)
   }
 
   cell_clicked(coord){
@@ -86,6 +102,47 @@ class GameEditPage extends React.Component{
   }
 
   upload_game(){
+    const url = 'http://localhost:5000/users/newGame';
+
+    // The data we are going to send in our request
+    let data = {
+      game_name: "a1",
+      creater: this.state.players,
+      num_rows: this.state.game.num_rows,
+      num_cols: this.state.game.num_cols,
+      goals: this.state.game.goals,
+      boxes: this.state.game.boxes,
+      walls: 
+        this.state.game.walls,
+      players: this.state.game.players
+    }
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'post', 
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json, text/plain',
+            'Content-Type': 'application/json'
+        },
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+    .then(function(res) {
+
+        // Handle response we get from the API.
+        // Usually check the error codes to see what happened.
+        if (res.status == 400) {
+            // If student was added successfully, tell the user.
+            alert('Upload Failed')
+        
+        } else {
+            alert('Upload Succeeed')
+            console.log(res)
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
     window.location.href = './profile?username=user1';
   }
 

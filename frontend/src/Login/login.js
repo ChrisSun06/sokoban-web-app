@@ -3,21 +3,28 @@ import {Link} from 'react-router-dom'
 // import LoginView from './log_view.js'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
+import axios from 'axios'
 import {borders} from '@material-ui/system'
-import {authenticate_user} from '../hardCodedData'
 import {authenticate_admin} from '../hardCodedData'
 import "./login.css"
-export class Login extends React.Component {
+export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             inputs: {
                 usr_nm: '',
-                passwrd: ''
+                passwrd: '',
+                authenticated: false
             }
         }
     }
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        this.props.onLogin(this.state.inputs.usr_nm, this.state.inputs.passwrd)
+    }
+
 
     onInput(input_type) {
         return (function (e) {
@@ -30,25 +37,6 @@ export class Login extends React.Component {
         }).bind(this);
     }
 
-    onLogin(e) {
-        // alert(JSON.stringify(this.state.inputs));
-        authenticate_user({username: this.state.inputs.usr_nm, password: this.state.inputs.passwrd})
-            .then(this.onAuthentication.bind(this))
-    }
-
-    onAuthentication(result) {
-        if (result.admin) {
-            window.location.href = `/admin`
-            // window.location.href='/profile?' + this.state.inputs.usr_nm
-        }
-        else if (result.authenticated) {
-            window.location.href = `/profile?username=${this.state.inputs.usr_nm}`
-            // window.location.href='/profile?' + this.state.inputs.usr_nm
-        } else {
-            alert('fail')
-        }
-    }
-
 
     jump(e) {
         window.location.href = '/signup'
@@ -59,7 +47,7 @@ export class Login extends React.Component {
             <div id="background">
             <body id='l_back'>
             <div id="l_rec">
-                <Container maxWidth="xs">
+                {/* <Container maxWidth="xs">
                     <span> </span><br/>
                     <h1 id = "l_h">Log in</h1>
                     <p className = "l_p1"><input className="login" type="text"
@@ -71,10 +59,30 @@ export class Login extends React.Component {
                                                                        value={this.state.inputs.passwrd}
                                                                        onChange={this.onInput('passwrd')}/></p>
                     <button id="bb"
-                            onClick={this.onLogin.bind(this)}><h2>Log in</h2></button>
+                            onClick={() => this.onLogin("a")}><h2>Log in</h2></button>
                     <br/>
                     <span> </span><br/>
-                </Container>
+                </Container> */}
+                <form onSubmit={this.onSubmit}>
+                    <h1>Login Below!</h1>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={this.state.inputs.usr_nm}
+                        onChange={this.onInput('usr_nm')}
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={this.state.inputs.passwrd}
+                        onChange={this.onInput('passwrd')}
+                        required
+                    />
+                    <input type="submit" value="Submit"/>
+                </form>
             </div>
             <div>
                 <Container maxWidth="xs">
@@ -91,4 +99,3 @@ export class Login extends React.Component {
     }
 }
 
-export default Login

@@ -16,9 +16,10 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import GamesIcon from '@material-ui/icons/Games';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import openSocket from 'socket.io-client';
 import "./styles.css"
 
+let socket = openSocket('http://localhost:5000');
 
 const IMAGES = {
     preview1, preview2, preview3
@@ -64,12 +65,31 @@ export default class LayoutLobby extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            usr_nm: "anc",
             current_on: ALL_GAMES,
             game_list: [],
             display_game: [],
             entering_room_code: ''
         };
         this.fetch_all_games();
+    }
+
+    onInfoo(){
+        fetch("http://localhost:5000/users/getInfo", {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json , text/plain',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": 'http://localhost:3000'
+            }
+        }).then(res => res.text())
+        .then(res => this.setState({usr_nm: res}));
+    }
+
+    componentDidMount() {
+        this.onInfoo();
     }
 
     fetch_all_games() {
@@ -80,12 +100,15 @@ export default class LayoutLobby extends React.Component {
     }
 
     on_create_room(game_preview){
-        window.location.href = `/gameroom?id=2`
+        socket.emit('createGame', {name: this.state.usr_nm})
+        socket.on('newGame', (data) => {
+            window.location.href = `/gameroom?id=3&code=${data.room}`
+        });
     }
 
     on_enter_room(){
+        socket.emit('joinGame', {name: this.state.usr_nm, room: this.state.entering_room_code})
         window.location.href = `/gameroom?id=3&code=${this.state.entering_room_code}`
-
     }
 
     on_input_room_code(e){
@@ -135,7 +158,7 @@ export default class LayoutLobby extends React.Component {
                 <br/>
                 <div id="b">
                     <IconButton onClick={this.on_enter_room.bind(this)}
-                                disabled={this.state.entering_room_code.length < 4}><GamesIcon/> <strong>Play</strong></IconButton>
+                                disabled={this.state.entering_room_code.length < 1}><GamesIcon/> <strong>Play</strong></IconButton>
                 </div>
             </div>
         )

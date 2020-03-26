@@ -17,6 +17,50 @@ export class SignUp extends React.Component {
         }
     }
 
+    // A function to send a POST request with a new student.
+    addUser() {
+    // the URL for the request
+        const url = 'http://localhost:5000/users';
+
+        // The data we are going to send in our request
+        let data = {
+            email: this.state.inputs.username,
+            password: this.state.inputs.password
+        }
+        // Create our request constructor with all the parameters we need
+        const request = new Request(url, {
+            method: 'post', 
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json'
+            },
+        });
+
+        // Send the request with fetch()
+        fetch(request)
+        .then(function(res) {
+
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status == 400) {
+                // If student was added successfully, tell the user.
+                alert('Signup Failed')
+            
+            } else {
+                console.log('Added student')
+                alert('Signup Succeeed')
+                console.log(request.session.id)
+        
+            }
+            console.log(res)  // log the result in the console for development purposes,
+                            //  users are not expected to see this.
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+
     onInput(input_type) {
         return (function (e) {
             const v = e.target.value;
@@ -63,7 +107,7 @@ export class SignUp extends React.Component {
                                                                        value={this.state.inputs.confirm_password}
                                                                        onChange={this.onInput('confirm_password')}/></p>
                     <button  id = "bbb"
-                            onClick={this.checkPassword.bind(this)}><h2>Sign up</h2></button>
+                            onClick={this.addUser.bind(this)}><h2>Sign up</h2></button>
                     <br/>
                     <span> </span><br/>
                 </Container>

@@ -1,2 +1,4 @@
 frontend/node_modules
 frontend/package-lock.json
+mongo-data/
+node_modules
