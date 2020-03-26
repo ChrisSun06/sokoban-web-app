@@ -11,7 +11,6 @@ const { ObjectID } = require('mongodb')
 const { User } = require('./../models/user')
 const { Game } = require('./../models/game')
 const bodyParser = require('body-parser') 
-const hbs = require('hbs')
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -28,10 +27,6 @@ app.use(bodyParser.json())
 
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-// Set express property 'view engine' to be 'hbs'
-app.set('view engine', 'hbs')
-// setting up partials directory
-hbs.registerPartials(__dirname + '/views/partials')
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
@@ -294,97 +289,6 @@ app.post('/students', authenticate, (req, res) => {
 		res.status(400).send(error) // 400 for bad request
 	})
 })
-
-
-// a GET route to get all students
-app.get('/students', authenticate, (req, res) => {
-	Student.find({
-		creator: req.user._id // from authenticate middleware
-	}).then((students) => {
-		res.send({ students }) // can wrap in object if want to add more properties
-	}, (error) => {
-		res.status(500).send(error) // server error
-	})
-})
-
-/// a GET route to get a student by their id.
-// id is treated as a wildcard parameter, which is why there is a colon : beside it.
-// (in this case, the database id, but you can make your own id system for your project)
-app.get('/students/:id', authenticate, (req, res) => {
-	/// req.params has the wildcard parameters in the url, in this case, id.
-	// log(req.params.id)
-	const id = req.params.id
-
-	// Good practise: Validate id immediately.
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()  // if invalid id, definitely can't find resource, 404.
-		return;
-	}
-
-	// Otherwise, find by the id and creator
-	Student.findOne({_id: id, creator: req.user._id}).then((student) => {
-		if (!student) {
-			res.status(404).send()  // could not find this student
-		} else {
-			/// sometimes we wrap returned object in another object:
-			//res.send({student})   
-			res.send(student)
-		}
-	}).catch((error) => {
-		res.status(500).send()  // server error
-	})
-
-})
-
-/// a DELETE route to remove a student by their id.
-app.delete('/students/:id', authenticate, (req, res) => {
-	const id = req.params.id
-
-	// Validate id
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-		return;
-	}
-
-	// Delete a student by their id
-	Student.findOneAndDelete({_id: id, creator: req.user._id}).then((student) => {
-		if (!student) {
-			res.status(404).send()
-		} else {   
-			res.send(student)
-		}
-	}).catch((error) => {
-		res.status(500).send() // server error, could not delete.
-	})
-})
-
-// a PATCH route for changing properties of a resource.
-// (alternatively, a PUT is used more often for replacing entire resources).
-app.patch('/students/:id', authenticate, (req, res) => {
-	const id = req.params.id
-
-	// get the updated name and year only from the request body.
-	const { name, year } = req.body
-	const body = { name, year }
-
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-		return;
-	}
-
-	// Update the student by their id.
-	Student.findOneAndUpdate({_id: id, creator: req.user._id}, {$set: body}, {new: true}).then((student) => {
-		if (!student) {
-			res.status(404).send()
-		} else {   
-			res.send(student)
-		}
-	}).catch((error) => {
-		res.status(400).send() // bad request for changing the student.
-	})
-
-})
-
 
 /*************************************************/
 // Express server listening...
