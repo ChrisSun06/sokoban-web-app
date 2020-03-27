@@ -16,7 +16,8 @@ var http = require('http').createServer(app);
 var io = require('socket.io')({
 	"transports": ["xhr-polling"],
 	"polling duration": 10
-  })(http);
+  }).listen(http);
+
 // starting the express server
 
 let rooms = 0;
