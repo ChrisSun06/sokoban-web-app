@@ -18,7 +18,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import openSocket from 'socket.io-client';
 import "./styles.css"
 
-const socket = openSocket(process.env.PORT);
+const socket = openSocket();
 
 function PreviewCard(props) {
     // alert(IMAGES[props.preview.preview_image])

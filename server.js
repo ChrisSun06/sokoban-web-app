@@ -227,7 +227,7 @@ io.on('connection', function (socket) {
 });
 
 
-  
+
 /**
  * Connect the Player 2 to the room he requested. Show error if room full.
  */
