@@ -6,7 +6,6 @@ const BOX = 'box';
 const GOAL = 'goal';
 const ERASE = 'delete';
 // import {EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from '../hardCodedData'
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 

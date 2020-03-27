@@ -2,7 +2,8 @@ import React from 'react';
 // import Data from '../hardCodedData'
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
-import {update_game_element, EMPTY, WALL, PLAYER, BOX, GOAL, ERASE, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
+
+import {update_game_element, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +12,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import "./styles.css"
+
+const EMPTY = 'empty';
+const WALL = 'wall';
+const PLAYER = 'player';
+const BOX = 'box';
+const GOAL = 'goal';
+const ERASE = 'delete';
 
 const styles = theme => ({
   root: {display: 'flex',  justifyContent:'center', alignItems:'center'}
