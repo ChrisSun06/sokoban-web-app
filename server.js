@@ -293,7 +293,7 @@ app.post('/students', authenticate, (req, res) => {
 /*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000
-http.listen(port, () => {
+http.listen(window.location.hostname, () => {
 	log(`Listening on port ${port}...`)
 }) 
 
