@@ -9,6 +9,125 @@ import "./styles.css"
 
 const watch_interval = 100;
 
+const sample_chats = [
+  {
+      room_num: 0,
+      msgs: [
+          {
+              time: new Date(),
+              sender_number: 0,
+              content: 'That looks easy!!!'
+          }
+      ]
+  },
+
+
+];
+
+const sample_game = {
+  num_rows: 5,
+  num_cols: 5,
+  // goals: [{[0, 2], [2, 0], [2, 4], [4, 2]}],
+  goals: [
+      {row: 0, col: 2},
+      {row: 2, col: 0},
+      {row: 2, col: 4},
+      {row: 4, col: 2}
+  ],
+  boxes: [
+      {row: 1, col: 2},
+      {row: 2, col: 1},
+      {row: 2, col: 3},
+      {row: 3, col: 2},
+  ],
+  walls: [
+      {row: 0, col: 1},
+      {row: 0, col: 3},
+      {row: 1, col: 1},
+      {row: 1, col: 3},
+      {row: 1, col: 0},
+      {row: 1, col: 4},
+      {row: 3, col: 0},
+      {row: 3, col: 1},
+      {row: 3, col: 3},
+      {row: 3, col: 4},
+      {row: 4, col: 1},
+      {row: 4, col: 3}
+  ],
+  players: [
+      {row: 2, col: 2, player_num: 0}
+  ]
+};
+
+// action consists of:
+//  {
+//    player_num: the player that took the action
+//    key: the key got pressed, has to be among W, A, S, D
+//  }
+// gonna do it asynchoronously for it to fit later with server, will use Proimse
+// const EMPTY = 'empty';
+// const WALL = 'wall';
+// const PLAYER = 'player';
+// const BOX = 'box';
+const EMPTY = 'empty';
+const WALL = 'wall';
+const PLAYER = 'player';
+const BOX = 'box';
+const GOAL = 'goal';
+const ERASE = 'delete';
+
+const DIRECTIONS = {
+  'w': [-1, 0],
+  's': [1, 0],
+  'a': [0, -1],
+  'd': [0, 1],
+  'W': [-1, 0],
+  'S': [1, 0],
+  'A': [0, -1],
+  'D': [0, 1]
+};
+
+function coord_type(game, r, c) {
+  if (r >= game.num_rows || c >= game.num_cols || r < 0 || c < 0) {
+      return WALL;
+  } else if (
+      game.walls.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return WALL;
+  } else if (
+      game.boxes.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return BOX;
+  } else if (
+      game.players.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return PLAYER;
+  } else {
+      return EMPTY;
+  }
+
+}
+
+
+
 function fetch_initial_game_config(...args) {
   // promise for asynchrousness
   return new Promise(function (resolve, reject) {
