@@ -24,6 +24,27 @@ const IMAGES = {
     preview1, preview2, preview3
 };
 
+const sample_created_games = [
+    {
+        game_name: 'Easy Game',
+        creater: {name: 'user1'},
+        preview_image: 'preview1',
+        game_id: 0
+    },
+    {
+        game_name: 'Strange Game',
+        creater: {name: 'user2'},
+        preview_image: 'preview2',
+        game_id: 1
+    },
+    {
+        game_name: 'Whatever Game',
+        creater: {name: 'user2'},
+        preview_image: 'preview3',
+        game_id: 2
+    }
+];
+
 function get_all_created_games(usr_num) {
     return new Promise(function (resolve, reject) {
         resolve({games: JSON.parse(JSON.stringify(sample_created_games))});
