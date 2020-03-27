@@ -24,6 +24,13 @@ const sample_chats = [
 
 ];
 
+
+function game_end(game) {
+  return game.boxes.reduce(function (prev, cur) {
+      return prev && on_goal(game, cur.row, cur.col);
+  }, true);
+}
+
 const sample_game = {
   num_rows: 5,
   num_cols: 5,
