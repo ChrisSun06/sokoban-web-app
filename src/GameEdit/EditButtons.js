@@ -7,9 +7,6 @@ const PLAYER = 'player';
 const BOX = 'box';
 const GOAL = 'goal';
 const ERASE = 'delete';
-// import {EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from '../hardCodedData'
-
-// import {EMPTY, WALL, PLAYER, BOX, GOAL, ERASE} from './constants';
 
 class EditButtons extends React.Component {
     constructor(props) {

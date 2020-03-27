@@ -13,7 +13,10 @@ const { Game } = require('./models/game')
 const bodyParser = require('body-parser') 
 var app = express();
 var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')({
+	"transports": ["xhr-polling"],
+	"polling duration": 10
+  })(http);
 // starting the express server
 
 let rooms = 0;
@@ -44,12 +47,6 @@ app.use(session({
         httpOnly: true
     }
 }));
-
-io.configure(function () { 
-	io.set("transports", ["xhr-polling"]); 
-	io.set("polling duration", 10); 
-  });
-
 // Our own express middleware to check for 
 // an active user on the session cookie (indicating a logged in user.)
 const sessionChecker = (req, res, next) => {
