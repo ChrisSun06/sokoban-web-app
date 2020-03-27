@@ -23,7 +23,15 @@ const sample_chats = [
 
 
 ];
-
+function on_goal(game, x, y) {
+  return game.goals.reduce(function (prev, cur) {
+      if (cur.row === x && cur.col === y) {
+          return true;
+      } else {
+          return prev;
+      }
+  }, false);
+}
 
 function game_end(game) {
   return game.boxes.reduce(function (prev, cur) {

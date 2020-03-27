@@ -101,6 +101,55 @@ function update_game_element(game, row, col, type) {
 
 }
 
+function coord_type(game, r, c) {
+  if (r >= game.num_rows || c >= game.num_cols || r < 0 || c < 0) {
+      return WALL;
+  } else if (
+      game.walls.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return WALL;
+  } else if (
+      game.boxes.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return BOX;
+  } else if (
+      game.players.reduce((prev, cur) => {
+          if (r === cur.row && c === cur.col) {
+              return true;
+          } else {
+              return prev;
+          }
+      }, false)
+  ) {
+      return PLAYER;
+  } else {
+      return EMPTY;
+  }
+
+}
+
+function on_goal(game, x, y) {
+  return game.goals.reduce(function (prev, cur) {
+      if (cur.row === x && cur.col === y) {
+          return true;
+      } else {
+          return prev;
+      }
+  }, false);
+}
+
 function game_change_dim(game, new_dim) {
   // promisify to simulate asynchrousness
   // alert(JSON.stringify(new_dim))
