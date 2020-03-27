@@ -1,7 +1,7 @@
 import React from 'react';
 // import Data from '../hardCodedData'
 import GameInterface from './GameInterface'
-import {next_game, fetch_initial_game_config,
+import {next_game, 
         get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
 import WaitingText from './WaitingText'
@@ -10,6 +10,16 @@ import { IconButton } from '@material-ui/core';
 import "./styles.css"
 
 const watch_interval = 100;
+
+function fetch_initial_game_config(...args) {
+  // promise for asynchrousness
+  return new Promise(function (resolve, reject) {
+      resolve({
+          game: sample_game,
+          player_lst: []
+      });
+  });
+}
 
 class GamePlayPage extends React.Component{
   constructor(props){
