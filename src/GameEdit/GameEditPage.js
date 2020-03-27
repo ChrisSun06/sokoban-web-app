@@ -3,7 +3,7 @@ import React from 'react';
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
 
-import {update_game_element, game_change_dim, fetch_initial_edit_game} from '../hardCodedData.js'
+import {update_game_element, game_change_dim} from '../hardCodedData.js'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,6 +23,21 @@ const ERASE = 'delete';
 const styles = theme => ({
   root: {display: 'flex',  justifyContent:'center', alignItems:'center'}
 });
+
+function fetch_initial_edit_game(...args) {
+  // promise to simulate asynchrononess, return empty 6 by 6 board
+  return new Promise(function (resolve, reject) {
+      const empty_game = {
+          num_rows: 6,
+          num_cols: 6,
+          goals: [],
+          walls: [],
+          boxes: [],
+          players: []
+      };
+      resolve({game: empty_game, player_lst: []})
+  });
+}
 
 class GameEditPage extends React.Component{
   constructor(props){
