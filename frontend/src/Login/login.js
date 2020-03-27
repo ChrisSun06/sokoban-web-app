@@ -2,10 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 // import LoginView from './log_view.js'
 import Container from '@material-ui/core/Container'
-import Box from '@material-ui/core/Box'
-import axios from 'axios'
-import {borders} from '@material-ui/system'
-import {authenticate_admin} from '../hardCodedData'
 import "./login.css"
 export default class Login extends React.Component {
 

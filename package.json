@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd frontend && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
