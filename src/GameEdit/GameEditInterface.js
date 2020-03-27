@@ -1,6 +1,5 @@
 import React from 'react';
 import {pi, floor} from 'mathjs';
-import {on_goal} from '../hardCodedData';
 import player_icon from '../gameResources/player.png'
 import box_icon from '../gameResources/box.jpeg'
 import obstacle_icon from '../gameResources/obstacle.png'
@@ -23,6 +22,16 @@ const h_rec = cell_size;
 const r_small = 5;
 const sign_font = 'Arial';
 const sign_base_size = 100;
+
+function on_goal(game, x, y) {
+  return game.goals.reduce(function (prev, cur) {
+      if (cur.row === x && cur.col === y) {
+          return true;
+      } else {
+          return prev;
+      }
+  }, false);
+}
 
 class GameEditInterface extends React.Component{
   constructor(props){
