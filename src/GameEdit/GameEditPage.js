@@ -3,7 +3,7 @@ import React from 'react';
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
 
-import {update_game_element, game_change_dim} from '../hardCodedData.js'
+import {update_game_element} from '../hardCodedData.js'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -36,6 +36,17 @@ function fetch_initial_edit_game(...args) {
           players: []
       };
       resolve({game: empty_game, player_lst: []})
+  });
+}
+
+function game_change_dim(game, new_dim) {
+  // promisify to simulate asynchrousness
+  // alert(JSON.stringify(new_dim))
+  const new_game = JSON.parse(JSON.stringify(game));
+  new_game.num_rows = new_dim.num_rows;
+  new_game.num_cols = new_dim.num_cols;
+  return new Promise(function (resolve, reject) {
+      resolve({game: new_game});
   });
 }
 
