@@ -3,7 +3,7 @@ import React from 'react';
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
 
-import {update_game_element, game_change_dim, fetch_initial_edit_game} from '../hardCodedData'
+import {update_game_element, game_change_dim, fetch_initial_edit_game} from '../hardCodedData.js'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
