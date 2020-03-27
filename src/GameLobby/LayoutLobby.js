@@ -18,7 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import openSocket from 'socket.io-client';
 import "./styles.css"
 
-let socket = openSocket('http://localhost:5000');
+let socket = openSocket(process.env.PORT);
 
 const IMAGES = {
     preview1, preview2, preview3
