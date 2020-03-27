@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import {get_all_created_games} from '../hardCodedData'
 import preview1 from './sokobanpreview1.png'
 import preview2 from './sokobanpreview2.jpeg'
 import preview3 from './sokobanpreview3.jpeg'
@@ -24,6 +23,13 @@ let socket = openSocket('http://localhost:5000');
 const IMAGES = {
     preview1, preview2, preview3
 };
+
+function get_all_created_games(usr_num) {
+    return new Promise(function (resolve, reject) {
+        resolve({games: JSON.parse(JSON.stringify(sample_created_games))});
+    })
+}
+
 
 
 function PreviewCard(props) {
