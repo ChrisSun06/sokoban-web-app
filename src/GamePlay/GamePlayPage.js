@@ -1,8 +1,6 @@
 import React from 'react';
 // import Data from '../hardCodedData'
 import GameInterface from './GameInterface'
-import {next_game, 
-        get_room_messages, push_new_message} from '../hardCodedData'
 import InGameChatBox from './InGameChatBox'
 import WaitingText from './WaitingText'
 import { IconButton } from '@material-ui/core';
@@ -18,6 +16,103 @@ function fetch_initial_game_config(...args) {
           game: sample_game,
           player_lst: []
       });
+  });
+}
+
+function next_game(game, action) {
+  // copy without ref
+  return new Promise(function (resolve, reject) {
+      const new_game = JSON.parse(JSON.stringify(game));
+
+      const player_num = action.player_num;
+      const key = action.key;
+      // console.log(new_game)
+      // console.log(action);
+      // console.log(player_num);
+      // console.log(key);
+      const plyr = new_game.players.find((player_i) => player_i.player_num === player_num);
+      if (!plyr) {
+          reject();
+      } else {
+          const move_dir = DIRECTIONS[key];
+          const dr = move_dir[0];
+          const dc = move_dir[1];
+          const r = plyr.row;
+          const c = plyr.col;
+          const rn = r + dr;
+          const cn = c + dc;
+          const type_n = coord_type(game, rn, cn);
+          let can_move = true;
+          // console.log(type_n);
+          if ([PLAYER, WALL].includes(type_n)) {
+              can_move = false;
+          } else if ([BOX].includes(type_n)) {
+              const rnn = rn + dr;
+              const cnn = cn + dc;
+              const type_nn = coord_type(game, rnn, cnn);
+              if ([BOX, PLAYER, WALL].includes(type_nn)) {
+                  can_move = false;
+              }
+          }
+          // else{
+          //   // empty
+          //   can_move = true;
+          // }
+          if (!can_move) {
+              // return new_game;
+              reject();
+          } else {
+              // console.log('finally moving');
+              // console.log(new_game)
+              if (type_n === BOX) {
+                  const boxn = new_game.boxes.find((bx) => bx.row === rn && bx.col === cn);
+                  boxn.row = rn + dr;
+                  boxn.col = cn + dc;
+              }
+              plyr.row = rn;
+              plyr.col = cn;
+              // console.log(new_game)
+              // resolve(game_end(new_game), JSON.stringify(new_game));
+              resolve({game_end: game_end(new_game), new_game: new_game});
+          }
+      }
+
+  });
+
+}
+
+function get_room_messages(room_id) {
+  return new Promise(function (resolve, reject) {
+      const rm_chat = sample_chats.filter(function (cts) {
+          return cts.room_num === room_id
+      })[0];
+      if (!rm_chat) {
+          reject();
+      } else {
+          resolve({chat: rm_chat});
+      }
+
+  });
+}
+
+function push_new_message(room_id, usr_id, content) {
+  return new Promise(function (resolve, reject) {
+      const rm_chat = sample_chats.filter(function (cts) {
+          return cts.room_num === room_id
+      })[0];
+      if (!!rm_chat) {
+          rm_chat.msgs.push(
+              {
+                  time: new Date(),
+                  sender_number: usr_id,
+                  content: content
+              }
+          );
+          resolve();
+      } else {
+          reject();
+      }
+
   });
 }
 

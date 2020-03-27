@@ -3,7 +3,6 @@ import React from 'react';
 import GameEditInterface from './GameEditInterface'
 import EditButtons from './EditButtons'
 
-import {update_game_element} from '../hardCodedData.js'
 import DimPanel from './DimPanel';
 import { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -37,6 +36,69 @@ function fetch_initial_edit_game(...args) {
       };
       resolve({game: empty_game, player_lst: []})
   });
+}
+
+// type among WALL, PLAYER, ERASE, BOX, GOAL
+function update_game_element(game, row, col, type) {
+  // original type among EMPTY, WALL, PLAYER, BOX
+  const original_type = coord_type(game, row, col);
+  const original_is_on_goal = on_goal(game, row, col);
+
+  const type_to_list_key = {
+      [WALL]: 'walls',
+      [PLAYER]: 'players',
+      [BOX]: 'boxes',
+      [GOAL]: 'goals'
+  };
+
+  const new_game = JSON.parse(JSON.stringify(game));
+  let updated = false;
+  if (type === ERASE) {
+      if (original_type !== EMPTY) {
+          // console.log(original_type);
+          // console.log(type_to_list_key[original_type]);
+          // console.log(type_to_list_key);
+          new_game[type_to_list_key[original_type]] = new_game[type_to_list_key[original_type]].filter(
+              (itm) => itm.row !== row || itm.col !== col
+          );
+          updated = true;
+      }
+      if (original_is_on_goal) {
+          new_game.goals = new_game.goals.filter((itm) => itm.row !== row || itm.col !== col);
+          updated = true;
+      }
+  } else if (type === GOAL) {
+      if (original_type !== WALL && !original_is_on_goal) {
+          new_game.goals.push({row: row, col: col});
+          updated = true;
+      }
+  } else if (type === WALL) {
+      if (!original_is_on_goal && original_type === EMPTY) {
+          new_game.walls.push({row: row, col: col});
+          updated = true;
+      }
+  } else if (type === PLAYER) {
+      if (original_type === EMPTY) {
+          const new_player_num = new_game.players.length;
+          new_game.players.push({row: row, col: col, player_num: new_player_num});
+          updated = true;
+      }
+  } else if (type === BOX) {
+      // BOX
+      if (original_type === EMPTY) {
+          new_game.boxes.push({row: row, col: col});
+          updated = true;
+      }
+  }
+
+  // Promisify to mimic asynchronouness, but might consider doing it locally...
+  return new Promise(function (resolve, reject) {
+      resolve({
+          new_game: new_game,
+          updated: updated
+      });
+  });
+
 }
 
 function game_change_dim(game, new_dim) {
