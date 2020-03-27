@@ -1,68 +1,135 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# team46
+Our project is an online platform for players to play the game Sokoban in multi player mode, create and post their own Sokoban layouts, as well as purchase custom icons and badges using the tokens earned from solving the puzzles.
 
-## Available Scripts
+Below is the instruction on how to use the app in phase 1:
+* Open the app you will see our login page
+* You can go to the sign up page by clicking "sign up" in home page. The information to fill in in sign up page should be straightforward. After signing up you will be directed back to log in page after clicking sign up.
+* Credentials:
 
-In the project directory, you can run:
+  normal user: log in with username "user" and password "user"
 
-### `yarn start`
+  admin user: log in with username "admin" and password "admin"
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* If you log yourself in as admin, you will be directed to the admin page
+  
+  You will see a list of users on the app, and you can search for a specific user by input the full username in the search bar(it is case sensitive for now) and click the search icon.
+  
+  Entering a user name that is not in the list will result in the browser alerting you “User not found”, and return back to having all users in the list.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+  You will also see a list of products of the token shop, which will be shown later in the normal user mode
 
-### `yarn test`
+  The users each have tokens, and it is supposed to be able to purchase products in the token shops
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  You can click "add token to all" to add one token for each user
 
-### `yarn build`
+  If you click "remove all users", all users will be removed (please try it after you are done with the other features of the user list)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  If you click "add new product", a new product with a default name and price will be added to the list of products (at the bottom, so you might need to scroll down)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+  For each user, you will see their user name, profile picture and number of tokens. There are also three actions you can take with each user.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  If you click the delete icon, the user will be removed, there will be a popup confirmation.
 
-### `yarn eject`
+  If you click "change password", there will be a popup where you can fill in the new password
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  If you click "change tokens", a popup will be shown for you to enter a new amount, the change will be reflected
+  after you submit the new token amount.
+  
+  For each product in the product list,
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  You can toggle if the product is in the token shop by clicking "make (un)available"
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  You can also edit the product name and price by clicking edit, after which a pop up will be shown for you to enter the new name and price
+  
+  Lastly as the admin, you can see and also activate/deactivate active games, by clicking making them available or unavailable.
+  
+  You can click the exit icon at the top left corner of the page to go back to the log in page
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* All other pages are for normal users and thus we will assume that you log yourself in as the normal user, and we will use the word "user" to refer to users without admin priviledge
 
-## Learn More
+* After logging in as an user, you will see the your profile page:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  First you will see your user name and profile picture in the profile
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  Below are three buttons to jump to the main functionaities for each user, and more details will follow later in this instruction about the pages they jump to.
 
-### Code Splitting
+  Below the three buttons are three sections, which are collapsed by default.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  The account information contains personal information
 
-### Analyzing the Bundle Size
+  The game history contains the scores in your past games
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  The games created part contains previews of games that you created and posted
 
-### Making a Progressive Web App
+  You can click the exit icon on top left corner to go back to log in page.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+* You can start playing by clicking "go to lobby" from the user profile.
 
-### Advanced Configuration
+  In the lobby you will see a list of available game layouts that are created by you or other users
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+  You can search for games by typing in the search bar on top, right now you only filter for games by their name
 
-### Deployment
+  There are two ways to start playing:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+    You can click the button create room under each layout, and you will enter a game room as a room owner
 
-### `yarn build` fails to minify
+    You can also enter a four digit code and click "play" at the bottom of the page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  There is a button on top left to go back to user profile
+
+* After getting into the game room:
+
+  First on top you will see the room code that other people can use to enter this room
+
+  Then you will see your user name
+
+  If you are the room owner, you will see a button "start" to start the entire game at the bottom, otherwise you will only see a message
+
+  You will see a list of users that is already in the room, for each user in the list
+
+  If it is you, you will see a button "quit" and clicking it will have you quit the game and redirect you back to lobby
+
+  If it is another user, and if you are the room owner, you can kick the user out of the room by clicking "kick" under that user
+
+* After the game starts, you will be directed to the actual game interface
+
+  If you want to quit the game, just click "quit"
+
+  Otherwise you can use "WASD" to move your player and try to move the boxes into green dots (the goals)
+    (by the way, you need to click the game for the keys to work properly if you move your focus somewhere else, say the chatbox)
+
+  You can input a message on top of the chatbox and send a message to other players (the send button is disabled if the message is empty)
+
+  Right now the this page is only a single player game because multiplayer cannot be done without a server
+
+  If you successfully solve a game, you will be redirected back to game lobby after 5 seconds, there will be a count down message.
+
+* You can also create your own games, and you can get to that page by clicking "create games" from your user profile, and you will be redirected to the page of your created games
+
+  You will see a list of game layouts you already created
+
+  If you click delete, the layout will be removed
+
+  If you click edit or if you click create game, you will be redirected to the game editting page
+
+  There is an exit button on top left to go back to user profile
+
+* Right now in the game editting page you will see a blank game, but in phase 2, we might also be loading a game you already created for you to edit
+
+  The game is put in the grids
+
+  Below the title "Game Edit", you will see a list of buttons for you to select what to add. For instance, if you select "wall" and click a cell in the grids, it will put wall in the cell. Meanwhile, if you select "delete", it will empty the cells that you click. Note that you cannot put goals on walls but can put them on players and boxes.
+
+  You can also adjust the board size using the slide bars
+
+  There is a share icon by the title "Game Edit" and you will be able to post your game by clicking that button, and for now you will only be redirected to user profile page.
+
+  You can give up by going clicking quit and go back to user profile page
+
+* As an user you can go to token shop by clicking "token shop" in your profile page
+
+  There are now three tabs of three different kinds of products that you will be able to purchase with your tokens
+  
+  The money(token) you have is shown on the top in the header under the title. Each time you purchase a product by clicking the money button at the bottom right corner of the product tile, your money will decrease by the price of that product. Until it reaches 0, where you are not allowed to purchase anymore, and will be alerted that you do not have enough tokens.
+
+  You can go back to the user profile by clicking the exit button on top left of the page
