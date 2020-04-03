@@ -1,0 +1,85 @@
+#im1 {
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 60px;
+    height: 130px
+}
+
+#im2 {
+    display: inline-block;
+    height: 130px
+}
+
+.big {
+    font-size: 125%
+}
+
+.small {
+    margin-left: 150px
+}
+
+.small1 {
+    margin-left: 140px
+}
+
+.tiny {
+    margin-left: 200px
+
+}
+
+.Icon {
+    margin-left: 5%
+}
+
+
+#h1 {
+    display: inline-block;
+    margin-left: 100px
+}
+
+.b1 {
+    display: inline-block;
+    margin-left: 50px
+}
+
+.b2 {
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 30px
+}
+
+.d1 {
+    margin-left: 50px;
+    margin-top: 50px
+}
+
+#I1 {
+    margin-left: 50px
+}
+
+#hidden {
+    visibility: hidden;
+    height: 0px;
+    opacity: 0
+}
+
+#visible {
+    visibility: visible;
+    height: auto;
+    opacity: 1
+}
+
+#l_back {
+    position: absolute;
+    background-image:url("./d.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.LogoffButton {
+    position: 'absolute';
+    bottom:0;
+    left:0;
+}

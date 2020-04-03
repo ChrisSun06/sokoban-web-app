@@ -18,7 +18,21 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
-		minlength: 6
+		minlength: 5
+	},
+	tokens: {
+		type: Number,
+		required: true
+	},
+	isAdmin: {
+		type: Boolean,
+		required: true
+	},
+	nickname: {
+		type: String,
+		minlength: 1,
+		trim: true,
+		required: true
 	}
 })
 
@@ -39,6 +53,7 @@ UserSchema.pre('save', function(next) {
 		next()
 	}
 })
+
 
 // A static method on the document model.
 // Allows us to find a User document by comparing the hashed password

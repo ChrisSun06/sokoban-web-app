@@ -1,22 +1,38 @@
 /* server.js - user & resource authentication */
+"use strict"
 const log = console.log
-const cors = require('cors')
 var path = require('path');
 const express = require('express')
+const app = express()
+    , server = require('http').createServer(app)
+    , io = require('socket.io').listen(server);
+
 const cookieParser = require('cookie-parser')
-var session = require('express-session')
 const jwt = require('jsonwebtoken');
 const { mongoose } = require('./db/mongoose')
+mongoose.set('useFindAndModify', false); // for some deprecation issues
 const { ObjectID } = require('mongodb')
 const { User } = require('./models/user')
+const bcrypt = require('bcryptjs')
 const { Game } = require('./models/game')
 const bodyParser = require('body-parser') 
-var app = express();
-var http = require('http').createServer(app);
-var io = require('socket.io')({
-	"transports": ["xhr-polling"],
-	"polling duration": 10
-  }).listen(http);
+app.use(bodyParser.json())
+app.use(cookieParser())
+const session = require('express-session')
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'sunhongyi24',
+    api_key: '763116971925145',
+    api_secret: 'zklCi1VFZ_sNkyP7aRpdYdNWlh8'
+});
 
 // starting the express server
 
@@ -25,17 +41,17 @@ let rooms = 0;
 let players = {}
 let rooms_info = {}
 
-app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
-
-mongoose.set('useFindAndModify', false); // for some deprecation issues
-
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+function localHash(pswd) {
+	return new Promise((resolve, reject) => {
+		bcrypt.genSalt(10, (err, salt) => {
+			bcrypt.hash(pswd.toString(), salt, (err, hash) => {
+				resolve(hash)
+			})
+		})
+	})
+}
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
-
-
 
 /*** Session handling **************************************/
 // Create a session cookie
@@ -48,33 +64,22 @@ app.use(session({
         httpOnly: true
     }
 }));
-// Our own express middleware to check for 
-// an active user on the session cookie (indicating a logged in user.)
-const sessionChecker = (req, res, next) => {
-    if (req.session.user) {
-        res.redirect('/dashboard'); // redirect to dashboard if logged in.
+
+// A route to check if a use is logged in on the session cookie
+app.get("/users/check-session", (req, res) => {
+    if (req.cookies["id"]) {
+        res.send(req.cookies["id"]);
     } else {
-        next(); // next() moves on to the route.
-    }    
-};
+        res.status(401).send();
+    }
+});
 
-// if (process.env.NODE_ENV === "production") {
-// 	app.use(express.static('frontend/build'));
-
-// 	app.get('*', (req, res) => {
-// 		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-// 	})
-// }
-app.use(express.static(path.join(__dirname, './frontend/build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/build'))
-})
-// A route to login and create a session
 app.post('/users/login', (req, res) => {
 	const email = req.body.email
     const password = req.body.password
     // Use the static method on the User model to find a user
 	// by their email and password
+	console.log(req.body.remember_me)
 	User.findByEmailPassword(email, password).then((user) => {
 	    if (!user) {
             console.log("failed")
@@ -87,6 +92,13 @@ app.post('/users/login', (req, res) => {
             console.log("not failed!")
 			//req.session.email = user.email
 			res.cookie('id',user._id, { maxAge: 900000, httpOnly: true });
+			if (req.body.remember_me){
+				res.cookie('password', req.body.password, { maxAge: 900000, httpOnly: true });
+				res.cookie('remember', true,  { maxAge: 900000, httpOnly: true })
+			} else {
+				res.cookie('remember', false,  { maxAge: 900000, httpOnly: true })
+			}
+			res.cookie('email', user.email, { maxAge: 900000, httpOnly: true });
 			res.send(true)
         }
     }).catch((error) => {
@@ -96,19 +108,41 @@ app.post('/users/login', (req, res) => {
     })
 })
 
-// A route to logout a user
-app.get('/users/logout', (req, res) => {
-	// Remove the session
-	req.session.destroy((error) => {
-		if (error) {
-			res.status(500).send(error)
-		} else {
-			res.redirect('/')
-		}
+app.post('/users/postGame', (req, res) => {
+	const game_id = req.body.game_id
+	res.cookie('game_id',game_id, { maxAge: 900000, httpOnly: true });
+	res.status(200).send()
+})
+
+app.get('/users/getGame', (req, res) => {
+	const game_id = req.cookies["game_id"]
+	Game.find({_id: game_id}).then((games) => {
+		res.send(games[0])
+	}, (error) => {
+		res.status(400).send(error)
 	})
 })
 
+
 app.get('/users/getInfo', (req, res) => {
+	const id = req.cookies["id"]
+	// Based on this cookie's id, we set up information for the user.
+	User.findById(id).then((user) => {
+	    if (!user) {
+            console.log("failed")
+            //res.redirect('/login');
+            res.send(false)
+        } else {
+            console.log("not failed!")
+			res.send(user.nickname)
+        }
+    }).catch((error) => {
+		console.log(error)
+        res.status(400).send(error)
+    })
+})
+
+app.get('/users/getInfoE', (req, res) => {
 	const id = req.cookies["id"]
 	// Based on this cookie's id, we set up information for the user.
 	User.findById(id).then((user) => {
@@ -122,10 +156,40 @@ app.get('/users/getInfo', (req, res) => {
         }
     }).catch((error) => {
 		console.log(error)
-		console.log("asd")
         res.status(400).send(error)
     })
 })
+
+app.get('/users/getInfoEmail', (req, res) => {
+	// Based on this cookie's id, we set up information for the user.
+	if (req.cookies["remember"]){
+		console.log(req.cookies["remember"])
+		if (req.cookies["remember"] === "true"){
+			res.send({email: req.cookies["email"], password: req.cookies["password"]});
+		} else if (req.cookies["remember"] === "false"){
+			res.send({email: '', password: ''});
+		}
+	}
+})
+
+app.get('/getInfo', (req, res) => {
+	const id = req.cookies["id"]
+	// Based on this cookie's id, we set up information for the user.
+	User.findById(id).then((user) => {
+	    if (!user) {
+            console.log("failed")
+            //res.redirect('/login');
+            res.send(false)
+        } else {
+            console.log("not failed!")
+			res.send(user)
+        }
+    }).catch((error) => {
+		console.log(error)
+        res.status(400).send(error)
+    })
+})
+
 
 app.get('/users/getRoomInfo', (req, res) => {
 	const id = req.cookies["id"]
@@ -137,7 +201,7 @@ app.get('/users/getRoomInfo', (req, res) => {
             res.send(false)
         } else {
 			console.log("not failed!")
-			k = players[user.email]
+			k = players[user.nickname]
 			res.send(k)
         }
     }).catch((error) => {
@@ -150,26 +214,78 @@ app.get('/users/getRoomInfo', (req, res) => {
 /** User routes below **/
 // Set up a POST route to *create* a user of your web app (*not* a student).
 app.post('/users', (req, res) => {
-
 	// Create a new user
 	const user = new User({
 		email: req.body.email,
-		password: req.body.password
+		password: req.body.password,
+		tokens: 1000,
+		isAdmin: false,
+		nickname: req.body.nickname
 	})
-
 	// Save the user
 	user.save().then((user) => {
-        res.send(user)
+        res.status(200).send()
 	}, (error) => {
+        console.log(error)
 		res.status(400).send(error) // 400 for bad request
 	})
 })
 
+app.get('/users', (req, res) => {
+	User.find({}, function(err, docs){
+		if (!err){ 
+			res.send({docs})
+		} else {
+			res.status(400).send(err)
+			throw err;}
+	})
+})
+
+app.patch('/users', (req, res) => {
+	const uid = req.body.id;
+	const option = req.body.opt;
+	if (option === "token"){
+		User.findOneAndUpdate({"_id": uid},
+		{
+			tokens: req.body.tokens
+		},{new: true}).then((result) => {
+			if(!result){
+				res.status(404).send()
+			} else {
+				console.log("success")
+				console.log(result)
+				res.send(result)
+				return;
+			}
+		}).catch((error) => console.log(error))
+	} else if (option === "password"){
+		let pswd = req.body.password
+		localHash(pswd).then(hashed => {
+			console.log(hashed)
+			User.findOneAndUpdate({"_id": uid},
+			{
+				password: hashed
+			},{new: true}).then((result) => {
+				if(!result){
+					res.status(404).send()
+				} else {
+					console.log("success")
+					console.log(result)
+					res.send(result)
+					return;
+				}
+			})
+		}).catch(err => console.log(err))
+	}
+})
+
 app.post('/users/newGame', (req, res) => {
 	const game = new Game({
-		game_name: "a1",
+		game_name: req.body.game_name,
 		creater: req.body.creater,
-		preview_image: './GameLobby/sokobanpreview3.jpeg',
+		nickname: req.body.nickname,
+        preview_image: req.body.image_url,
+        image_id: req.body.image_id,
 		game: null
 	})
 
@@ -196,23 +312,72 @@ app.post('/users/newGame', (req, res) => {
 	})
 })
 
-// Middleware for authentication of resources
-const authenticate = (req, res, next) => {
-	if (req.session.user) {
-		User.findById(req.session.user).then((user) => {
-			if (!user) {
-				return Promise.reject()
-			} else {
-				req.user = user
-				next()
-			}
-		}).catch((error) => {
-			res.status(401).send("Unauthorized")
-		})
-	} else {
-		res.status(401).send("Unauthorized")
+app.patch('/users/editGame', (req, res) => {
+	const g_id = req.cookies["game_id"]
+	const gamedata = {
+		num_rows: req.body.num_rows,
+		num_cols: req.body.num_cols,
+		goals: req.body.goals,
+		boxes: req.body.boxes,
+		walls: 
+			req.body.walls,
+		players: req.body.players
 	}
-}
+
+
+	if (!ObjectID.isValid(g_id)){
+		res.status(404).send()
+		return;
+	}
+
+	console.log(req.body.game_name)
+
+	Game.findOneAndUpdate({"_id": g_id},
+	{
+		game_name: req.body.game_name,
+		preview_image: req.body.image_url,
+		image_id: req.body.image_id,
+		game: gamedata
+	},{new: true}).then((result) => {
+		if(!result){
+			res.status(404).send()
+		} else {
+			console.log("success")
+			console.log(result)
+			res.send(result)
+			return;
+		}
+	}).catch((error) => console.log(error))
+})
+
+app.get("/logoff", (req, res) => {
+	res.cookie("id", '', {expires: new Date(0)});
+	res.status(200).send()
+})
+
+app.get('/games', (req, res) => {
+	// Add code here
+	Game.find({creater: req.cookies["email"]}).then((games) => {
+		//console.log(games)
+		res.send(games)
+	}, (error) => {
+		res.status(400).send(error)
+	})
+})
+
+app.post("/images", multipartMiddleware, (req, res) => {
+    // Use uploader.upload API to upload image to cloudinary server.
+    cloudinary.uploader.upload(
+        req.files.image.path, // req.files contains uploaded files
+        function (result) {
+            // Create a new image using the Image mongoose model
+            let img = {
+                image_id: result.public_id, // image id on cloudinary server
+                image_url: result.url, // image url on cloudinary server
+            }
+            res.send(img)
+        });
+});
 
 /* The Socket I/O calls below *******************************/
 io.on('connection', function (socket) {
@@ -242,72 +407,17 @@ io.on('connection', function (socket) {
 
 
 
-/**
- * Connect the Player 2 to the room he requested. Show error if room full.
- */
+app.use(express.static(__dirname + "/client/build"));
 
-
-/*** Webpage routes below **********************************/
-// Inject the sessionChecker middleware to any routes that require it.
-// sessionChecker will run before the route handler and check if we are
-// logged in, ensuring that we go to the dashboard if that is the case.
-
-// The various redirects will ensure a proper flow between login and dashboard
-// pages so that your users have a proper experience on the front-end.
-
-// route for root: should redirect to login route
-app.get('/', sessionChecker, (req, res) => {
-	res.sendFile(path.join(__dirname, './../frontend/public', 'index.html'))
-})
-
-// login route serves the login page
-app.get('/login', sessionChecker, (req, res) => {
-	//res.sendFile(__dirname + '/public/login.html')
-	// render the handlebars template for the login page
-	//res.render('login.hbs');
-})
-
-// dashboard route will check if the user is logged in and server
-// the dashboard page
-app.get('/dashboard', (req, res) => {
-	if (req.session.user) {
-		//res.sendFile(__dirname + '/public/dashboard.html')
-		// render the handlebars template with the email of the user
-		res.render('dashboard.hbs', {
-			email: req.session.email
-		})
-	} else {
-		res.redirect('/login')
-	}
-})
-/*********************************************************/
-
-/*** API Routes below ************************************/
-
-/** Student resource routes **/
-// a POST route to *create* a student
-app.post('/students', authenticate, (req, res) => {
-	// log(req.body)
-
-	// Create a new student using the Student mongoose model
-	const student = new Student({
-		name: req.body.name,
-		year: req.body.year,
-		creator: req.user._id // creator id from the authenticate middleware
-	})
-
-	// Save student to the database
-	student.save().then((result) => {
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error) // 400 for bad request
-	})
-})
+// All routes other than above will go to index.html
+app.get("*", (req, res) => {
+    res.sendFile(__dirname + "/client/build/index.html");
+});
 
 /*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000
-http.listen(port, () => {
+server.listen(port, () => {
 	log(`Listening on port ${port}...`)
 }) 
 

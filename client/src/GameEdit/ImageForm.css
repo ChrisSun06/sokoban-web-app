@@ -1,0 +1,23 @@
+/* Styles for the ImageForm React component */
+
+.image-form {
+    text-align: center;
+  }
+  
+  .image-form__field {
+    display: inline-block;
+    padding-right: 20px;
+  }
+  
+  .MuiButton-root.image-form__submit-button {
+    background-color: #457474;
+  }
+  
+  .image-form__message--success {
+    color: green;
+  }
+  
+  .image-form__message--error {
+    color: red;
+  }
+  

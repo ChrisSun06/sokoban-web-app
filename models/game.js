@@ -37,13 +37,21 @@ const gameSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	image_id: {
+        type: String,
+        required: true
+    },
 	creater: {
+		type: String,
+		required: true
+	},
+	nickname: {
 		type: String,
 		required: true
 	},
 	preview_image: {
 		type: String,
-		required: false
+		required: true
 	},
 	game: gameDataScheme
 })
