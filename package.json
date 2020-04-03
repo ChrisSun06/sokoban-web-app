@@ -36,10 +36,10 @@
     "validator": "^10.11.0"
   },
   "scripts": {
-    "setup": "npm install && cd frontend && npm install && cd ..",
-    "build-run": "cd frontend && npm run build && cd .. && node server.js",
+    "setup": "npm install && cd client && npm install && cd ..",
+    "build-run": "cd client && npm run build && cd .. && node server.js",
     "start": "node server.js",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
