@@ -59,6 +59,14 @@ const StyledMenu = withStyles({
     },
   }))(MenuItem);
 
+  const GameArray = (props) => (
+    <>
+      {props.games.map(game => (
+        <div className = "small" id={props.hiddenProperty3}>Name: {game.game_name}<img id = "im2" class='imgside' src={game.preview_image}/></div>
+      ))}
+    </>
+  );
+
 
 export class Profile extends React.Component{
 
@@ -69,6 +77,7 @@ export class Profile extends React.Component{
         this.toggleClass3 = this.toggleClass3.bind(this)
         this.handleClick = this.handleClick.bind(this)
         this.handleClose = this.handleClose.bind(this)
+        this.getAllGames = this.getAllGames.bind(this)
         this.onInfoo = this.onInfoo.bind(this)
         this.state = {
             // usr:{
@@ -81,7 +90,8 @@ export class Profile extends React.Component{
             anchorEl: false,
             email: undefined,
             tokens: 0,
-            avatar: undefined
+            avatar: undefined,
+            games: []
         }
     }
 
@@ -101,14 +111,24 @@ export class Profile extends React.Component{
         .then(res => this.setState({usr: res.nickname, tokens: res.tokens, email: res.email, avatar: res.avatar}));
     }
 
-    componentDidMount() {
-        this.onInfoo();
+    getAllGames(){
+        fetch("/games", {
+            method: 'GET',
+            redirect: 'follow',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json , text/plain',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": '*'
+            }
+        }).then(res => res.json())
+        .then(res => this.setState({games: res}));
     }
 
-    // get_name(e){
-    //     const queryString = require('query-string');
-    //     return queryString.parse(window.location.search).username
-    // }
+    componentDidMount() {
+        this.onInfoo();
+        this.getAllGames();
+    }
 
     jump(e){
         window.location.href='/lobby'
@@ -211,13 +231,14 @@ export class Profile extends React.Component{
                             {this.state.active2 ? <KeyboardArrowDownIcon onClick={this.toggleClass2}/> : <ChevronRightIcon onClick={this.toggleClass2}/>}
                         </IconButton>
                     <span className = "big">Game History</span>
-                        <div className = "small" id={hiddenProperty2}>Game: 1,  Score: 10</div>
-
-                        <IconButton id = "I1">
+                    <div>
+                    <IconButton id = "I1">
                             {this.state.active3 ? <KeyboardArrowDownIcon onClick={this.toggleClass3}/> : <ChevronRightIcon onClick={this.toggleClass3}/>}
                         </IconButton>
                     <span className = "big">Games Created</span>
-                        <div className = "small" id={hiddenProperty3}><img id = "im2" class='imgside' src={g1}/></div>
+                        {/* <div className = "small" id={hiddenProperty3}><img id = "im2" class='imgside' src={g1}/></div> */}
+                        <GameArray games={this.state.games} hiddenProperty3={hiddenProperty3}/>
+                    </div>
                 </div>
             }
             {!this.state.usr &&

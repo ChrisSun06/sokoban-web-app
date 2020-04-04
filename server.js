@@ -91,14 +91,14 @@ app.post('/users/login', (req, res) => {
             //req.session.user = user._id;
             console.log("not failed!")
 			//req.session.email = user.email
-			res.cookie('id',user._id, { maxAge: 900000, httpOnly: true });
+			res.cookie('id',user._id, { httpOnly: true });
 			if (req.body.remember_me){
-				res.cookie('password', req.body.password, { maxAge: 900000, httpOnly: true });
-				res.cookie('remember', true,  { maxAge: 900000, httpOnly: true })
+				res.cookie('password', req.body.password, { httpOnly: true });
+				res.cookie('remember', true,  { httpOnly: true })
 			} else {
-				res.cookie('remember', false,  { maxAge: 900000, httpOnly: true })
+				res.cookie('remember', false,  { httpOnly: true })
 			}
-			res.cookie('email', user.email, { maxAge: 900000, httpOnly: true });
+			res.cookie('email', user.email, { httpOnly: true });
 			res.send(true)
         }
     }).catch((error) => {
@@ -110,7 +110,7 @@ app.post('/users/login', (req, res) => {
 
 app.post('/users/postGame', (req, res) => {
 	const game_id = req.body.game_id
-	res.cookie('game_id',game_id, { maxAge: 900000, httpOnly: true });
+	res.cookie('game_id',game_id, { httpOnly: true });
 	res.status(200).send()
 })
 
@@ -306,7 +306,11 @@ app.post('/users/newGame', (req, res) => {
 
 	// Save the user
 	game.save().then((rest) => {
-        res.send(rest)
+		if (!rest){
+			res.status(500).send()
+		} else {
+			res.send(rest)
+		}
 	}, (error) => {
 		console.log(error)
 		res.status(400).send(error) // 400 for bad request
@@ -441,12 +445,12 @@ io.on('connection', function (socket) {
 
 
 
-app.use(express.static(__dirname + "/client/build"));
+// app.use(express.static(__dirname + "/client/build"));
 
-// All routes other than above will go to index.html
-app.get("*", (req, res) => {
-    res.sendFile(__dirname + "/client/build/index.html");
-});
+// // All routes other than above will go to index.html
+// app.get("*", (req, res) => {
+//     res.sendFile(__dirname + "/client/build/index.html");
+// });
 
 /*************************************************/
 // Express server listening...

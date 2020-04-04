@@ -3,7 +3,18 @@ import React from "react";
 import pic from "./bag.png"
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import "./styles.css";
 
@@ -129,7 +140,37 @@ const productData3 = [
         price: "100"
     }
 ];
-   
+
+const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      {...props}
+    />
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
 
 
 class Shop extends React.Component {
@@ -158,9 +199,29 @@ class Shop extends React.Component {
                     price: elem.price
                 }
             }),
-            money: 4500
+            money: 4500,
+            anchorEl: false
           }
+        this.handleClick = this.handleClick.bind(this)
+        this.handleClose = this.handleClose.bind(this)
     }
+
+    jump1(e){
+        window.location.href='/gamecreated'
+    }
+
+    jump2(e){
+        window.location.href='/lobby'
+    }
+
+    handleClick = (event) => {
+        this.setState({anchorEl: true});
+    };
+    
+    handleClose = () => {
+        this.setState({anchorEl: false});
+    };
+
 
     //Server call that manipulate datas
     handlePurchase(index, title){
@@ -202,7 +263,35 @@ class Shop extends React.Component {
     render() {
         return (
             <div id="main">
-                <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
+                <IconButton onClick={this.handleClick}><MenuIcon/></IconButton>
+                <div className = "b2">
+                <StyledMenu
+                            id="customized-menu"
+                            anchorEl={this.state.anchorEl}
+                            keepMounted
+                            open={Boolean(this.state.anchorEl)}
+                            onClose={this.handleClose}
+                        >
+                            <StyledMenuItem onClick={this.on_quit.bind(this)}>
+                            <ListItemIcon>
+                                <MeetingRoomIcon fontSize="small" onClick={this.on_quit.bind(this)}/>
+                            </ListItemIcon>
+                            <ListItemText primary="Go To Dashboard" />
+                            </StyledMenuItem>
+                            <StyledMenuItem onClick={this.jump1.bind(this)}>
+                            <ListItemIcon>
+                                <AddBoxIcon fontSize="small" onClick={this.jump1.bind(this)} />
+                            </ListItemIcon>
+                            <ListItemText primary="Create Game" />
+                            </StyledMenuItem>
+                            <StyledMenuItem onClick={this.jump2.bind(this)}>
+                            <ListItemIcon>
+                                <MeetingRoomIcon fontSize="small" onClick={this.jump2.bind(this)}/>
+                            </ListItemIcon>
+                            <ListItemText primary="Go To Lobby" />
+                            </StyledMenuItem>
+                        </StyledMenu>
+                        </div>
                 <div className="Shop">
                     <Header
                         title="Token Shop"

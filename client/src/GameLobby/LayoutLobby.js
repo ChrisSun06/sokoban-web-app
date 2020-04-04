@@ -16,9 +16,52 @@ import InputLabel from '@material-ui/core/InputLabel'
 import GamesIcon from '@material-ui/icons/Games';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import openSocket from 'socket.io-client';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import MenuIcon from '@material-ui/icons/Menu';
+import RemoveIcon from '@material-ui/icons/Remove';
 import "./styles.css"
 
 let socket = openSocket();
+const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      {...props}
+    />
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
 
 const IMAGES = {
     preview1, preview2, preview3
@@ -80,7 +123,7 @@ const DeleteRoom = (props) => {
         <div >
         <CardActions disableSpacing>
             <IconButton aria-label="Delete Room" onClick={function(){props.on_delete_room(props.gid)}}>
-                <Add/> Delete Room
+                <RemoveIcon/> Delete Room
             </IconButton>
         </CardActions>
         </div>
@@ -112,7 +155,10 @@ export default class LayoutLobby extends React.Component {
             display_game: [],
             entering_room_code: '',
             isAdmin: false,
+            anchorEl: false
         };
+        this.handleClick = this.handleClick.bind(this)
+        this.handleClose = this.handleClose.bind(this)
         this.fetch_all_games();
     }
 
@@ -165,6 +211,22 @@ export default class LayoutLobby extends React.Component {
         })
     }
 
+    jump1(e){
+        window.location.href='/gamecreated'
+    }
+
+    jump2(e){
+        window.location.href='/shop'
+    }
+
+    handleClick = (event) => {
+        this.setState({anchorEl: true});
+    };
+    
+    handleClose = () => {
+        this.setState({anchorEl: false});
+    };
+
     componentDidMount() {
         this.onInfoo();
         console.log(this.state.game_list)
@@ -185,6 +247,28 @@ export default class LayoutLobby extends React.Component {
     }
 
     on_create_room(game_preview){
+        let data = {
+            game_id: game_preview._id
+        }
+        fetch('/users/postGame', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+            'Accept': 'application/json , text/plain',
+              'Content-Type': 'application/json',
+              "Access-Control-Allow-Origin": '*'
+            }
+          })
+          .then(res => {
+            if (res.status != 200) {
+                const error = new Error(res.error);
+                throw error;
+            }
+          })
+          .catch(err => {
+                console.error(err);
+          });
         socket.emit('createGame', {name: this.state.usr_nm})
         socket.on('newGame', (data) => {
             window.location.href = `/gameroom?id=3&code=${data.room}`
@@ -210,7 +294,35 @@ export default class LayoutLobby extends React.Component {
     render() {
         return (
             <div id="background">
-                <IconButton onClick={this.on_quit.bind(this)}> <ExitToAppIcon/></IconButton>
+                <IconButton onClick={this.handleClick}><MenuIcon/></IconButton>
+                <div className = "b2">
+                <StyledMenu
+                            id="customized-menu"
+                            anchorEl={this.state.anchorEl}
+                            keepMounted
+                            open={Boolean(this.state.anchorEl)}
+                            onClose={this.handleClose}
+                        >
+                            <StyledMenuItem onClick={this.on_quit.bind(this)}>
+                            <ListItemIcon>
+                                <MeetingRoomIcon fontSize="small" onClick={this.on_quit.bind(this)}/>
+                            </ListItemIcon>
+                            <ListItemText primary="Go To Dashboard" />
+                            </StyledMenuItem>
+                            <StyledMenuItem onClick={this.jump1.bind(this)}>
+                            <ListItemIcon>
+                                <AddBoxIcon fontSize="small" onClick={this.jump1.bind(this)} />
+                            </ListItemIcon>
+                            <ListItemText primary="Create Game" />
+                            </StyledMenuItem>
+                            <StyledMenuItem onClick={this.jump2.bind(this)}>
+                            <ListItemIcon>
+                                <ShoppingCartIcon fontSize="small" onClick={this.jump2.bind(this)}/>
+                            </ListItemIcon>
+                            <ListItemText primary="Go to Shop" />
+                            </StyledMenuItem>
+                        </StyledMenu>
+                        </div>
                 <ReactSearchBox
                     placeholder="Search"
                     // value="Search..."

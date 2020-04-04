@@ -410,17 +410,17 @@ class GameEditPage extends React.Component{
 
         // Handle response we get from the API.
         // Usually check the error codes to see what happened.
-        if (res.status == 400) {
+        if (res.status == 400 || res.status == 200) {
             alert('Upload Failed')
         
         } else {
             alert('Upload Succeed')
-            console.log(res)
         }
     }).catch((error) => {
+        alert('Upload Failed')
         console.log(error)
     })
-    window.location.href = './profile?username=user1';
+    window.location.href = './profile';
   }
 
   update_game(){

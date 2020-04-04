@@ -268,6 +268,7 @@ class GamePlayPage extends React.Component{
         input_msg: ''
       }
     }
+    this.fetch_game = this.fetch_game.bind(this)
   }
 
   parseUrl(){
@@ -330,17 +331,35 @@ class GamePlayPage extends React.Component{
   }
 
   componentDidMount(){
-    fetch_initial_game_config()
-      .then((function(result){
-        // alert(JSON.stringify(result))
-        this.setState({
-          game: result.game,
-          players: result.player_lst
-        }, this.focus_on_canvas.bind(this));
-      }).bind(this));
+    // fetch_initial_game_config()
+    //   .then((function(result){
+    //     // alert(JSON.stringify(result))
+    //     this.setState({
+    //       game: result.game,
+    //       players: result.player_lst
+    //     }, this.focus_on_canvas.bind(this));
+    //   }).bind(this));
+    this.fetch_game()
     // const {room_number} = useParams();
     const room_number = this.state.url_info.room_number;
     this.start_watching_msgs(room_number);
+  }
+
+  fetch_game(){
+    fetch("/users/getGame", {
+      method: 'GET',
+      redirect: 'follow',
+      credentials: 'include',
+      headers: {
+          'Accept': 'application/json , text/plain',
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": '*'
+      }
+      }).then(res => res.json())
+      .then(res => this.setState({
+        game: res.game,
+        players: []
+      }));
   }
 
   start_watching_msgs(rm_num){

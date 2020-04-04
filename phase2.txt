@@ -1,0 +1,42 @@
+[User part]: (username: user@user.com, password: user)
+
+First, you can see the login page, and in the bottom there's a link to the sign up page.
+Without being already logged in, you cannot enter other pages except the login page and the signup page.
+
+In Sign up page, the email address will be your username to login(has to be a valid email), and the password must be min length of 4. Nickname is going to be your name shown on your profile and game creation(min length of 1, must be unique).
+
+In the bottom there's an image upload button, for which you must upload as your profile picture. Click the upload button on the right to upload, once succeed, an alert will pop up to notify you. Then you can click sign up. A successful sign up will put you back to login page, and a msg will pop up to notify you as well.
+
+In the sign in page, there's a "remember me" checkbox, once checked, it will remember and autofill your password and username for you once you logged out.
+
+In profile page, you can see your uploaded avatar on the left, and your nickname on the right.
+There are 3 bars below,
+"Account information" shows some basic information about your account.
+"Game history" is not implemented, since multi-player gaming is not implemented.
+"Games Created" shows all the games you've created, and the game name of your game.
+
+On the top left button, there will always be a menu button, which if you clicked on it, will show different options.
+"Go to Lobby" takes you to the game lobby, which you are showed ALL games created by ALL users. You can choose to create room, if will give you a room code on the top, so that another player can join this room using this code. Although multiplayer gaming is not implemented, multiplayer(up to 2) joining the same room is implemented. If you opened another browser with different cookie, another player can guide to this page"/lobby" and input the code in the bottom where it says "Enter a room code to enter an existing room:". After that you should be able to see 2 players in the same room on both browsers.
+
+"Create Game" takes you into a similar lobby, but now you can only see games created by you. You can click "+Create Game" button on the top to create a game, upon clicking it, you will have the option to create a game just as described in the phase1 readme. You can also now upload a picture as your game's preview, as well as a name for your game. Upon succesful image upload, you will be notified. And after all is done, click the upload button on the top right corner to upload your game. Again, you will be notified if it is successful or not, and you will be redirected to dashboard.
+If you redirect yourself to create game again, you should be able to see your game, as well as editing it.
+
+"Go To Shop" takes you into the token shop, which is not implemented.
+
+[Admin Part]: (username: admin@admin.com, password: admin),
+Using above credentials you will be directed into admin dashboard upon login.
+
+Like in the phase1 readme, you can search people by their email.
+You can add token to all, which adds 1 token to each user.
+You can change their password for each user, as well as customize their tokens.
+Other functions are not implemented.
+
+You can also see active games down below, for which you can see all games created by users.
+In order to modify them, go to lobby by pressing Go To Lobby on the top left corner's menu button.
+This gives you a view of everyone's game, and you can delete it, but user cannot to such action, only admin can.
+
+
+
+
+
+

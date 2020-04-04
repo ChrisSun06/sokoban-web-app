@@ -127,21 +127,36 @@ class App extends React.Component {
                 <Switch>
                     {/* the above one is just a dummy page to test the router works */}
 
-                    <Route path="/gameplay">
-                        <GamePlayPage/>
-                    </Route>
-                    <Route path="/gameedit">
-                        <GameEditPage/>
-                    </Route>
-                    <Route path="/lobby">
-                        <LayoutLobby/>
-                    </Route>
-                    <Route path="/gameroom">
-                        <GameRoomPage/>
-                    </Route>
-                    <Route path="/gamecreated">
-                        <GameCreatedPage/>
-                    </Route>
+                    <Route exact path="/gameplay" render={({ logProps }) =>
+                        (
+                        <div>
+                        {!this.state.email ? <Login {...logProps} onLogin={this.onLogin}/> : <GamePlayPage/>}
+                        </div>
+                        )}/>
+                    <Route exact path="/gameedit" render={({ logProps }) =>
+                        (
+                        <div>
+                        {!this.state.email ? <Login {...logProps} onLogin={this.onLogin}/> : <GameEditPage/>}
+                        </div>
+                        )}/>
+                    <Route exact path="/lobby" render={({ logProps }) =>
+                        (
+                        <div>
+                        {!this.state.email ? <Login {...logProps} onLogin={this.onLogin}/> : <LayoutLobby/>}
+                        </div>
+                        )}/>
+                    <Route exact path="/gameroom" render={({ logProps }) =>
+                        (
+                        <div>
+                        {!this.state.email ? <Login {...logProps} onLogin={this.onLogin}/> : <GameRoomPage/>}
+                        </div>
+                        )}/>
+                    <Route exact path='/gamecreated' render={({ logProps }) =>
+                        (
+                        <div>
+                        {!this.state.email ? <Login {...logProps} onLogin={this.onLogin}/> : <GameCreatedPage/>}
+                        </div>
+                        )}/>
                     <Route exact path='/shop' render={({ logProps }) =>
                         (
                         <div>
@@ -165,11 +180,6 @@ class App extends React.Component {
                             </div>
                         )}
                     />
-
-                    {/* add your own pages' path above this line */}
-                    {/* <Route exact_path=''>
-                            <MainPage/>
-                        </Route> */}
                     <Route render={() => <div>404 Not found</div>} />
                 </Switch>
             </Router>
