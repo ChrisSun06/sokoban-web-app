@@ -69,7 +69,7 @@ function PreviewCard(props) {
         props.on_edit(props.preview._id);
     }
     const on_del_this_card = function(){
-        props.on_del(props.preview.game_id);
+        props.on_del(props.preview._id);
     }
     return (<Card>
         <CardHeader
@@ -83,6 +83,9 @@ function PreviewCard(props) {
         <CardActionArea>
                 <IconButton aria-label="Edit" onClick={on_edit_this_card}>
                     <EditIcon/> Edit Game
+                </IconButton>
+                <IconButton aria-label="Edit" onClick={on_del_this_card}>
+                    <DeleteIcon/> Edit Game
                 </IconButton>
         </CardActionArea>
     </Card>)
@@ -149,9 +152,36 @@ class GameCreatedPage extends React.Component {
     }
 
     on_del_game(id){
-        this.setState({
-            ...this.state,
-            games: this.state.games.filter(function(itm){return itm.game_id !== id})
+        const url = '/users/deleteGame';
+
+        // The data we are going to send in our request
+        let data = {
+            gid: id
+        }
+        // Create our request constructor with all the parameters we need
+        const request = new Request(url, {
+            method: 'DELETE', 
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json'
+            },
+        });
+
+        // Send the request with fetch()
+        fetch(request)
+        .then(function(res) {
+            // Handle response we get from the API.
+            if (res.status == 500 || res.status == 404) {
+                // If student was added successfully, tell the user.
+                alert(res.status)
+            } else {
+                alert('Deletion Succeed')
+                window.location.reload(false);
+            }  // log the result in the console for development purposes,
+                            //  users are not expected to see this.
+        }).catch((error) => {
+            console.log(error)
         })
     }
 

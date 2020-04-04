@@ -142,13 +142,10 @@ export class SignUp extends React.Component {
             return undefined
           }
         })
-        .then(res => {
-            window.location.href = '/'
-        })
         .catch((error) => {
-            alert('Signup Failed')
             console.log(error)
         })
+        window.location.href = '/'
     }
 
 

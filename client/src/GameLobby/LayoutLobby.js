@@ -202,7 +202,7 @@ export default class LayoutLobby extends React.Component {
                 // If student was added successfully, tell the user.
                 alert(res.status)
             } else {
-                alert('Deletion Succeeed')
+                alert('Deletion Succeed')
                 window.location.reload(false);
             }  // log the result in the console for development purposes,
                             //  users are not expected to see this.
