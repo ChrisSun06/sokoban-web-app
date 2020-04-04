@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 import "./styles.css"
 const StyledMenu = withStyles({
@@ -71,6 +72,10 @@ onLogOff(){
     window.location.href = '/'
   }
 
+  jump(){
+    window.location.href = '/lobby'
+  }
+
   handleClick = (event) => {
     this.setState({anchorEl: true});
   };
@@ -105,6 +110,12 @@ onLogOff(){
             <ExitToAppIcon fontSize="small" onClick={() => this.onLogOff()}/>
         </ListItemIcon>
         <ListItemText primary="Log Out" />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={this.jump.bind(this)}>
+        <ListItemIcon>
+            <MeetingRoomIcon fontSize="small" onClick={this.jump.bind(this)}/>
+        </ListItemIcon>
+        <ListItemText primary="Go To Lobby" />
         </StyledMenuItem>
         </StyledMenu>
       </div>

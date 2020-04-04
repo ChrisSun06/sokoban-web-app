@@ -78,14 +78,17 @@ export class Profile extends React.Component{
             active1: false,
             active2: false,
             active3: false,
-            anchorEl: false
+            anchorEl: false,
+            email: undefined,
+            tokens: 0,
+            avatar: undefined
         }
     }
 
     
 
     onInfoo(){
-        fetch("users/getInfo", {
+        fetch("/getInfo", {
             method: 'GET',
             redirect: 'follow',
             credentials: 'include',
@@ -94,8 +97,8 @@ export class Profile extends React.Component{
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": '*'
             }
-        }).then(res => res.text())
-        .then(res => this.setState({usr: res}));
+        }).then(res => res.json())
+        .then(res => this.setState({usr: res.nickname, tokens: res.tokens, email: res.email, avatar: res.avatar}));
     }
 
     componentDidMount() {
@@ -155,7 +158,7 @@ export class Profile extends React.Component{
             <IconButton onClick={this.handleClick}><MenuIcon/></IconButton>
             {!!this.state.usr &&
                 <div>
-                    <img id = "im1" class='imgside' src={profile}/>
+                    <img id = "im1" class='imgside' src={this.state.avatar || profile}/>
                     <h2 id = "h1">{this.state.usr}</h2><br/>
                     <div className = "b2">
                         <StyledMenu
@@ -199,9 +202,9 @@ export class Profile extends React.Component{
                         </IconButton>
                     <span className = "big">Account Information</span></div>
                         <div className = "small" id = {hiddenProperty1}> Personal information</div>
-                        <div className = "tiny" id = {hiddenProperty1}>Name: {this.state.usr}</div>
-                        <div className = "tiny" id = {hiddenProperty1}>Age: 20</div>
-                        <div className = "tiny" id = {hiddenProperty1}>VIP level: 0</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Nickname: {this.state.usr}</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Email: {this.state.email}</div>
+                        <div className = "tiny" id = {hiddenProperty1}>Token: {this.state.tokens}</div>
                         {/* <div className = "small1" style={hiddenProperty1}><button style={{marginLeft: 10}} id="login_button">Change password</button></div> */}
 
                         <IconButton id = "I1">

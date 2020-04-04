@@ -53,13 +53,50 @@ class gameStatus extends React.Component {
       arr: dummy_games.map(function(elem) {
         return {
           name: elem.name,
+          creater: undefined,
           pic: elem.pic,
           available: elem.available,
           seen_edit: false
         }
       }),
     }
+    this.onLoad = this.onLoad.bind(this);
   }
+
+  onLoad(){
+    fetch('/allGames', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+      'Accept': 'application/json , text/plain',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": '*'
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      let tmp = res.map(function(elem) {
+        return {
+          name: elem.game_name,
+          pic: elem.preview_image,
+          creater: elem.creater,
+          available: true,
+          seen_edit: false
+        }
+      })
+      this.setState({
+        arr: tmp
+      })
+    })
+    .catch(err => {
+          console.error(err);
+          alert('Error loading games, please try again!');
+    });
+  }
+  componentDidMount() {
+    this.onLoad();
+  }
+
 
 
 
@@ -92,16 +129,8 @@ class gameStatus extends React.Component {
                       </ListItemAvatar>
                       <ListItemText
                           primary={user.name}
+                          secondary={"Created by " + user.creater}
                       />
-                      <ListItemSecondaryAction>
-                          <Button variant="contained" color="primary" id="subside_btn" onClick={() => this.changeAvailability(index)}>
-                          {user.available ? (
-                            <span>Make Unavailable</span>
-                            ) : (
-                                <span>Make Available</span>
-                            )}
-                          </Button>
-                      </ListItemSecondaryAction>
                   </ListItem>
                   </div>
                   )}

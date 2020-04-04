@@ -177,11 +177,9 @@ app.get('/getInfo', (req, res) => {
 	// Based on this cookie's id, we set up information for the user.
 	User.findById(id).then((user) => {
 	    if (!user) {
-            console.log("failed")
             //res.redirect('/login');
             res.send(false)
         } else {
-            console.log("not failed!")
 			res.send(user)
         }
     }).catch((error) => {
@@ -201,7 +199,7 @@ app.get('/users/getRoomInfo', (req, res) => {
             res.send(false)
         } else {
 			console.log("not failed!")
-			k = players[user.nickname]
+			let k = players[user.nickname]
 			res.send(k)
         }
     }).catch((error) => {
@@ -220,11 +218,16 @@ app.post('/users', (req, res) => {
 		password: req.body.password,
 		tokens: 1000,
 		isAdmin: false,
-		nickname: req.body.nickname
+		nickname: req.body.nickname,
+		avatar: req.body.avatar
 	})
 	// Save the user
-	user.save().then((user) => {
-        res.status(200).send()
+	user.save().then((result) => {
+		if (!result){
+			res.status(404).send()
+		} else {
+			res.send(result)
+		}
 	}, (error) => {
         console.log(error)
 		res.status(400).send(error) // 400 for bad request
@@ -261,7 +264,6 @@ app.patch('/users', (req, res) => {
 	} else if (option === "password"){
 		let pswd = req.body.password
 		localHash(pswd).then(hashed => {
-			console.log(hashed)
 			User.findOneAndUpdate({"_id": uid},
 			{
 				password: hashed
@@ -299,7 +301,6 @@ app.post('/users/newGame', (req, res) => {
 		players: req.body.players
 	}
 
-	console.log(gamedata)
 
 	game.game = gamedata
 
@@ -350,6 +351,29 @@ app.patch('/users/editGame', (req, res) => {
 	}).catch((error) => console.log(error))
 })
 
+app.delete('/users/deleteGame', (req, res) => {
+	// Add code here
+	const g_id = req.body.gid
+	// Validate id
+	if (!ObjectID.isValid(g_id)) {
+		res.status(404).send()
+		return;
+	}
+
+	// Delete a student by their id
+	Game.findOneAndRemove({_id: g_id}).then((game) => {
+		if (!game) {
+			res.status(404).send()
+			return;
+		} else {
+			res.status(200).send()
+			return;
+		}
+	}).catch((error) => {
+		res.status(500).send(error) // server error, could not delete.
+	})
+})
+
 app.get("/logoff", (req, res) => {
 	res.cookie("id", '', {expires: new Date(0)});
 	res.status(200).send()
@@ -358,6 +382,16 @@ app.get("/logoff", (req, res) => {
 app.get('/games', (req, res) => {
 	// Add code here
 	Game.find({creater: req.cookies["email"]}).then((games) => {
+		//console.log(games)
+		res.send(games)
+	}, (error) => {
+		res.status(400).send(error)
+	})
+})
+
+app.get('/allGames', (req, res) => {
+	// Add code here
+	Game.find({}).then((games) => {
 		//console.log(games)
 		res.send(games)
 	}, (error) => {
@@ -389,7 +423,7 @@ io.on('connection', function (socket) {
 		
 	});
 	socket.on('joinGame', function(data){
-		roomInt = parseInt(data.room)
+		let roomInt = parseInt(data.room)
 		rooms_info[roomInt]["player2"] = data.name
 		let opp = null
 		for (const [key, value] of Object.entries(players)) {

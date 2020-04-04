@@ -420,7 +420,6 @@ class GameEditPage extends React.Component{
     }).catch((error) => {
         console.log(error)
     })
-    alert(this.state.image_id)
     window.location.href = './profile?username=user1';
   }
 
@@ -435,6 +434,7 @@ class GameEditPage extends React.Component{
     let data = {
       game_name: this.state.game_name,
       creater: this.state.players,
+      nickname: this.state.nickname,
       num_rows: this.state.game.num_rows,
       num_cols: this.state.game.num_cols,
       goals: this.state.game.goals,
@@ -466,11 +466,9 @@ class GameEditPage extends React.Component{
         
         } else {
             alert('Upload Succeed')
-            console.log(res.json())
         }
     }).catch((error) => {
         console.log(error)
-        alert('Upload Failed')
     })
     window.location.href = './profile?username=user1';
   }

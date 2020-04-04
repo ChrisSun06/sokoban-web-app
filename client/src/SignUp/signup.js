@@ -15,26 +15,30 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import ImageForm from "./ImageForm"
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import PublishIcon from '@material-ui/icons/Publish';
 
-function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center" color="#C3CFC9">
-        {'Copyright © '}
-        <Link href="https://material-ui.com/" color="#C3CFC9">
-          Hongyi Sun
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
   
   const styles = theme => ({
+    root: {
+      '& > *': {
+        marginTop:8,
+      },
+    },
+    input:{
+      marginTop: 20
+    },
     paper: {
       marginTop: 8,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+    },
+    profilepic: {
+      direction:"column",
+      justify:"center"
     },
     avatar: {
       margin: 1,
@@ -62,44 +66,87 @@ export class SignUp extends React.Component {
                 password: '',
                 confirm_password: '',
                 nickname: ''
-            }
+            },
+            image_id: undefined,
+            image_url: "./../Profile/profile.png" 
         }
         this.addUser = this.addUser.bind(this)
+        this.addImage = this.addImage.bind(this)
     }
+
+    addImage (form){
+      // the URL for the request
+      const url = "/images";
+  
+      // The data we are going to send in our request
+      const imageData = new FormData(form);
+  
+      // Create our request constructor with all the parameters we need
+      const request = new Request(url, {
+          method: "post",
+          body: imageData,
+      });
+  
+      // Send the request with fetch()
+      fetch(request)
+          .then(res => res.json())
+          .then(res => {
+              // Handle response we get from the API.
+              // Usually check the error codes to see what happened.
+                  // If image was added successfully, tell the user.
+                this.setState({
+                    image_id: res.image_id,
+                    image_url: res.image_url
+                });
+                alert("Image upload succeed")
+          })
+          .catch(error => {
+              console.log(error);
+          });
+    };
 
     // A function to send a POST request with a new student.
     addUser() {
     // the URL for the request
         const url = '/users';
+        let ret = this.checkPassword();
+        if (ret === -1){
+          return;
+        }
 
         // The data we are going to send in our request
         let data = {
             email: this.state.inputs.username,
             password: this.state.inputs.password,
-            nickname: this.state.inputs.nickname
+            nickname: this.state.inputs.nickname,
+            avatar: this.state.image_url
         }
         // Create our request constructor with all the parameters we need
         const request = new Request(url, {
-            method: 'post', 
+            method: "post", 
             body: JSON.stringify(data),
             headers: {
-                'Accept': 'application/json, text/plain',
+                Accept: "application/json, text/plain, */*",
                 'Content-Type': 'application/json'
-            },
+            }
         });
 
         // Send the request with fetch()
         fetch(request)
-        .then(function(res) {
-            // Handle response we get from the API.
-            if (res.status == 400) {
-                // If student was added successfully, tell the user.
-                alert('Signup Failed')
-            } else {
-                alert('Signup Succeeed')
-            }  // log the result in the console for development purposes,
-                            //  users are not expected to see this.
-        }).catch((error) => {
+        .then(res => {
+          if (res.status === 200){
+            alert('Signup Succeeed')
+            return res.json()
+          } else {
+            alert('Signup Failed')
+            return undefined
+          }
+        })
+        .then(res => {
+            window.location.href = '/'
+        })
+        .catch((error) => {
+            alert('Signup Failed')
             console.log(error)
         })
     }
@@ -119,13 +166,16 @@ export class SignUp extends React.Component {
     checkPassword(e) {
         if (this.state.inputs.username === '') {
             alert('username cannot be empty')
+            return -1
         } else if (this.state.inputs.password !== this.state.inputs.confirm_password) {
             alert('password does not match')
+            return -1
         } else if (this.state.inputs.nickname === ''){
             alert('nickname cannot be empty')
-        } else {
-            // window.location.href = `/profile?username=${this.state.inputs.usr_nm}`
-            window.location.href = '/'
+            return -1
+        } else if (this.state.image_url === undefined || this.state.image_url === "./../Profile/profile.png" ){
+            alert('Please upload your profile picture')
+            return -1
         }
     }
 
@@ -137,36 +187,6 @@ export class SignUp extends React.Component {
         const { classes } = this.props;
         return (
             <body id='l_back'>
-            {/* <div id="rec">
-                <Container maxWidth="xs">
-                    <span> </span><br/>
-                    <h1 id = "l_h1">Sign Up</h1>
-                    <p className = "l_p1"><input className="signup" type="text"
-                                                                       placeholder="Username"
-                                                                       value={this.state.inputs.username}
-                                                                       onChange={this.onInput('username')}/></p>
-                    <p className = "l_p1"><input className="signup" type="password"
-                                                                       placeholder="Password"
-                                                                       value={this.state.inputs.password}
-                                                                       onChange={this.onInput('password')}/></p>
-                    <p className = "l_p1"><input className="signup" type="password"
-                                                                       placeholder="Confirm Password"
-                                                                       value={this.state.inputs.confirm_password}
-                                                                       onChange={this.onInput('confirm_password')}/></p>
-                    <button  id = "bbb"
-                            onClick={this.addUser.bind(this)}><h2>Sign up</h2></button>
-                    <br/>
-                    <span> </span><br/>
-                </Container>
-            </div>
-            <div>
-                <Container maxWidth="xs">
-                    <p  id = "h2"><strong>Already have an account?</strong>
-                        <button className = "b2" id="login_button" onClick={this.jump.bind(this)}>Log in
-                        </button>
-                    </p>
-                </Container>
-            </div> */}
             <Container component="main" maxWidth="xs">
               <CssBaseline />
               <div className={classes.paper}>
@@ -242,18 +262,30 @@ export class SignUp extends React.Component {
                   >
                     Sign Up
                   </Button>
-                  <Grid container>
+                  {/* <div className={classes.root}>
+                  Upload Avatar:  
+                  <form className="image-form" onSubmit={(e) => {
+                    e.preventDefault();
+                    this.addImage(e.target);
+                }}>
+                  <input type="file" id="file1" className={classes.input}  name="file1" />
+                  <label htmlFor="icon-button-file">
+                    <IconButton color="#C3CFC9" type="submit" aria-label="upload picture" component="span" justify="right">
+                      <PublishIcon />
+                    </IconButton>
+                  </label>
+                  </form>
+                </div> */}
+                </form>
+                <ImageForm addImage={this.addImage}/>
+                <Grid container>
                     <Grid item onClick={this.jump.bind(this)}>
                       <Link href='/login' variant="body2" color="#C3CFC9">
                         {"Already have an account? Log in."}
                       </Link>
                     </Grid>
                   </Grid>
-                </form>
               </div>
-              <Box mt={8} my={10}>
-                <Copyright />
-              </Box>
             </Container>
             </body>
         )

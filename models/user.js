@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
-		minlength: 5
+		minlength: 4
 	},
 	tokens: {
 		type: Number,
@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		minlength: 1,
 		trim: true,
+		required: true
+	},
+	avatar: {
+		type: String,
 		required: true
 	}
 })

@@ -18,7 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import openSocket from 'socket.io-client';
 import "./styles.css"
 
-let socket = openSocket(window.location.hostname);
+let socket = openSocket();
 
 const IMAGES = {
     preview1, preview2, preview3
@@ -67,8 +67,24 @@ function PreviewCard(props) {
                 <Add/> Create Room
             </IconButton>
         </CardActions>
+        { props.isAdmin 
+                    ? <DeleteRoom on_delete_room={props.on_delete_room} gid={props.preview._id}/>
+                    : null
+        }
 
     </Card>)
+}
+
+const DeleteRoom = (props) => {
+    return (
+        <div >
+        <CardActions disableSpacing>
+            <IconButton aria-label="Delete Room" onClick={function(){props.on_delete_room(props.gid)}}>
+                <Add/> Delete Room
+            </IconButton>
+        </CardActions>
+        </div>
+    )
 }
 
 function LayoutList(props) {
@@ -77,7 +93,7 @@ function LayoutList(props) {
             {props.game_previews.map(function (preview) {
                 return (
                     <Grid md={3}>
-                        <PreviewCard preview={preview} on_create_room={props.on_create_room}/>
+                        <PreviewCard preview={preview} on_create_room={props.on_create_room} isAdmin={props.isAdmin} on_delete_room={props.on_delete_room}/>
                     </Grid>)
             })}
         </Grid>)
@@ -94,13 +110,14 @@ export default class LayoutLobby extends React.Component {
             current_on: ALL_GAMES,
             game_list: [],
             display_game: [],
-            entering_room_code: ''
+            entering_room_code: '',
+            isAdmin: false,
         };
         this.fetch_all_games();
     }
 
     onInfoo(){
-        fetch("users/getInfo", {
+        fetch("/getInfo", {
             method: 'GET',
             redirect: 'follow',
             credentials: 'include',
@@ -109,8 +126,43 @@ export default class LayoutLobby extends React.Component {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": '*'
             }
-        }).then(res => res.text())
-        .then(res => this.setState({usr_nm: res}));
+        }).then(res => res.json())
+        .then(res => {this.setState({usr_nm: res.nickname, isAdmin: res.isAdmin})
+    });
+    }
+
+    onDeleteRoom(game_id){
+        const url = '/users/deleteGame';
+
+        // The data we are going to send in our request
+        let data = {
+            gid: game_id
+        }
+        // Create our request constructor with all the parameters we need
+        const request = new Request(url, {
+            method: 'DELETE', 
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json'
+            },
+        });
+
+        // Send the request with fetch()
+        fetch(request)
+        .then(function(res) {
+            // Handle response we get from the API.
+            if (res.status == 500 || res.status == 404) {
+                // If student was added successfully, tell the user.
+                alert(res.status)
+            } else {
+                alert('Deletion Succeeed')
+                window.location.reload(false);
+            }  // log the result in the console for development purposes,
+                            //  users are not expected to see this.
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     componentDidMount() {
@@ -119,7 +171,7 @@ export default class LayoutLobby extends React.Component {
     }
 
     fetch_all_games() {
-        fetch("games", {
+        fetch("/allGames", {
             method: 'GET',
             redirect: 'follow',
             credentials: 'include',
@@ -182,7 +234,9 @@ export default class LayoutLobby extends React.Component {
 
                 {this.state.current_on === ALL_GAMES && <LayoutList
                                                             game_previews={this.state.display_game}
-                                                            on_create_room={this.on_create_room.bind(this)}/>}
+                                                            on_create_room={this.on_create_room.bind(this)}
+                                                            isAdmin={this.state.isAdmin}
+                                                            on_delete_room={this.onDeleteRoom.bind(this)}/>}
 
                 <div id="a">
                     <InputLabel style={{marginRight: '10px'}}><strong>Enter a room code to enter an existing room: </strong></InputLabel>

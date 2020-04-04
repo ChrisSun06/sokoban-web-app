@@ -252,16 +252,14 @@ class UsersList extends React.Component {
   addOneToAll(){
     let tmp = this.state.data;
     for(let i = 0; i < tmp.length; i++){
-      tmp[i].tokens += 1;
-      dummy_users[i].tokens += 1;
+      this.changeTokens(tmp[i].id, i, tmp[i].tokens + 1);
     }
-    this.setState({
-      data: tmp,
-    });
+    window.location.reload(false);
   }
 
   //Server call that obtain datas
-  findUser(name){
+  findUser(name, event){
+    event.preventDefault();
     let user = null;
     for (let i = 0; i < this.state.data.length; i++){
       if (this.state.data[i].name === name){
@@ -276,16 +274,7 @@ class UsersList extends React.Component {
       });
     } else {
       alert("User not found!")
-      let dup = dummy_users.map(function(elem) {
-        return {
-          name: elem.name,
-          tokens: elem.tokens,
-          pic: elem.pic,
-        }
-      })
-      this.setState({
-        data: dup
-      });
+      this.loadUsers();
     }
   }
 
@@ -312,7 +301,7 @@ class UsersList extends React.Component {
                   inputProps={{ 'aria-label': 'Search People' }}
                   onChange={this.inputUserChange}
               />
-              <IconButton id="iconButton" aria-label="search" onClick={() => this.findUser(this.inputUser)}>
+              <IconButton type="submit" id="iconButton" aria-label="search" onClick={(e) => this.findUser(this.inputUser, e)}>
                   <SearchIcon/>
               </IconButton>
           </Paper>
