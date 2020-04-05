@@ -39,6 +39,10 @@ You can also see active games down below, for which you can see all games create
 In order to modify them, go to lobby by pressing Go To Lobby on the top left corner's menu button.
 This gives you a view of everyone's game, and you can delete it, but user cannot to such action, only admin can.
 
+[Overview for the routes]:
+Shown as comments above each routes.
+
+
 
 Link: https://radiant-waters-17734.herokuapp.com/
 

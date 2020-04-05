@@ -51,7 +51,6 @@ function localHash(pswd) {
 	})
 }
 
-// body-parser: middleware for parsing HTTP JSON body into a usable object
 
 /*** Session handling **************************************/
 // Create a session cookie
@@ -74,23 +73,23 @@ app.get("/users/check-session", (req, res) => {
     }
 });
 
+//Check if given email and password is same for logging in purposes.
+/*
+request body: {
+	email: ..
+	password: ..
+}
+*/
 app.post('/users/login', (req, res) => {
 	const email = req.body.email
     const password = req.body.password
-    // Use the static method on the User model to find a user
-	// by their email and password
 	console.log(req.body.remember_me)
 	User.findByEmailPassword(email, password).then((user) => {
 	    if (!user) {
             console.log("failed")
-            //res.redirect('/login');
             res.send(false)
         } else {
-            // Add the user's id to the session cookie.
-            // We can check later if this exists to ensure we are logged in.
-            //req.session.user = user._id;
             console.log("not failed!")
-			//req.session.email = user.email
 			res.cookie('id',user._id, { httpOnly: true });
 			if (req.body.remember_me){
 				res.cookie('password', req.body.password, { httpOnly: true });
@@ -108,12 +107,26 @@ app.post('/users/login', (req, res) => {
     })
 })
 
+//Post game's id to user's cookie. Doesn't return anything, just changed the active cookie's information.
+/*
+request body: {
+	game_id: ...
+}
+*/
 app.post('/users/postGame', (req, res) => {
 	const game_id = req.body.game_id
 	res.cookie('game_id',game_id, { httpOnly: true });
 	res.status(200).send()
 })
 
+
+//Get game based on game id stored in user's cookie, return the game instance stored in the database.
+/*
+request body: {
+	
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/users/getGame', (req, res) => {
 	const game_id = req.cookies["game_id"]
 	Game.find({_id: game_id}).then((games) => {
@@ -123,7 +136,12 @@ app.get('/users/getGame', (req, res) => {
 	})
 })
 
-
+//Get user's nickname based on it's id stored in their cookie.
+/*
+request body: {
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/users/getInfo', (req, res) => {
 	const id = req.cookies["id"]
 	// Based on this cookie's id, we set up information for the user.
@@ -142,6 +160,12 @@ app.get('/users/getInfo', (req, res) => {
     })
 })
 
+//Get user's email based on it's id stored in their cookie.
+/*
+request body: {
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/users/getInfoE', (req, res) => {
 	const id = req.cookies["id"]
 	// Based on this cookie's id, we set up information for the user.
@@ -160,6 +184,12 @@ app.get('/users/getInfoE', (req, res) => {
     })
 })
 
+//Send over user's email and password if it sets "remember" in their cookie to true, used for "remember me" checkbox.
+/*
+request body: {
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/users/getInfoEmail', (req, res) => {
 	// Based on this cookie's id, we set up information for the user.
 	if (req.cookies["remember"]){
@@ -172,6 +202,13 @@ app.get('/users/getInfoEmail', (req, res) => {
 	}
 })
 
+
+//Send over whole user instance based on its set id in cookie.
+/*
+request body: {
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/getInfo', (req, res) => {
 	const id = req.cookies["id"]
 	// Based on this cookie's id, we set up information for the user.
@@ -188,14 +225,18 @@ app.get('/getInfo', (req, res) => {
     })
 })
 
-
+//Send over the room info(room when players wait before game start) of the current user based on its id in cookie.
+/*
+request body: {
+}
+Don't need to add anything in the body, because all information is in the cookie through user's request.
+*/
 app.get('/users/getRoomInfo', (req, res) => {
 	const id = req.cookies["id"]
 	// Based on this cookie's id, we set up information for the user.
 	User.findById(id).then((user) => {
 	    if (!user) {
             console.log("failed")
-            //res.redirect('/login');
             res.send(false)
         } else {
 			console.log("not failed!")
@@ -204,13 +245,19 @@ app.get('/users/getRoomInfo', (req, res) => {
         }
     }).catch((error) => {
 		console.log(error)
-		console.log("asd")
         res.status(400).send(error)
     })
 })
 
-/** User routes below **/
-// Set up a POST route to *create* a user of your web app (*not* a student).
+// Sign up routes for user. Return user instance if successful.
+/*
+request body: {
+	email: ... (has to be a valid email),
+	password: ...(min length 4),
+	nickname: ...(min length 1),
+	avatar: ...
+}
+*/
 app.post('/users', (req, res) => {
 	// Create a new user
 	const user = new User({
@@ -234,6 +281,11 @@ app.post('/users', (req, res) => {
 	})
 })
 
+// Get ALL users
+/*
+request body: {
+}
+*/
 app.get('/users', (req, res) => {
 	User.find({}, function(err, docs){
 		if (!err){ 
@@ -244,6 +296,13 @@ app.get('/users', (req, res) => {
 	})
 })
 
+// Change user's token or password based on option in request body.
+/*
+request body: {
+	id: ...,
+	option: 1 of "token", "password"
+}
+*/
 app.patch('/users', (req, res) => {
 	const uid = req.body.id;
 	const option = req.body.opt;
@@ -281,6 +340,23 @@ app.patch('/users', (req, res) => {
 	}
 })
 
+// Post a new game.
+/*
+request body: {
+      game_name: game_name,
+      creater: players,
+      nickname: nickname,
+      num_rows: game.num_rows,
+      num_cols: game.num_cols,
+      goals: game.goals,
+      boxes: game.boxes,
+      walls: 
+        game.walls,
+      players: game.players,
+      image_id: image_id,
+      image_url: image_url
+    }
+*/
 app.post('/users/newGame', (req, res) => {
 	const game = new Game({
 		game_name: req.body.game_name,
@@ -304,7 +380,6 @@ app.post('/users/newGame', (req, res) => {
 
 	game.game = gamedata
 
-	// Save the user
 	game.save().then((rest) => {
 		if (!rest){
 			res.status(500).send()
@@ -317,6 +392,23 @@ app.post('/users/newGame', (req, res) => {
 	})
 })
 
+// Edit a game.
+/*
+request body: {
+      game_name: game_name,
+      creater: players,
+      nickname: nickname,
+      num_rows: game.num_rows,
+      num_cols: game.num_cols,
+      goals: game.goals,
+      boxes: game.boxes,
+      walls: 
+        game.walls,
+      players: game.players,
+      image_id: image_id,
+      image_url: image_url
+    }
+*/
 app.patch('/users/editGame', (req, res) => {
 	const g_id = req.cookies["game_id"]
 	const gamedata = {
@@ -355,6 +447,12 @@ app.patch('/users/editGame', (req, res) => {
 	}).catch((error) => console.log(error))
 })
 
+// Delete a game based on game's _id (gid)
+/*
+request body: {
+      gid: ...
+}
+*/
 app.delete('/users/deleteGame', (req, res) => {
 	// Add code here
 	const g_id = req.body.gid
@@ -378,11 +476,21 @@ app.delete('/users/deleteGame', (req, res) => {
 	})
 })
 
+// Log off, which destory user's id in cookie, by letting it expires right away.
+/*
+request body: {
+    }
+*/
 app.get("/logoff", (req, res) => {
 	res.cookie("id", '', {expires: new Date(0)});
 	res.status(200).send()
 })
 
+// Get the game by game creater's email stored in their cookie.
+/*
+request body: {
+    }
+*/
 app.get('/games', (req, res) => {
 	// Add code here
 	Game.find({creater: req.cookies["email"]}).then((games) => {
@@ -393,6 +501,11 @@ app.get('/games', (req, res) => {
 	})
 })
 
+// Get ALL games
+/*
+request body: {
+    }
+*/
 app.get('/allGames', (req, res) => {
 	// Add code here
 	Game.find({}).then((games) => {
@@ -403,6 +516,12 @@ app.get('/allGames', (req, res) => {
 	})
 })
 
+// Post image to Cloudinary server
+/*
+request body: {
+}
+we put file(image) to upload in the request's file.
+*/
 app.post("/images", multipartMiddleware, (req, res) => {
     // Use uploader.upload API to upload image to cloudinary server.
     cloudinary.uploader.upload(
@@ -444,10 +563,10 @@ io.on('connection', function (socket) {
 });
 
 
-
+// Use the static build.
 app.use(express.static(__dirname + "/client/build"));
 
-// All routes other than above will go to index.html
+// All routes other than above will go to index.html, which we pre-builded.
 app.get("*", (req, res) => {
     res.sendFile(__dirname + "/client/build/index.html");
 });
