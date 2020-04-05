@@ -36,7 +36,7 @@ In order to modify them, go to lobby by pressing Go To Lobby on the top left cor
 This gives you a view of everyone's game, and you can delete it, but user cannot to such action, only admin can.
 
 
-
+Link: https://radiant-waters-17734.herokuapp.com/
 
 
 
