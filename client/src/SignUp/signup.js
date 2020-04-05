@@ -135,7 +135,7 @@ export class SignUp extends React.Component {
         fetch(request)
         .then(res => {
           if (res.status === 200){
-            alert('Signup Succeeed')
+            alert('Signup Succeed')
             return res.json()
           } else {
             alert('Signup Failed')
@@ -145,7 +145,7 @@ export class SignUp extends React.Component {
         .catch((error) => {
             console.log(error)
         })
-        window.location.href = '/'
+        window.location.href = '/login'
     }
 
 
