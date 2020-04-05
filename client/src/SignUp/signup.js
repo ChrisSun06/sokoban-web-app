@@ -133,16 +133,20 @@ export class SignUp extends React.Component {
 
         // Send the request with fetch()
         fetch(request)
-        .then(res => {
-          if (res.status === 200){
-            alert('Signup Succeed')
+        .then(function(res) {
+
+          // Handle response we get from the API.
+          // Usually check the error codes to see what happened.
+          if (res.status == 400 || res.status == 404) {
+              alert('Signup Failed')
+          
           } else {
-            alert('Signup Failed')
+              alert('Signup Succeed')
           }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+      }).catch((error) => {
+          alert('Sigup Failed')
+          console.log(error)
+      })
         window.location.href = '/login'
     }
 
