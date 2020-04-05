@@ -5,7 +5,7 @@ Without being already logged in, you cannot enter other pages except the login p
 
 In Sign up page, the email address will be your username to login(has to be a valid email), and the password must be min length of 4. Nickname is going to be your name shown on your profile and game creation(min length of 1, must be unique).
 
-In the bottom there's an image upload button, for which you must upload as your profile picture. Click the upload button on the right to upload, once succeed, an alert will pop up to notify you. Then you can click sign up. A successful sign up will put you back to login page, and a msg will pop up to notify you as well.
+In the bottom there's an image upload button, for which you must upload as your profile picture. Click the upload button on the right to upload, once succeed, an alert will pop up to notify you. Then you can click sign up. A successful sign up will cause a success msg to pop up to notify you.
 
 In the sign in page, there's a "remember me" checkbox, once checked, it will remember and autofill your password and username for you once you logged out.
 
@@ -16,12 +16,16 @@ There are 3 bars below,
 "Games Created" shows all the games you've created, and the game name of your game.
 
 On the top left button, there will always be a menu button, which if you clicked on it, will show different options.
-"Go to Lobby" takes you to the game lobby, which you are showed ALL games created by ALL users. You can choose to create room, if will give you a room code on the top, so that another player can join this room using this code. Although multiplayer gaming is not implemented, multiplayer(up to 2) joining the same room is implemented. If you opened another browser with different cookie, another player can guide to this page"/lobby" and input the code in the bottom where it says "Enter a room code to enter an existing room:". After that you should be able to see 2 players in the same room on both browsers.
+"Go to Lobby" takes you to the game lobby, which you are showed ALL games created by ALL users. 
+You can choose to create room, if will give you a room code on the top, so that another player can join this room using this code. 
+Although multiplayer gaming is not implemented, multiplayer(up to 2) joining the same room is implemented(Using socket-io). If you opened another browser with different cookie, another player can guide to this page"/lobby" and input the code in the bottom where it says "Enter a room code to enter an existing room:". After that you should be able to see 2 players in the same room on both browsers.
+Kicking people out of the room is not implemented. And 1 player quit will not allow the other player to see it.
 
 "Create Game" takes you into a similar lobby, but now you can only see games created by you. You can click "+Create Game" button on the top to create a game, upon clicking it, you will have the option to create a game just as described in the phase1 readme. You can also now upload a picture as your game's preview, as well as a name for your game. Upon succesful image upload, you will be notified. And after all is done, click the upload button on the top right corner to upload your game. Again, you will be notified if it is successful or not, and you will be redirected to dashboard.
 If you redirect yourself to create game again, you should be able to see your game, as well as editing it.
+You can also delet your own game, by pressing the delete game button.
 
-"Go To Shop" takes you into the token shop, which is not implemented.
+"Go To Shop" takes you into the token shop, which is not implemented with the server.
 
 [Admin Part]: (username: admin@admin.com, password: admin),
 Using above credentials you will be directed into admin dashboard upon login.
