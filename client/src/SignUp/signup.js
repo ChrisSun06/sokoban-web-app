@@ -126,7 +126,7 @@ export class SignUp extends React.Component {
             method: "post", 
             body: JSON.stringify(data),
             headers: {
-                Accept: "application/json, text/plain, */*",
+                'Accept': 'application/json, text/plain',
                 'Content-Type': 'application/json'
             }
         });
@@ -136,10 +136,8 @@ export class SignUp extends React.Component {
         .then(res => {
           if (res.status === 200){
             alert('Signup Succeed')
-            return res.json()
           } else {
             alert('Signup Failed')
-            return undefined
           }
         })
         .catch((error) => {
