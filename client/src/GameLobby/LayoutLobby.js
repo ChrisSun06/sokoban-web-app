@@ -98,7 +98,7 @@ function PreviewCard(props) {
     return (<Card>
         <CardHeader
             title={`${props.preview.game_name}`}
-            subheader={`By ${props.preview.creater}`}
+            subheader={`By ${props.preview.nickname}`}
         />
         <CardContent
         >

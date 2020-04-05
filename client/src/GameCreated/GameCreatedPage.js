@@ -85,7 +85,7 @@ function PreviewCard(props) {
                     <EditIcon/> Edit Game
                 </IconButton>
                 <IconButton aria-label="Edit" onClick={on_del_this_card}>
-                    <DeleteIcon/> Edit Game
+                    <DeleteIcon/> Delete Game
                 </IconButton>
         </CardActionArea>
     </Card>)

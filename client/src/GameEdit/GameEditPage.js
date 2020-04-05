@@ -410,7 +410,7 @@ class GameEditPage extends React.Component{
 
         // Handle response we get from the API.
         // Usually check the error codes to see what happened.
-        if (res.status == 400 || res.status == 200) {
+        if (res.status == 400) {
             alert('Upload Failed')
         
         } else {
