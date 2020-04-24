@@ -1,5 +1,5 @@
-# team46
-Our project is an online platform for players to play the game Sokoban in multi player mode, create and post their own Sokoban layouts, as well as purchase custom icons and badges using the tokens earned from solving the puzzles.
+# Introduction
+This project is an online platform for players to play the game Sokoban in multi player mode, create and post their own Sokoban layouts, as well as purchase custom icons and badges using the tokens earned from solving the puzzles.
 
 Below is the instruction on how to use the app in phase 1:
 * Open the app you will see our login page
