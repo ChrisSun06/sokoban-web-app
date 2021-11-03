@@ -33,7 +33,7 @@
     "react-search-box": "latest",
     "socket.io": "^1.4.2",
     "socket.io-client": "^2.3.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "setup": "npm install && cd client && npm install && cd ..",
